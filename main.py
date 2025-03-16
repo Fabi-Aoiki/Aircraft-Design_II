@@ -58,9 +58,6 @@ Momenten_liste = {
 class Moment:
     def __init__(self, Weight, X_Dis_m, Z_Dis_m = 0, Y_Dis_m = 0):
 
-
-
-
         self.Weight = float(Weight)
         self.x = float(X_Dis_m)
         self.z = float(Z_Dis_m)
@@ -197,7 +194,7 @@ print("Minimum Bat Weight:", W_Bat)
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
-Moment(Ww,10,-5)
+M_Ww = Moment(Ww,10,-5)
 
 W_tail = Empenage_thorenbeck.Calc_W_tail()
 print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
@@ -230,6 +227,9 @@ print(f"Hydraulics and pneumatics Weight nach Thorenbeck Kapitel 8 = {Whp} [kg]"
 
 Wel = Airframe_service_etc_Thorenbeck.Calc_Wel()
 print(f"Electrical Weight nach Thorenbeck Kapitel 8 = {Wel} [kg]")
+
+Wfur = Airframe_service_etc_Thorenbeck.Calc_Wfurn() # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
+print(f"Furniture Weight nach Thorenbeck Kapitel 8 = {Wfur} [kg]")
 
 WAC = Airframe_service_etc_Thorenbeck.Calc_Weight_AC()
 print(f"A.C. Weight nach Thorenbeck Kapitel 8 inklusive korrektur = {WAC} [kg]")
