@@ -36,6 +36,9 @@ P_b = 20447989*(10**-3) #kW - (System?)Power base variant
 P_s = 22653528*(10**-3) #kW - (System?)Power stretch variant
 P_elNonProp = 250 * 10^3 #W Elektrische Leistung ohne Motor(en)
 P_elNonPropToMotors = 0.0625 #percent electric power relation systems to electric motors
+l_cab = 52 #length of cabin stretched
+pax_s = 276 # Pax stretch
+
 
 #Cruise chosen values
 epsilion = 1/18 #glide ratio 1/(L/D) - middle of range for commercial aircraft turbofans due to worse aerodynamics of LHE aircaft compared to conventional
@@ -198,6 +201,20 @@ kieg = 0.347
 RC = 6800 #km
 
 mOE_s = 62300 #kg
+
+S_human = 1.8 #m^2 (Paper)
+
+k_human = 58 #w/m^2 (Paper)
+
+Q_ppax = S_human * k_human # W
+
+Q_lhi = 16817.7 # W Wärme aufnahme des LH
+
+
+
+
+
+
 
 
 

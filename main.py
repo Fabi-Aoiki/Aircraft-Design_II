@@ -231,6 +231,24 @@ print(f"Hydraulics and pneumatics Weight nach Thorenbeck Kapitel 8 = {Whp} [kg]"
 Wel = Airframe_service_etc_Thorenbeck.Calc_Wel()
 print(f"Electrical Weight nach Thorenbeck Kapitel 8 = {Wel} [kg]")
 
+WAC = Airframe_service_etc_Thorenbeck.Calc_Weight_AC()
+print(f"A.C. Weight nach Thorenbeck Kapitel 8 inklusive korrektur = {WAC} [kg]")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

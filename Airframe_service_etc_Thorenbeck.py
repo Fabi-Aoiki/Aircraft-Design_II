@@ -3,7 +3,7 @@ import constants as con
 import pandas as pd
 import math
 import isa
-import weight_estimation as we
+
 
 def Calc_Wieg():
     kieg = con.kieg
@@ -64,3 +64,27 @@ def Calc_Wfurn(): # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
     W_furn = W_furn_1 + W_furn_2 + W_furn_3 + W_furn_4 + W_furn_5 + W_furn_6 + W_furn_7 + W_furn_8 + W_furn_9 + W_furn_10
 
     return(W_furn)
+
+
+def Calc_Weight_AC_Thoren():
+    W_AC_T = 14 * con.l_cab**(1.28)
+    return(W_AC_T)
+
+def Calc_Weight_AC():
+    W_T = Calc_Weight_AC_Thoren()
+
+    Q_p = con.Q_ppax * con.pax_s
+    Q_lh = con.Q_lhi
+
+    fac = (Q_p - Q_lh) / Q_p # Correction Factor through cooling by LH
+
+    W_AC = W_T *fac
+
+    return(W_AC)
+
+print(Calc_Weight_AC())
+
+
+
+
+
