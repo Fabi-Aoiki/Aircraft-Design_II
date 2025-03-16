@@ -304,4 +304,6 @@ ser = pd.Series(data=d, index=['WS', 'v_s', 'v_m', 'AR', 'taper', 'Mto', 'sweep'
 ser.to_excel('values.xlsx', sheet_name='Calc')
 
 
+
+
 #Main Longer
