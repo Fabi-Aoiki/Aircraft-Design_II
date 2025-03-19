@@ -43,25 +43,28 @@ def Calc_Wfurn(): # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
 
     W_furn_3 = 113.4 + 29.5 # 1 x main meal galley + 1 x coffee bar
 
+    W_furn_4 = 136 * 7 # mass per toilet x amount of toilets
+
     S_cf = 200 # m^2, muss noch nachgesehen werden
-    W_furn_4 = 0.94 * S_cf**(1.15)
+    W_furn_5 = 0.94 * S_cf**(1.15)
 
     V_pc = 200 # m^3, muss noch nachgesehen werden
     V_ch = 200 # m^3, muss noch nachgesehen werden
-    W_furn_5 = 3.69 * (V_pc + V_ch)**(1.14)
+    W_furn_6 = 3.69 * (V_pc + V_ch)**(1.14)
 
-    W_furn_6 = 1.28 * V_ch
+    W_furn_7 = 1.28 * V_ch
 
-    W_furn_7 = 0 # kein convertible
+    W_furn_8 = 0 # kein convertible
 
-    W_furn_8 = 18.1 + 1.09 * 276 # 276 pax
+    W_furn_9 = 18.1 + 1.09 * 276 # 276 pax
 
     Wto = con.Wto_stretch/9.806
-    W_furn_9 = 0.0030 * Wto
+    W_furn_10 = 0.0030 * Wto
 
-    W_furn_10 = 0.453 * (276 + 6 + 2) # pax + stewards + pilots
+    W_furn_11 = 0.453 * (276 + 6 + 2) # pax + stewards + pilots
 
-    W_furn = W_furn_1 + W_furn_2 + W_furn_3 + W_furn_4 + W_furn_5 + W_furn_6 + W_furn_7 + W_furn_8 + W_furn_9 + W_furn_10
+    W_furn = W_furn_1 + W_furn_2 + W_furn_3 + W_furn_4 + W_furn_5 + W_furn_6 + W_furn_7 + W_furn_8 + W_furn_9 + \
+    W_furn_10 + W_furn_11
 
     return(W_furn)
 
