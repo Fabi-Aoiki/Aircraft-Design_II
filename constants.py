@@ -133,7 +133,7 @@ Lamda_12 = 18.55 #Sweep mittellinie
 
 const_kst = 9.06*10**(-4)#Kosnt in kst
 
-vD = 200#Georg macht das
+vD = 200.6 # m/s, Georg hat das gerechnet
 kb = 1.0 #Krakträger Wing
 
 cons_Wtef = 2.706 #Jaaaa
