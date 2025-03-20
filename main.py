@@ -192,6 +192,17 @@ print("Minimum Bat Weight:", W_Bat)
 
 
 #Weights Calculations######################################################################################################
+W_FC_Stack = W_fcStackBase 
+print(f"FC Stuff {W_FC_Stack} [kg]")
+
+W_FC_Sys = W_sys
+print(f"FC Stuff {W_FC_Sys} [kg]")
+
+W_FC_cool = W_cool
+print(f"FC Stuff {W_FC_cool} [kg]")
+
+W_FC_Bat = W_Bat
+print(f"FC Stuff {W_FC_Bat} [kg]")
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
