@@ -84,10 +84,3 @@ def Calc_Weight_AC():
     W_AC = W_T *fac
 
     return(W_AC)
-
-print(Calc_Weight_AC())
-
-
-
-
-
