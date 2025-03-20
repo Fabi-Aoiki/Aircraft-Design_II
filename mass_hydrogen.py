@@ -1,1 +1,0 @@
-# This script has been created to calculate the masses of the hydrogen systems.
