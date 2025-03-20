@@ -210,7 +210,7 @@ M_Ww = Moment(Ww*2,34.6,2.46)
 
 W_tail = Empenage_thorenbeck.Calc_W_tail()
 print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
-M_Tail = Moment(W_tail,50)
+M_Tail = Moment(W_tail,59.437,5.88)
 
 W_fus = Fuselage_Thorenbeck.Calc_fus()
 print(f"Fus Weight nach Thorenbeck Kapitel 8 + Apendix b d = {W_fus} [kg]")
@@ -227,6 +227,8 @@ print(f"Control Weight nach Thorenbeck Kapitel 8 = {W_control} [kg]")
 
 W_nacel = Engines_Thorenbeck.Calc_Wn()
 print(f"Nacel Weight nach Thorenbeck Kapitel 8 = {W_nacel} [kg]")
+M_Nac_Front = Moment(W_nacel/2,32.646,2.459)
+M_Nac_Back = Moment(W_nacel/2,35.822,2.459)
 
 W_engins = Engines_Thorenbeck.Calc_We()
 print(f"Engine Weight nach Thorenbeck Kapitel 8 = {W_engins} [kg]")
