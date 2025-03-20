@@ -206,16 +206,15 @@ print(f"FC Stuff {W_FC_Bat} [kg]")
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
-M_Ww = Moment(Ww,10,-5)
+M_Ww = Moment(Ww*2,34.6,2.46)
 
 W_tail = Empenage_thorenbeck.Calc_W_tail()
 print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
-Moment(W_tail,50)
-
+M_Tail = Moment(W_tail,50)
 
 W_fus = Fuselage_Thorenbeck.Calc_fus()
 print(f"Fus Weight nach Thorenbeck Kapitel 8 + Apendix b d = {W_fus} [kg]")
-Moment(W_fus,25,2)
+M_fus = Moment(W_fus,28.215,0.1)
 
 W_Nose_Gear = Under_Thorenbeck.Calc_under_Nose()
 print(f"Nose Gear Weifght nach Thorenbeck Kapitel 8 = {W_Nose_Gear} [kg]")
