@@ -45,14 +45,19 @@ def Calc_Wfurn(): # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
 
     W_furn_4 = 136 * 7 # mass per toilet x amount of toilets
 
-    S_cf = 200 # m^2, muss noch nachgesehen werden
+    S_cf = 183.95 # m^2, measured from CAD
     W_furn_5 = 0.94 * S_cf**(1.15)
 
-    V_pc = 200 # m^3, muss noch nachgesehen werden
-    V_ch = 200 # m^3, muss noch nachgesehen werden
-    W_furn_6 = 3.69 * (V_pc + V_ch)**(1.14)
+    # V_pc = 323 # m^3, measured from CAD
+    V_ch_xp = 6.8*11 # m^3, measured from CAD
+    # V_ch_xc = 6.8*21 # m^3, measured from CAD
+    # W_furn_6 = 3.69 * (V_pc + V_ch_xc)**(1.14)
 
-    W_furn_7 = 1.28 * V_ch
+    W_furn_6 = 1000 # kg, Eigeninitiative
+
+    print(W_furn_6)
+
+    W_furn_7 = 1.28 * V_ch_xp
 
     W_furn_8 = 0 # kein convertible
 
@@ -67,6 +72,8 @@ def Calc_Wfurn(): # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
     W_furn_10 + W_furn_11
 
     return(W_furn)
+
+Calc_Wfurn()
 
 
 def Calc_Weight_AC_Thoren():
@@ -84,3 +91,6 @@ def Calc_Weight_AC():
     W_AC = W_T *fac
 
     return(W_AC)
+
+
+weight_insulation = 2000 # kg für Insulierung
