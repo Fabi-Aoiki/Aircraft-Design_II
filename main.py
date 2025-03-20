@@ -28,6 +28,7 @@ import Under_Thorenbeck
 import Contro_Thorenbeck
 import Engines_Thorenbeck
 import Airframe_service_etc_Thorenbeck
+import Seating_Thorenbeck
 import pandas as pd
 
 
@@ -205,10 +206,11 @@ W_fus = Fuselage_Thorenbeck.Calc_fus()
 print(f"Fus Weight nach Thorenbeck Kapitel 8 + Apendix b d = {W_fus} [kg]")
 Moment(W_fus,25,2)
 
-W_under = Under_Thorenbeck.Calc_under()
-print(f"Under Weifght nach Thorenbeck Kapitel 8 = {W_under} [kg]")
+W_Nose_Gear = Under_Thorenbeck.Calc_under_Nose()
+print(f"Nose Gear Weifght nach Thorenbeck Kapitel 8 = {W_Nose_Gear} [kg]")
 
-Moment(W_under,10,-2)
+W_Main_Gear = Under_Thorenbeck.Calc_under_Main()
+print(f"Main Gear Weifght nach Thorenbeck Kapitel 8 = {W_Main_Gear} [kg]")
 
 W_control = Contro_Thorenbeck.Calc_Wsc()
 print(f"Control Weight nach Thorenbeck Kapitel 8 = {W_control} [kg]")
@@ -234,6 +236,11 @@ print(f"Furniture Weight nach Thorenbeck Kapitel 8 = {Wfur} [kg]")
 WAC = Airframe_service_etc_Thorenbeck.Calc_Weight_AC()
 print(f"A.C. Weight nach Thorenbeck Kapitel 8 inklusive korrektur = {WAC} [kg]")
 
+W_seat_econ = Seating_Thorenbeck.Calc_Weight_econ()
+print(f"Economy sitze nach Recaro {W_seat_econ} [kg]")
+
+W_seat_buis = Seating_Thorenbeck.Calc_Weight_Buisness()
+print(f"Buisness sitze nach Recaro {W_seat_buis} [kg]")
 
 
 
