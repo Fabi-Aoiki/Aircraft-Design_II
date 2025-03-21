@@ -28,7 +28,7 @@ def Calc_Wel(): #Berechnung nach Formel 8-40, Berechnung Electrical, Annahme üb
     
     Wto = con.Wto_stretch/9.806
     Wel = 0.02 * Wto + 181 #kg
-
+    
     return(Wel)
 
 

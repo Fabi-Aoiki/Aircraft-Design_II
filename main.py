@@ -240,12 +240,15 @@ M_Eng_Back = Moment(W_engins/2,35.822-1,2.459)
 
 Wieg = Airframe_service_etc_Thorenbeck.Calc_Wieg()
 print(f"Instruments etc. Weight nach Thorenbeck Kapitel 8 = {Wieg} [kg]")
+M_Ieg = Moment(Wieg,7,1) # Educated Guess
 
 Whp = Airframe_service_etc_Thorenbeck.Calc_Whp()
 print(f"Hydraulics and pneumatics Weight nach Thorenbeck Kapitel 8 = {Whp} [kg]")
+M_Hp = Moment(Whp,40.867,1.229)
 
 Wel = Airframe_service_etc_Thorenbeck.Calc_Wel()
 print(f"Electrical Weight nach Thorenbeck Kapitel 8 = {Wel} [kg]")
+M_El = Moment(Wel,0,0)
 
 Wfur = Airframe_service_etc_Thorenbeck.Calc_Wfurn() # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
 print(f"Furniture Weight nach Thorenbeck Kapitel 8 = {Wfur} [kg]")
