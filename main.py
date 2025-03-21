@@ -279,12 +279,12 @@ M_Seat_Busi = Moment(W_seat_buis,13.658,0.5)
 x_CoG = Momenten_Summe['Mom_x'] / Momenten_Summe['Weights']
 z_CoG = Momenten_Summe['Mom_z'] / Momenten_Summe['Weights']
 
-print("x_CoG: " + str(x_CoG))
-print("z_CoG: " + str(z_CoG))
+print(f"Center of Gravity X:{x_CoG * 1000} [mm]")
+print(f"Center of Gravity Z:{z_CoG * 1000} [mm]")
 
 
-print(Momenten_Summe)
-print(Momenten_liste)
+#print(Momenten_Summe)
+#print(Momenten_liste)
 
 # "Weights" : [],
 #     "Mom_x" : [],
@@ -321,8 +321,10 @@ df_1 = pd.DataFrame({'Weights': Momenten_Summe['Weights'],
         'Momente_X': Momenten_Summe['Mom_x'],
         'Momente_Z': Momenten_Summe['Mom_z'],
         'Momente_y': Momenten_Summe['Mom_y'],
+        'Center_X': x_CoG,
+        'Center_Z': z_CoG 
         },
-        index=(10,20,30,40)
+        index=(10,20,30,40,50,60)
     )  
 
 
