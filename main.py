@@ -218,12 +218,15 @@ M_fus = Moment(W_fus,28.215,0.1)
 
 W_Nose_Gear = Under_Thorenbeck.Calc_under_Nose()
 print(f"Nose Gear Weifght nach Thorenbeck Kapitel 8 = {W_Nose_Gear} [kg]")
+M_Nose_Gear = Moment(W_Nose_Gear,5,-4)
 
 W_Main_Gear = Under_Thorenbeck.Calc_under_Main()
 print(f"Main Gear Weifght nach Thorenbeck Kapitel 8 = {W_Main_Gear} [kg]")
+M_Main_Gear = Moment(W_Main_Gear,36.765,-4)
 
 W_control = Contro_Thorenbeck.Calc_Wsc()
 print(f"Control Weight nach Thorenbeck Kapitel 8 = {W_control} [kg]")
+M_sc = Moment(W_control,38.382,2.459)
 
 W_nacel = Engines_Thorenbeck.Calc_Wn()
 print(f"Nacel Weight nach Thorenbeck Kapitel 8 = {W_nacel} [kg]")
@@ -232,6 +235,8 @@ M_Nac_Back = Moment(W_nacel/2,35.822,2.459)
 
 W_engins = Engines_Thorenbeck.Calc_We()
 print(f"Engine Weight nach Thorenbeck Kapitel 8 = {W_engins} [kg]")
+M_Eng_Front = Moment(W_engins/2,32.646-1,2.459)
+M_Eng_Back = Moment(W_engins/2,35.822-1,2.459)
 
 Wieg = Airframe_service_etc_Thorenbeck.Calc_Wieg()
 print(f"Instruments etc. Weight nach Thorenbeck Kapitel 8 = {Wieg} [kg]")
