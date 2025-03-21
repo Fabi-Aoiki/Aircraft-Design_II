@@ -252,16 +252,19 @@ M_EL = Moment(Wel,25.114,-0.5)
 
 Wfur = Airframe_service_etc_Thorenbeck.Calc_Wfurn() # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
 print(f"Furniture Weight nach Thorenbeck Kapitel 8 = {Wfur} [kg]")
+M_Fur = Moment(Wfur,29.893,1)
 
 WAC = Airframe_service_etc_Thorenbeck.Calc_Weight_AC()
 print(f"A.C. Weight nach Thorenbeck Kapitel 8 inklusive korrektur = {WAC} [kg]")
-M_AC = Moment(WAC,0,0)
+M_AC = Moment(WAC,21,-1.25)
 
 W_seat_econ = Seating_Thorenbeck.Calc_Weight_econ()
 print(f"Economy sitze nach Recaro {W_seat_econ} [kg]")
+M_Seat_Econ = Moment(W_seat_econ,37.814,0.5)
 
 W_seat_buis = Seating_Thorenbeck.Calc_Weight_Buisness()
 print(f"Buisness sitze nach Recaro {W_seat_buis} [kg]")
+M_Seat_Busi = Moment(W_seat_buis,13.658,0.5)
 
 
 
