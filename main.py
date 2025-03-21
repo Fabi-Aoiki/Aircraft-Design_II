@@ -282,6 +282,10 @@ z_CoG = Momenten_Summe['Mom_z'] / Momenten_Summe['Weights']
 print(f"Center of Gravity X:{x_CoG * 1000} [mm]")
 print(f"Center of Gravity Z:{z_CoG * 1000} [mm]")
 
+W_Take_off = Momenten_Summe['Weights'] + con.m_fStr + 31220
+print(f"Mass Take off new:{W_Take_off} [kg]")
+
+
 
 #print(Momenten_Summe)
 #print(Momenten_liste)
