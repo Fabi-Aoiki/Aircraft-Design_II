@@ -276,7 +276,8 @@ print(f"Buisness sitze nach Recaro {W_seat_buis} [kg]")
 M_Seat_Busi = Moment(W_seat_buis,13.658,0.5)
 
 
-
+x_CoG = Momenten_Summe['Mom_x'] / Momenten_Summe['Weights']
+z_CoG = Momenten_Summe['Mom_z'] / Momenten_Summe['Weights']
 
 
 
