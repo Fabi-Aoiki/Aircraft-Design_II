@@ -29,6 +29,7 @@ import Contro_Thorenbeck
 import Engines_Thorenbeck
 import Airframe_service_etc_Thorenbeck
 import Seating_Thorenbeck
+import mass_tank_and_insu
 import pandas as pd
 
 
@@ -192,17 +193,25 @@ print("Minimum Bat Weight:", W_Bat)
 
 
 #Weights Calculations######################################################################################################
+W_Tank = mass_tank_and_insu.m_T_I_tot
+print(f"Tank and Insu {W_Tank} [kg]")
+M_Tank = Moment(W_Tank,29.893,0)
+
 W_FC_Stack = W_fcStackBase 
 print(f"FC Stuff {W_FC_Stack} [kg]")
+M_FC_Stack = Moment(W_FC_Stack,31.716,-1.25)
 
 W_FC_Sys = W_sys
 print(f"FC Stuff {W_FC_Sys} [kg]")
+M_FC_Sys = Moment(W_FC_Sys,31.716,-1.25)
 
 W_FC_cool = W_cool
 print(f"FC Stuff {W_FC_cool} [kg]")
+M_FC_Cool = Moment(W_FC_cool,29.893,-2.025)
 
 W_FC_Bat = W_Bat
 print(f"FC Stuff {W_FC_Bat} [kg]")
+M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
@@ -265,17 +274,6 @@ M_Seat_Econ = Moment(W_seat_econ,37.814,0.5)
 W_seat_buis = Seating_Thorenbeck.Calc_Weight_Buisness()
 print(f"Buisness sitze nach Recaro {W_seat_buis} [kg]")
 M_Seat_Busi = Moment(W_seat_buis,13.658,0.5)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
