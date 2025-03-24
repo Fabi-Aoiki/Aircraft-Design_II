@@ -21,13 +21,13 @@ def sigma (xn_MAC, xcg_MAC):
 
 def c_Li(AR, phi_50, M):
     phi_50 = deg_to_rad(phi_50) #degree to radiant converter
-    c_Li = np.pi * AR / (1 + np.sqrt(1 + (AR/2)**2 * (np.tan(phi_50)**2 + (1 - M**2))))
+    c_Li = np.pi * AR / (1 + np.sqrt(1 + (AR/2)**2 * ((np.tan(phi_50))**2 + (1 - M**2))))
     return c_Li
 
 def daw_danT (rTAC, M):
     b = 44.4
     b_v = 5.37
-    daw_danT = 1.75 * c_Li(cons.AR, 19, M) / (np.pi * cons.AR * (cons.taper * rTAC * 2 / b)**0.25 * (1 + b_v * 2 / b))
+    daw_danT = 1.75 * round(c_Li(cons.AR, 19, M), 3) / (np.pi * cons.AR * (cons.taper * rTAC * 2 / b)**0.25 * (1 + b_v * 2 / b))
     return daw_danT
 
 def xn_MAC (rTAC, M):
@@ -39,6 +39,7 @@ def xn_MAC (rTAC, M):
 
     xn_MAC = xACnT_MAC + rTAC/MAC * S_T/S * 0.95 * c_LT/c_L * (1 - daw_danT_)
 
-    return c_LT, c_LnT, daw_danT_, c_L, xn_MAC
+    #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
+    return xn_MAC
 
-print(xn_MAC(27.4, cons.ma_max))
+#print(xn_MAC(27.9, cons.ma_max))
