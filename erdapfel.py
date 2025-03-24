@@ -32,12 +32,12 @@ plt.plot(px, py, '-', label = "Fueling")
 # boarding
 
 m_row_econ = 6*83 + 3*12 # kg
-m_row_prem = 42*83 + 2*12 # kg
+m_row_prem = 4*83 + 2*12 # kg
 n_row = 15 + 15 + 1 + 20 # amount of rows
-x_row_51 = 50 # distance in x direction for row bla from tip
-x_row_31 = 35
-x_row_30 = 34
-x_row_15 = 20
+x_row_51 = 52.619 # distance in x direction for row bla from tip
+x_row_31 = 36.034
+x_row_30 = 34.891
+x_row_15 = 19.554
 pitch_econ = 32*2.54/100
 pitch_prem = 36*2.54/100
 
@@ -47,29 +47,48 @@ py = list()
 px.append(x_CoG_OE)
 py.append(m_OE + con.m_fStr)
 
+x_alt = x_CoG_OE
+
 for i in range(1, n_row+1):
     j = n_row - i + 1
     if j > 31:
-        x_new = (x_CoG_OE*(m_OE+con.m_fStr)+(x_row_51-pitch_econ*(i-1))*m_row_econ)/(m_OE + con.m_fStr + m_row_econ*i)
-        px.append(x_new)
-        py.append(m_OE + con.m_fStr + m_row_econ*i)
+        m_cur = m_OE + con.m_fStr + m_row_econ * i
+        x_cur = x_row_51-pitch_econ*(i-1)
+        x_neu = (x_alt*(m_cur-m_row_econ) + x_cur*m_row_econ)/ m_cur
+        px.append(x_neu)
+        py.append(m_cur)
+        x_alt = x_neu
     elif j == 31:
-        pass
+        m_cur = m_OE + con.m_fStr + m_row_econ * i
+        x_cur = x_row_31
+        x_neu = (x_alt*(m_cur-m_row_econ) + x_cur*m_row_econ)/ m_cur
+        px.append(x_neu)
+        py.append(m_cur)
+        x_alt = x_neu
     elif j < 31 and j > 15:
-        pass
+        m_cur = m_OE + con.m_fStr + m_row_econ * i
+        x_cur = x_row_30-pitch_econ*(i-1)
+        x_neu = (x_alt*(m_cur-m_row_econ) + x_cur*m_row_econ)/ m_cur
+        px.append(x_neu)
+        py.append(m_cur)
+        x_alt = x_neu
     elif j <= 15:
-        pass
+        m_cur = m_OE + con.m_fStr + m_row_econ * 36 + m_row_prem*(i-36)
+        x_cur = x_row_15-pitch_prem*(i-1)
+        x_neu = (x_alt*(m_cur-m_row_econ) + x_cur*m_row_econ)/ m_cur
+        px.append(x_neu)
+        py.append(m_cur)
     else:
         print("Wrong row index reached. Please review.")
-    
-plt.plot(px, py, '-', label = "Boarding")
 
-print(py)
+plt.plot(px, py, "-", label = "Boarding")
 
 # cargo loading
 
-xmin = 20
-xmax = 40
+
+
+xmin = 27.5
+xmax = 32.5
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)
