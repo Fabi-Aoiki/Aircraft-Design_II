@@ -16,6 +16,10 @@ x = np.linspace(28.39, 30.35, 100)
 y = 553928 / (34.828 - x)
 plt.plot(x, y, "-", label = "Max Nose Gear Load")
 
+    # min nose gear load
+
+plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load")
+
 # fueling
 
 px = list()
