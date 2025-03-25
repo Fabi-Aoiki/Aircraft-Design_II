@@ -14,11 +14,11 @@ m_OE = main.Momenten_Summe['Weights']
 
 x = np.linspace(28.39, 30.35, 100)
 y = 553928 / (34.828 - x)
-plt.plot(x, y, "-", label = "Max Nose Gear Load")
+plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = ":")
 
     # min nose gear load
 
-plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load")
+plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
 # fueling
 
@@ -30,7 +30,7 @@ py.append(m_OE)
 px.append(x_CoG_OE)
 py.append(m_OE + con.m_fStr)
 
-plt.plot(px, py, '-', label = "Fueling")
+plt.plot(px, py, '-', label = "Fueling", color = "red")
 
 # boarding
 
@@ -78,7 +78,7 @@ for i in range(len(x_row)):
     x_old = x_new
     m_old = m_new
 
-plt.plot(px, py, "-", label = "Boarding")
+plt.plot(px, py, "-", label = "Boarding", color = "green")
 
 # cargo loading
 
@@ -106,12 +106,12 @@ for i in range(len(x_ld)):
     x_old = x_new
     m_old = m_new
 
-plt.plot(px, py, "-", label = "Cargo Loading")
+plt.plot(px, py, "-", label = "Cargo Loading", color = "blue")
 
 # plot
 
-xmin = 27.5
-xmax = 32.5
+xmin = 28.0
+xmax = 34.0
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)
@@ -145,11 +145,11 @@ x_CoG_TO = x_new
 
 x = np.linspace(28.39, 30.35, 100)
 y = 553928 / (34.828 - x)
-plt.plot(x, y, "-", label = "Max Nose Gear Load")
+plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = ":")
 
     # min nose gear load
 
-plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load")
+plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
 # unfueling
 
@@ -161,7 +161,7 @@ py.append(main.W_Take_off)
 px.append(x_CoG_TO)
 py.append(main.W_Take_off - con.m_fStr)
 
-plt.plot(px, py, '-', label = "Fueling")
+plt.plot(px, py, '-', label = "Unfueling", color = "red")
 
 # cargo unloading
 
@@ -189,7 +189,7 @@ for i in range(len(x_ld)):
     x_old = x_new
     m_old = m_new
 
-plt.plot(px, py, "-", label = "Cargo Unloading")
+plt.plot(px, py, "-", label = "Cargo Unloading", color = "blue")
 
 # disembarking
 
@@ -221,12 +221,12 @@ for i in range(len(x_row)):
     x_old = x_new
     m_old = m_new
 
-plt.plot(px, py, "-", label = "Disembarking")
+plt.plot(px, py, "-", label = "Disembarking", color = "green")
 
 # plot
 
-xmin = 27.5
-xmax = 32.5
+xmin = 28.0
+xmax = 34.0
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)
