@@ -85,7 +85,33 @@ plt.plot(px, py, "-", label = "Boarding")
 
 # cargo loading
 
+n_ld = 12
+x_ld = list()
 
+for i in range(1, n_ld+1):
+    x_ld.append(54.786-n_ld*1.536+1.536/2*i)
+
+m_cargo = 6656 # kg
+m_ld = m_cargo / n_ld
+
+m_old_it0 = m_OE + con.m_fStr + 24564
+x_old = x_neu
+
+px = [x_old]
+py = [m_old_it0]
+
+for i in range(len(x_ld)):
+    m_old = m_old_it0 + m_ld*i
+    m_new = m_old + m_ld
+    x_new = 1/m_new * (x_old * m_old + x_ld[i] * m_ld)
+    px.append(x_new)
+    py.append(m_new)
+    x_old = x_new
+    m_old = m_new
+
+plt.plot(px, py, "-", label = "Cargo Loading")
+
+# plot
 
 xmin = 27.5
 xmax = 32.5
