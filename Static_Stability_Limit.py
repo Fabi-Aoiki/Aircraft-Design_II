@@ -7,7 +7,8 @@ xACnT_MAC_08 = 0.25 - 0.1 - 0.05 + 0.055 #Shift due to MACH number 0.8
 MAC = cons.MAC
 S_T = 29.4
 S = 197.5
-rTAC=25.670
+#rTAC=25.670
+rTAC=29.670
 
 def deg_to_rad(deg):
     rad = np.pi / 180 * deg

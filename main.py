@@ -193,6 +193,8 @@ print("Minimum Bat Weight:", W_Bat)
 
 
 #Weights Calculations######################################################################################################
+#Change on 27.03.25 Wing 4 Meter to the front
+
 W_Tank = mass_tank_and_insu.m_T_I_tot
 print(f"Tank and Insu {W_Tank} [kg]")
 M_Tank = Moment(W_Tank,29.893,0)
@@ -215,7 +217,7 @@ M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
-M_Ww = Moment(Ww*2,34.6,2.46)
+M_Ww = Moment(Ww*2,34.6 - 4,2.46) #Creo distace old 9893.39999999999964
 
 W_tail = Empenage_thorenbeck.Calc_W_tail()
 print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
@@ -239,13 +241,13 @@ M_sc = Moment(W_control,38.382,2.459)
 
 W_nacel = Engines_Thorenbeck.Calc_Wn()
 print(f"Nacel Weight nach Thorenbeck Kapitel 8 = {W_nacel} [kg]")
-M_Nac_Front = Moment(W_nacel/2,32.646,2.459)
-M_Nac_Back = Moment(W_nacel/2,35.822,2.459)
+M_Nac_Front = Moment(W_nacel/2,32.646 - 4,2.459)
+M_Nac_Back = Moment(W_nacel/2,35.822 - 4,2.459)
 
 W_engins = Engines_Thorenbeck.Calc_We()
 print(f"Engine Weight nach Thorenbeck Kapitel 8 = {W_engins} [kg]")
-M_Eng_Front = Moment(W_engins/2,32.646-1,2.459)
-M_Eng_Back = Moment(W_engins/2,35.822-1,2.459)
+M_Eng_Front = Moment(W_engins/2,31.646 - 4,2.459)
+M_Eng_Back = Moment(W_engins/2,34.822 - 4,2.459)
 
 Wieg = Airframe_service_etc_Thorenbeck.Calc_Wieg()
 print(f"Instruments etc. Weight nach Thorenbeck Kapitel 8 = {Wieg} [kg]")
@@ -343,4 +345,96 @@ ser.to_excel('values.xlsx', sheet_name='Calc')
 
 
 
-#Main Longer
+#Before Chnages on 27.03.25
+"""W_Tank = mass_tank_and_insu.m_T_I_tot
+print(f"Tank and Insu {W_Tank} [kg]")
+M_Tank = Moment(W_Tank,29.893,0)
+
+W_FC_Stack = W_fcStackBase 
+print(f"FC Stuff {W_FC_Stack} [kg]")
+M_FC_Stack = Moment(W_FC_Stack,31.716,-1.25)
+
+W_FC_Sys = W_sys
+print(f"FC Stuff {W_FC_Sys} [kg]")
+M_FC_Sys = Moment(W_FC_Sys,31.716,-1.25)
+
+W_FC_cool = W_cool
+print(f"FC Stuff {W_FC_cool} [kg]")
+M_FC_Cool = Moment(W_FC_cool,29.893,-2.025)
+
+W_FC_Bat = W_Bat
+print(f"FC Stuff {W_FC_Bat} [kg]")
+M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
+
+Ww = Wing_thorenbeck.Calc_Ww()
+print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
+M_Ww = Moment(Ww*2,34.6,2.46)
+
+W_tail = Empenage_thorenbeck.Calc_W_tail()
+print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
+M_Tail = Moment(W_tail,59.437,5.88)
+
+W_fus = Fuselage_Thorenbeck.Calc_fus()
+print(f"Fus Weight nach Thorenbeck Kapitel 8 + Apendix b d = {W_fus} [kg]")
+M_fus = Moment(W_fus,28.215,0.1)
+
+W_Nose_Gear = Under_Thorenbeck.Calc_under_Nose()
+print(f"Nose Gear Weifght nach Thorenbeck Kapitel 8 = {W_Nose_Gear} [kg]")
+M_Nose_Gear = Moment(W_Nose_Gear,5,-4)
+
+W_Main_Gear = Under_Thorenbeck.Calc_under_Main()
+print(f"Main Gear Weifght nach Thorenbeck Kapitel 8 = {W_Main_Gear} [kg]")
+M_Main_Gear = Moment(W_Main_Gear,36.765,-4)
+
+W_control = Contro_Thorenbeck.Calc_Wsc()
+print(f"Control Weight nach Thorenbeck Kapitel 8 = {W_control} [kg]")
+M_sc = Moment(W_control,38.382,2.459)
+
+W_nacel = Engines_Thorenbeck.Calc_Wn()
+print(f"Nacel Weight nach Thorenbeck Kapitel 8 = {W_nacel} [kg]")
+M_Nac_Front = Moment(W_nacel/2,32.646,2.459)
+M_Nac_Back = Moment(W_nacel/2,35.822,2.459)
+
+W_engins = Engines_Thorenbeck.Calc_We()
+print(f"Engine Weight nach Thorenbeck Kapitel 8 = {W_engins} [kg]")
+M_Eng_Front = Moment(W_engins/2,32.646-1,2.459)
+M_Eng_Back = Moment(W_engins/2,35.822-1,2.459)
+
+Wieg = Airframe_service_etc_Thorenbeck.Calc_Wieg()
+print(f"Instruments etc. Weight nach Thorenbeck Kapitel 8 = {Wieg} [kg]")
+M_IEG = Moment(Wieg,7,1) # Educated Guess
+
+Whp = Airframe_service_etc_Thorenbeck.Calc_Whp()
+print(f"Hydraulics and pneumatics Weight nach Thorenbeck Kapitel 8 = {Whp} [kg]")
+M_HP = Moment(Whp,40.867,1.229)
+
+Wel = Airframe_service_etc_Thorenbeck.Calc_Wel()
+print(f"Electrical Weight nach Thorenbeck Kapitel 8 = {Wel} [kg]")
+M_EL = Moment(Wel,25.114,-0.5)
+
+Wfur = Airframe_service_etc_Thorenbeck.Calc_Wfurn() # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
+print(f"Furniture Weight nach Thorenbeck Kapitel 8 = {Wfur} [kg]")
+M_Fur = Moment(Wfur,29.893,1)
+
+WAC = Airframe_service_etc_Thorenbeck.Calc_Weight_AC()
+print(f"A.C. Weight nach Thorenbeck Kapitel 8 inklusive korrektur = {WAC} [kg]")
+M_AC = Moment(WAC,21,-1.25)
+
+W_seat_econ = Seating_Thorenbeck.Calc_Weight_econ()
+print(f"Economy sitze nach Recaro {W_seat_econ} [kg]")
+M_Seat_Econ = Moment(W_seat_econ,37.814,0.5)
+
+W_seat_buis = Seating_Thorenbeck.Calc_Weight_Buisness()
+print(f"Buisness sitze nach Recaro {W_seat_buis} [kg]")
+M_Seat_Busi = Moment(W_seat_buis,13.658,0.5)
+
+
+x_CoG = Momenten_Summe['Mom_x'] / Momenten_Summe['Weights']
+z_CoG = Momenten_Summe['Mom_z'] / Momenten_Summe['Weights']
+
+print(f"Center of Gravity X:{x_CoG * 1000} [mm]")
+print(f"Center of Gravity Z:{z_CoG * 1000} [mm]")
+
+W_Take_off = Momenten_Summe['Weights'] + con.m_fStr + 31220
+print(f"Mass Take off new:{W_Take_off} [kg]")
+"""
