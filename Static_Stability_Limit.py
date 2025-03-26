@@ -56,4 +56,4 @@ def xn_MAC_Mach_08 (rTAC, M):
     #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
     return xn_MAC_08
 
-print(xn_MAC(27.9, cons.ma_max))
+# print(xn_MAC(27.9, cons.ma_max))

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import main
 import constants as con
 import numpy as np
-import Static_Stability_Limit
+import Static_Stability_Limit as ssl
 
 
 # function x_CoG to x_CoG_MAC / MAC
@@ -12,6 +12,7 @@ def xCOG_percMAC(x_CoG):
     MAC = con.MAC
     x_CoG_MAC = x_CoG - x_MAC
     percMAC = x_CoG_MAC / MAC * 100
+    return percMAC
 
 
 
@@ -26,19 +27,27 @@ m_OE = main.Momenten_Summe['Weights']
 
 x = np.linspace(28.39, 30.35, 100)
 y = 553928 / (34.828 - x)
+
+# for i in range(len(x)):
+#     x[i] = xCOG_percMAC(x[i])
+
+# print(x)
+
 plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = ":")
 
     # min nose gear load
 
 plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
-Static_Stability_Limit.xn_MAC(27.9, con.ma_max)    # neutral point
+    # neutral point
 
-pass # 40.8 %
+# x = ssl.xn_MAC(27.9, con.ma_max)*100
+# plt.plot([x, x], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
 
-Static_Stability_Limit.xn_MAC_Mach_08(27.9, con.ma_max) #AC 08
+    # AC Mach 0.8
 
-pass # blabla
+# ssl.xn_MAC_Mach_08(27.9, con.ma_max)
+
 
 # fueling
 
