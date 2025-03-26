@@ -7,6 +7,7 @@ xACnT_MAC_08 = 0.25 - 0.1 - 0.05 + 0.055 #Shift due to MACH number 0.8
 MAC = cons.MAC
 S_T = 29.4
 S = 197.5
+rTAC=25.670
 
 def deg_to_rad(deg):
     rad = np.pi / 180 * deg
@@ -56,4 +57,6 @@ def xn_MAC_Mach_08 (rTAC, M):
     #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
     return xn_MAC_08
 
-# print(xn_MAC(27.9, cons.ma_max))
+
+
+print(xn_MAC(rTAC, cons.ma_max))
