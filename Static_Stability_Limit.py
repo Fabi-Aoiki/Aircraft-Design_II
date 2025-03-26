@@ -2,6 +2,8 @@ import constants as cons
 import numpy as np
 
 xACnT_MAC = 0.25 - 0.1 - 0.05
+xACnT_MAC_08 = 0.25 - 0.1 - 0.05 + 0.055 #Shift due to MACH number 0.8
+
 MAC = cons.MAC
 S_T = 29.4
 S = 197.5
@@ -41,5 +43,17 @@ def xn_MAC (rTAC, M):
 
     #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
     return xn_MAC
+
+def xn_MAC_Mach_08 (rTAC, M):
+
+    c_LT = c_Li(cons.AR_h, 20, M)
+    c_LnT = c_Li(cons.AR, 19, M)
+    daw_danT_ = daw_danT(rTAC, M)
+    c_L = c_LnT * (1 + c_LT/c_LnT * S_T/S * 0.95 * (1 - daw_danT_))
+
+    xn_MAC_08 = xACnT_MAC_08 + rTAC/MAC * S_T/S * 0.95 * c_LT/c_L * (1 - daw_danT_)
+
+    #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
+    return xn_MAC_08
 
 print(xn_MAC(27.9, cons.ma_max))

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import main
 import constants as con
 import numpy as np
+import Static_Stability_Limit
 
 
 # function x_CoG to x_CoG_MAC / MAC
@@ -31,11 +32,11 @@ plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = "
 
 plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
-    # neutral point
+Static_Stability_Limit.xn_MAC(27.9, con.ma_max)    # neutral point
 
 pass # 40.8 %
 
-    # AC Mach 0.8
+Static_Stability_Limit.xn_MAC_Mach_08(27.9, con.ma_max) #AC 08
 
 pass # blabla
 
