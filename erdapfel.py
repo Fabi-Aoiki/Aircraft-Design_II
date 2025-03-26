@@ -3,6 +3,17 @@ import main
 import constants as con
 import numpy as np
 
+
+# function x_CoG to x_CoG_MAC / MAC
+
+def xCOG_percMAC(x_CoG):
+    x_MAC = 32.660
+    MAC = con.MAC
+    x_CoG_MAC = x_CoG - x_MAC
+    percMAC = x_CoG_MAC / MAC * 100
+
+
+
 # loading phase
 
 x_CoG_OE = main.x_CoG
@@ -19,6 +30,14 @@ plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = "
     # min nose gear load
 
 plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
+
+    # neutral point
+
+pass # 40.8 %
+
+    # AC Mach 0.8
+
+pass # blabla
 
 # fueling
 

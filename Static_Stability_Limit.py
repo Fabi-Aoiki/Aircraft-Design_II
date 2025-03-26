@@ -2,7 +2,7 @@ import constants as cons
 import numpy as np
 
 xACnT_MAC = 0.25 - 0.1 - 0.05
-MAC = 4.916
+MAC = cons.MAC
 S_T = 29.4
 S = 197.5
 
@@ -42,4 +42,4 @@ def xn_MAC (rTAC, M):
     #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
     return xn_MAC
 
-#print(xn_MAC(27.9, cons.ma_max))
+print(xn_MAC(27.9, cons.ma_max))

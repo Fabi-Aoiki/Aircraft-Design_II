@@ -219,6 +219,11 @@ W_eco_pp = 8 #kg Recaro R1
 W_bus_pp = 10 #kg Recaro R2
 
 
+# Plane Geometry for CoG
+
+MAC = 4.916
+
+
 
 
 
