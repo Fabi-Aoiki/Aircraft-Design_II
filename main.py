@@ -217,7 +217,7 @@ M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
-M_Ww = Moment(Ww*2,34.6 - 4,2.46) #Creo distace old 9893.39999999999964
+M_Ww = Moment(Ww*2,34.6 - 3,2.46) #Creo distace old 9893.39999999999964
 
 W_tail = Empenage_thorenbeck.Calc_W_tail()
 print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
@@ -241,13 +241,13 @@ M_sc = Moment(W_control,38.382,2.459)
 
 W_nacel = Engines_Thorenbeck.Calc_Wn()
 print(f"Nacel Weight nach Thorenbeck Kapitel 8 = {W_nacel} [kg]")
-M_Nac_Front = Moment(W_nacel/2,32.646 - 4,2.459)
-M_Nac_Back = Moment(W_nacel/2,35.822 - 4,2.459)
+M_Nac_Front = Moment(W_nacel/2,32.646 - 3,2.459)
+M_Nac_Back = Moment(W_nacel/2,35.822 - 3,2.459)
 
 W_engins = Engines_Thorenbeck.Calc_We()
 print(f"Engine Weight nach Thorenbeck Kapitel 8 = {W_engins} [kg]")
-M_Eng_Front = Moment(W_engins/2,31.646 - 4,2.459)
-M_Eng_Back = Moment(W_engins/2,34.822 - 4,2.459)
+M_Eng_Front = Moment(W_engins/2,31.646 - 3,2.459)
+M_Eng_Back = Moment(W_engins/2,34.822 - 3,2.459)
 
 Wieg = Airframe_service_etc_Thorenbeck.Calc_Wieg()
 print(f"Instruments etc. Weight nach Thorenbeck Kapitel 8 = {Wieg} [kg]")

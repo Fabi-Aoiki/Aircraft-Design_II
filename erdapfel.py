@@ -8,7 +8,7 @@ import Static_Stability_Limit as ssl
 # function x_CoG to x_CoG_MAC / MAC
 
 def xCOG_percMAC(x_CoG):
-    x_MAC = 32.660 - 4
+    x_MAC = 32.660 - 3
     MAC = con.MAC
     x_CoG_MAC = x_CoG - x_MAC
     percMAC = x_CoG_MAC / MAC * 100
