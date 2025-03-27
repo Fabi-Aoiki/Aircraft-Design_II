@@ -149,7 +149,7 @@ plt.plot(px, py, "-", label = "Cargo Loading", color = "blue")
 
 # plot
 
-xmin = 0
+xmin = -20
 xmax = 100
 ymin = m_OE
 ymax = main.W_Take_off
