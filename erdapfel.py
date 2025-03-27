@@ -8,12 +8,11 @@ import Static_Stability_Limit as ssl
 # function x_CoG to x_CoG_MAC / MAC
 
 def xCOG_percMAC(x_CoG):
-    x_MAC = 32.660
+    x_MAC = 32.660 - 4
     MAC = con.MAC
     x_CoG_MAC = x_CoG - x_MAC
     percMAC = x_CoG_MAC / MAC * 100
     return percMAC
-
 
 
 # loading phase
@@ -28,21 +27,21 @@ m_OE = main.Momenten_Summe['Weights']
 x = np.linspace(28.39, 30.35, 100)
 y = 553928 / (34.828 - x)
 
-# for i in range(len(x)):
-#     x[i] = xCOG_percMAC(x[i])
-
-# print(x)
+for i in range(len(x)):
+    x[i] = xCOG_percMAC(x[i])
 
 plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = ":")
 
     # min nose gear load
 
-plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
+a = xCOG_percMAC(33.34)
+
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
     # neutral point
 
-# x = ssl.xn_MAC(27.9, con.ma_max)*100
-# plt.plot([x, x], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
+x = ssl.xn_MAC(27.9, con.ma_max)*100
+plt.plot([x, x], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
 
     # AC Mach 0.8
 
@@ -58,6 +57,11 @@ px.append(x_CoG_OE)
 py.append(m_OE)
 px.append(x_CoG_OE)
 py.append(m_OE + con.m_fStr)
+
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
+
+print(px)
 
 plt.plot(px, py, '-', label = "Fueling", color = "red")
 
@@ -107,6 +111,9 @@ for i in range(len(x_row)):
     x_old = x_new
     m_old = m_new
 
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
+
 plt.plot(px, py, "-", label = "Boarding", color = "green")
 
 # cargo loading
@@ -135,18 +142,21 @@ for i in range(len(x_ld)):
     x_old = x_new
     m_old = m_new
 
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
+
 plt.plot(px, py, "-", label = "Cargo Loading", color = "blue")
 
 # plot
 
-xmin = 28.0
-xmax = 34.0
+xmin = 0
+xmax = 100
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)
 plt.ylim(ymin, ymax)
 
-plt.xlabel('x (m)')
+plt.xlabel('% MAC (-)')
 plt.ylabel('m (kg)')
 plt.title('Loading Phase')
 plt.legend()
