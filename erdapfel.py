@@ -34,18 +34,19 @@ plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = "
 
     # min nose gear load
 
-a = xCOG_percMAC(33.34)
+a = xCOG_percMAC(33.62)
 
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
     # neutral point
 
-x = ssl.xn_MAC(27.9, con.ma_max)*100
-plt.plot([x, x], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
+a = ssl.xn_MAC(27.9, con.ma_max)*100
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
 
     # AC Mach 0.8
 
-# ssl.xn_MAC_Mach_08(27.9, con.ma_max)
+a = ssl.xn_MAC_Mach_08(27.9, con.ma_max)
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = ":")
 
 
 # fueling
@@ -60,8 +61,6 @@ py.append(m_OE + con.m_fStr)
 
 for i in range(len(px)):
     px[i] = xCOG_percMAC(px[i])
-
-print(px)
 
 plt.plot(px, py, '-', label = "Fueling", color = "red")
 
@@ -102,7 +101,7 @@ for i in range(20):
 x_old = x_CoG_OE
 m_old_it0 = m_OE + con.m_fStr
 
-for i in range(len(x_row)):
+for i in range(len(x_row)-1):
     m_old = m_old_it0 + sum(m_row[50-i:])
     m_new = m_old + m_row[50-i]
     x_new = 1/m_new * (x_old * m_old + x_row[50-i] * m_row[50-i])
@@ -160,6 +159,8 @@ plt.xlabel('% MAC (-)')
 plt.ylabel('m (kg)')
 plt.title('Loading Phase')
 plt.legend()
+ax = plt.gca()
+ax.set_yticks([m_OE, m_OE + con.m_fStr, main.W_Take_off-m_cargo, main.W_Take_off])
 plt.grid(True)
 
 plt.show()
@@ -184,11 +185,17 @@ x_CoG_TO = x_new
 
 x = np.linspace(28.39, 30.35, 100)
 y = 553928 / (34.828 - x)
+
+for i in range(len(x)):
+    x[i] = xCOG_percMAC(x[i])
+
 plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = ":")
 
     # min nose gear load
 
-plt.plot([33.34, 33.34], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
+a = xCOG_percMAC(33.62)
+
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
 
 # unfueling
 
@@ -200,18 +207,17 @@ py.append(main.W_Take_off)
 px.append(x_CoG_TO)
 py.append(main.W_Take_off - con.m_fStr)
 
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
+
 plt.plot(px, py, '-', label = "Unfueling", color = "red")
 
 # cargo unloading
 
-n_ld = 12
 x_ld = list()
 
 for i in range(0, n_ld):
     x_ld.append(54.786-n_ld*1.536+1.536/2+1.536*i)
-
-m_cargo = 6656 # kg
-m_ld = m_cargo / n_ld
 
 m_old_it0 = main.W_Take_off - con.m_fStr
 x_old = x_CoG_TO
@@ -227,6 +233,9 @@ for i in range(len(x_ld)):
     py.append(m_new)
     x_old = x_new
     m_old = m_new
+
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
 
 plt.plot(px, py, "-", label = "Cargo Unloading", color = "blue")
 
@@ -260,21 +269,26 @@ for i in range(len(x_row)):
     x_old = x_new
     m_old = m_new
 
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
+
 plt.plot(px, py, "-", label = "Disembarking", color = "green")
 
 # plot
 
-xmin = 28.0
-xmax = 34.0
+xmin = -20
+xmax = 100
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)
 plt.ylim(ymin, ymax)
 
-plt.xlabel('x (m)')
+plt.xlabel('% MAC (-)')
 plt.ylabel('m (kg)')
-plt.title('Unloading Phase')
+plt.title('Loading Phase')
 plt.legend()
+ax = plt.gca()
+ax.set_yticks([m_OE, main.W_Take_off - con.m_fStr, main.W_Take_off - con.m_fStr - m_cargo, main.W_Take_off])
 plt.grid(True)
 
 plt.show()

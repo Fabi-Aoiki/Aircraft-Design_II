@@ -130,7 +130,8 @@ print(getLandingDistance())
 #plotting############################################################################################
 
 powerToWeightChosen = 20
-x = WS_Values
+x = WS_Values 
+"""
 plt.axvline(x = getWS_Max(), color='tab:grey', label='W/S Max', linestyle='dashdot')
 #plt.axvline(x = getLandingDistance(), color='darkgreen', label='Landing Distance', linestyle='dashdot')
 #plt.axvline(x = maxlandingWS, color='darkgreen', label='Landing Distance', linestyle='dashdot')
@@ -150,6 +151,7 @@ plt.ylabel('Power to Weight Ratio [W/N]')
 plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.05),ncol=3, fancybox=True, shadow=True)
 plt.grid()
 plt.show()
+"""
 
 Prop_Base = Prop_Dim_V1.Prop_size(con.P_b)
 Prop_Stretch = Prop_Dim_V1.Prop_size(con.P_s)
