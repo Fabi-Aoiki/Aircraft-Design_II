@@ -8,7 +8,7 @@ MAC = cons.MAC
 S_T = 29.4
 S = 197.5
 #rTAC=25.670
-rTAC=29.670
+rTAC=28.67 # 3 Meters
 
 def deg_to_rad(deg):
     rad = np.pi / 180 * deg

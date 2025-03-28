@@ -40,12 +40,12 @@ plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", col
 
     # neutral point
 
-a = ssl.xn_MAC(28.67, con.ma_max)*100
+a = ssl.xn_MAC(ssl.rTAC, con.ma_max)*100
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
 
     # AC Mach 0.8
 
-a = ssl.xn_MAC_Mach_08(28.67, con.ma_max)
+a = ssl.xn_MAC_Mach_08(ssl.rTAC, con.ma_max)*100
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "AC Mach 0.8", color = "gray", linestyle = ":")
 
 
@@ -196,6 +196,17 @@ plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = "
 a = xCOG_percMAC(33.62)
 
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
+
+    # neutral point
+
+a = ssl.xn_MAC(ssl.rTAC, con.ma_max)*100
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
+
+    # AC Mach 0.8
+
+a = ssl.xn_MAC_Mach_08(ssl.rTAC, con.ma_max)*100
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "AC Mach 0.8", color = "gray", linestyle = ":")
+
 
 # unfueling
 
