@@ -40,13 +40,13 @@ plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", col
 
     # neutral point
 
-a = ssl.xn_MAC(27.9-3, con.ma_max)*100
+a = ssl.xn_MAC(28.67, con.ma_max)*100
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = "--")
 
     # AC Mach 0.8
 
-a = ssl.xn_MAC_Mach_08(27.9-3, con.ma_max)
-plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Neutral Point", color = "gray", linestyle = ":")
+a = ssl.xn_MAC_Mach_08(28.67, con.ma_max)
+plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "AC Mach 0.8", color = "gray", linestyle = ":")
 
 
 # fueling
