@@ -214,7 +214,7 @@ print(f"FC Cooling {W_FC_cool} [kg]")
 M_FC_Cool = Moment(W_FC_cool,29.893,-2.025)
 
 W_FC_Bat = W_Bat
-print(f"FC Stuff {W_FC_Bat} [kg]")
+print(f"FC Battery {W_FC_Bat} [kg]")
 M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
 
 Ww = Wing_thorenbeck.Calc_Ww()
