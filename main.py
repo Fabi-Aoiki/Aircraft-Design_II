@@ -202,15 +202,15 @@ print(f"Tank and Insu {W_Tank} [kg]")
 M_Tank = Moment(W_Tank,29.893,0)
 
 W_FC_Stack = W_fcStackBase 
-print(f"FC Stuff {W_FC_Stack} [kg]")
+print(f"FC Stacks {W_FC_Stack} [kg]")
 M_FC_Stack = Moment(W_FC_Stack,31.716,-1.25)
 
 W_FC_Sys = W_sys
-print(f"FC Stuff {W_FC_Sys} [kg]")
+print(f"FC Systems {W_FC_Sys} [kg]")
 M_FC_Sys = Moment(W_FC_Sys,31.716,-1.25)
 
 W_FC_cool = W_cool
-print(f"FC Stuff {W_FC_cool} [kg]")
+print(f"FC Cooling {W_FC_cool} [kg]")
 M_FC_Cool = Moment(W_FC_cool,29.893,-2.025)
 
 W_FC_Bat = W_Bat
