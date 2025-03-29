@@ -152,7 +152,7 @@ xmin = -20
 xmax = 100
 ymin = m_OE
 ymax = main.W_Take_off
-plt.xlim(xmin, xmax)
+plt.xlim(xmin, xmax)    
 plt.ylim(ymin, ymax)
 
 plt.xlabel('% MAC (-)')
@@ -296,7 +296,7 @@ plt.ylim(ymin, ymax)
 
 plt.xlabel('% MAC (-)')
 plt.ylabel('m (kg)')
-plt.title('Loading Phase')
+plt.title('Unloading Phase')
 plt.legend()
 ax = plt.gca()
 ax.set_yticks([m_OE, main.W_Take_off - con.m_fStr, main.W_Take_off - con.m_fStr - m_cargo, main.W_Take_off])
