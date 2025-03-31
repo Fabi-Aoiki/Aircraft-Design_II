@@ -95,3 +95,6 @@ def Calc_Weight_AC():
 
 
 weight_insulation = 2000 # kg für Insulierung
+
+
+print(f" AC ol{Calc_Weight_AC_Thoren()}") 

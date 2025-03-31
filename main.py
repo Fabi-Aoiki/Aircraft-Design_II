@@ -229,11 +229,11 @@ W_fus = Fuselage_Thorenbeck.Calc_fus()
 print(f"Fus Weight nach Thorenbeck Kapitel 8 + Apendix b d = {W_fus} [kg]")
 M_fus = Moment(W_fus,28.215,0.1)
 
-W_Nose_Gear = Under_Thorenbeck.Calc_under_Main()
+W_Nose_Gear = Under_Thorenbeck.Calc_under_Main() * 2/3
 print(f"Nose Gear Weifght nach Thorenbeck Kapitel 8 = {W_Nose_Gear} [kg]")
 M_Nose_Gear = Moment(W_Nose_Gear,10,-2.8)
 
-W_Main_Gear = Under_Thorenbeck.Calc_under_Main()
+W_Main_Gear = Under_Thorenbeck.Calc_under_Main() * 2/3
 print(f"Main Gear Weifght nach Thorenbeck Kapitel 8 = {W_Main_Gear} [kg]")
 M_Main_Gear = Moment(W_Main_Gear,49.7860,-2.8)
 
