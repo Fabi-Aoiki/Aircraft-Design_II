@@ -56,8 +56,6 @@ def Calc_Wfurn(): # Berechnung 8.4.3.d nach Formel 8-44 oder nach Tabelle 8-12
 
     W_furn_6 = 1000 # kg, Eigeninitiative
 
-    print(W_furn_6)
-
     W_furn_7 = 1.28 * V_ch_xp
 
     W_furn_8 = 0 # kein convertible
