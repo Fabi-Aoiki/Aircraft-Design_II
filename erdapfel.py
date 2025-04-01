@@ -21,7 +21,7 @@ x_CoG_OE = main.x_CoG
 m_OE = main.Momenten_Summe['Weights']
 
 # limits
-
+"""
     # max nose gear load
 
 x = np.linspace(28.39, 30.35, 100)
@@ -37,7 +37,7 @@ plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = "
 a = xCOG_percMAC(33.62)
 
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
-
+"""
     # neutral point
 
 a = ssl.xn_MAC(ssl.rTAC, con.ma_max)*100
@@ -180,7 +180,7 @@ plt.show()
 x_CoG_TO = x_new
 
 # limits
-
+"""
     # max nose gear load
 
 x = np.linspace(28.39, 30.35, 100)
@@ -196,7 +196,7 @@ plt.plot(x, y, "-", label = "Max Nose Gear Load", color = "black", linestyle = "
 a = xCOG_percMAC(33.62)
 
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "Min Nose Gear Load", color = "black", linestyle = "--")
-
+"""
     # neutral point
 
 a = ssl.xn_MAC(ssl.rTAC, con.ma_max)*100
