@@ -160,7 +160,7 @@ Cor_factor_Ttail = 1.05 #NOT in Thorenbeck assumption by me.
 
 #Fus Tohrenbeck
 
-kwf = 0.32 #Nein
+kwf = 0.23 
 lt = 29.83 # m Length fus to tail 
 hf = 5.48 # m height fus
 bf = 4.5 #m with fus
