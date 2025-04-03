@@ -15,8 +15,8 @@ def Calc_fus():
     hf = con.hf
     SG = con.SG
 
-    Wf_base = kwf * (vD * (lt)/(bf + hf))**(0.5)*SG**(1.2)
-    Wf = Wf_base * (1+ 0.08 + 0.07)
+    Wf_base = kwf * np.sqrt(vD * lt/(bf + hf))*SG**(1.2)
+    Wf = Wf_base * (1 + 0.08 + 0.07)
 
     return(Wf)
 
