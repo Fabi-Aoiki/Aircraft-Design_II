@@ -208,7 +208,7 @@ a = ssl.xn_MAC_Mach_08(ssl.rTAC, con.ma_max)*100
 plt.plot([a, a], [m_OE, main.W_Take_off], "-", label = "AC Mach 0.8", color = "gray", linestyle = ":")
 
 
-# unfueling
+# fuel consumption
 
 px = list()
 py = list()
@@ -221,7 +221,7 @@ py.append(main.W_Take_off - con.m_fStr)
 for i in range(len(px)):
     px[i] = xCOG_percMAC(px[i])
 
-plt.plot(px, py, '-', label = "Unfueling", color = "red")
+plt.plot(px, py, '-', label = "Fuel Consumption", color = "red")
 
 # cargo unloading
 
@@ -251,16 +251,6 @@ for i in range(len(px)):
 plt.plot(px, py, "-", label = "Cargo Unloading", color = "blue")
 
 # disembarking
-
-m_row_econ = 6*83 + 3*12 # kg
-m_row_prem = 4*83 + 2*12 # kg
-n_row = 15 + 15 + 1 + 20 # amount of rows
-x_row_51 = 52.619 # distance in x direction for row bla from tip
-x_row_31 = 36.034
-x_row_30 = 34.891
-x_row_15 = 19.554
-pitch_econ = 32*2.54/100
-pitch_prem = 36*2.54/100
 
 px = list()
 py = list()
