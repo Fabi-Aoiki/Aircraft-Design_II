@@ -219,7 +219,7 @@ M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
 
 Ww = Wing_thorenbeck.Calc_Ww()
 print(f"Wing Weight nach Thorenbeck apendix C = {Ww} [kg]")
-M_Ww = Moment(Ww*2,34.6 - 3,2.46) #Creo distace old 9893.39999999999964
+M_Ww = Moment(Ww,34.6 - 3,2.46) #Creo distace old 9893.39999999999964
 
 W_tail = Empenage_thorenbeck.Calc_W_tail()
 print(f"Empenage Weight nach Thorenbeck Kapitel 8 = {W_tail} [kg]")
