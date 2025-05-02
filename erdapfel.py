@@ -7,6 +7,7 @@ import Static_Stability_Limit as ssl
 
 # function x_CoG to x_CoG_MAC / MAC
 
+x_MAC = 32.660 - 3
 def xCOG_percMAC(x_CoG):
     x_MAC = 32.660 - 3
     MAC = con.MAC
@@ -140,7 +141,10 @@ for i in range(len(x_row)):
 for i in range(len(px)):
     px[i] = xCOG_percMAC(px[i])
 
-plt.plot(px, py, "-", color = "green")
+plt.plot(px, py, "-", color = "green", label = "Boarding")
+
+px_bftb = px
+py_bftb = py
 
 # revert for boarding from back to front
 
@@ -150,6 +154,9 @@ for i in range(len(px)):
     px_rev[i] = (px[0] - px_rev[i])*2 + px_rev[i]
 
 plt.plot(px_rev, py, "-", color = "green")
+
+px_bbtf = px_rev
+py_bbtf = py
 
 # cargo loading
 
@@ -182,10 +189,13 @@ for i in range(len(px)):
 
 plt.plot(px, py, "-", label = "Cargo Loading", color = "blue")
 
+px_cargo = px
+py_cargo = py
+
 # plot
 
-xmin = -20
-xmax = 100
+xmin = -30
+xmax = 50
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)    
@@ -261,6 +271,12 @@ plt.plot(px, py, '-', label = "Fuel Consumption", color = "red")
 
 # cargo unloading
 
+for i in range(len(py_cargo)):
+    py_cargo[i] = py_cargo[i] - con.m_fStr
+
+plt.plot(px_cargo, py_cargo, "-", label = "Cargo Unloading", color = "blue")
+
+'''
 x_ld = list()
 
 for i in range(0, n_ld):
@@ -285,45 +301,52 @@ for i in range(len(px)):
     px[i] = xCOG_percMAC(px[i])
 
 plt.plot(px, py, "-", label = "Cargo Unloading", color = "blue")
+'''
 
 # disembarking from front to back
 
-px = list()
-py = list()
+# px = list()
+# py = list()
 
-px.append(x_new)
-py.append(m_new)
+# x_new = px_cargo[0] /100 * con.MAC + x_MAC 
+# m_new = main.W_Take_off - con.m_fStr - m_cargo
 
-x_old = x_new
-m_old_it0 = m_new 
+# px.append(x_new)
+# py.append(m_new)
 
-for i in range(len(x_row)):
-    m_old = m_old_it0 - sum(m_row[:i])
-    m_new = m_old - m_row[i]
-    x_new = 1/m_new * (x_old * m_old - x_row[i] * m_row[i])
-    px.append(x_new)
-    py.append(m_new)
-    x_old = x_new
-    m_old = m_new
+# x_old = x_new
+# m_old_it0 = m_new 
 
-for i in range(len(px)):
-    px[i] = xCOG_percMAC(px[i])
+# for i in range(len(x_row)):
+#     m_old = m_old_it0 - sum(m_row[:i])
+#     m_new = m_old - m_row[i]
+#     x_new = 1/m_new * (x_old * m_old - x_row[i] * m_row[i])
+#     px.append(x_new)
+#     py.append(m_new)
+#     x_old = x_new
+#     m_old = m_new
 
-plt.plot(px, py, "-", label = "Disembarking", color = "green")
+# for i in range(len(px)):
+#     px[i] = xCOG_percMAC(px[i])
+
+for i in range(len(py_bftb)):
+    py_bftb[i] = py_bftb[i] - m_cargo
+
+plt.plot(px_bftb, py_bftb, "-", label = "Disembarking", color = "green")
 
 # disembarking from back to front
 
-px_rev = px[::-1]
-for i in range(len(px)):
-    px_rev[i] = px_rev[i] - (px[-1] - px[0])
-    px_rev[i] = (px[0] - px_rev[i])*2 + px_rev[i]
+# px_rev = px[::-1]
+# for i in range(len(px)):
+#     px_rev[i] = px_rev[i] - (px[-1] - px[0])
+#     px_rev[i] = (px[0] - px_rev[i])*2 + px_rev[i]
 
-plt.plot(px_rev, py, "-", color = "black")
+plt.plot(px_bbtf, py_bbtf, "-", label = "Disembarking", color = "green")
 
 # plot
 
-xmin = -20
-xmax = 100
+xmin = -30
+xmax = 50
 ymin = m_OE
 ymax = main.W_Take_off
 plt.xlim(xmin, xmax)
