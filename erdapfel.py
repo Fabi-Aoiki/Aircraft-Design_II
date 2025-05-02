@@ -101,6 +101,7 @@ for i in range(20):
 x_old = x_CoG_OE
 m_old_it0 = m_OE + con.m_fStr
 
+'''
 for i in range(len(x_row)-1):
     m_old = m_old_it0 + sum(m_row[50-i:])
     m_new = m_old + m_row[50-i]
@@ -114,31 +115,41 @@ for i in range(len(px)):
     px[i] = xCOG_percMAC(px[i])
 
 plt.plot(px, py, "-", label = "Boarding", color = "green")
+'''
 
 # boarding from front to back
 
-# px = list()
-# py = list()
+px = list()
+py = list()
 
-# px.append(x_CoG_OE)
-# py.append(m_OE + con.m_fStr)
+px.append(x_CoG_OE)
+py.append(m_OE + con.m_fStr)
 
-# x_old = x_CoG_OE
-# m_old_it0 = m_OE + con.m_fStr
+x_old = x_CoG_OE
+m_old_it0 = m_OE + con.m_fStr
 
-# for i in range(len(x_row)-1):
-#     m_old = m_old_it0 + sum(m_row[i:])
-#     m_new = m_old + m_row[i]
-#     x_new = 1/m_new * (x_old * m_old + x_row[i] * m_row[i])
-#     px.append(x_new)
-#     py.append(m_new)
-#     x_old = x_new
-#     m_old = m_new
+for i in range(len(x_row)):
+    m_old = m_old_it0 + sum(m_row[:i])
+    m_new = m_old + m_row[i]
+    x_new = 1/m_new * (x_old * m_old + x_row[i] * m_row[i])
+    px.append(x_new)
+    py.append(m_new)
+    x_old = x_new
+    m_old = m_new
 
-# for i in range(len(px)):
-#     px[i] = xCOG_percMAC(px[i])
+for i in range(len(px)):
+    px[i] = xCOG_percMAC(px[i])
 
-# plt.plot(px, py, "-", color = "black")
+plt.plot(px, py, "-", color = "green")
+
+# revert for boarding from back to front
+
+px_rev = px[::-1]
+for i in range(len(px)):
+    px_rev[i] = px_rev[i] - (px[-1] - px[0])
+    px_rev[i] = (px[0] - px_rev[i])*2 + px_rev[i]
+
+plt.plot(px_rev, py, "-", color = "green")
 
 # cargo loading
 
@@ -275,7 +286,7 @@ for i in range(len(px)):
 
 plt.plot(px, py, "-", label = "Cargo Unloading", color = "blue")
 
-# disembarking
+# disembarking from front to back
 
 px = list()
 py = list()
@@ -299,6 +310,15 @@ for i in range(len(px)):
     px[i] = xCOG_percMAC(px[i])
 
 plt.plot(px, py, "-", label = "Disembarking", color = "green")
+
+# disembarking from back to front
+
+px_rev = px[::-1]
+for i in range(len(px)):
+    px_rev[i] = px_rev[i] - (px[-1] - px[0])
+    px_rev[i] = (px[0] - px_rev[i])*2 + px_rev[i]
+
+plt.plot(px_rev, py, "-", color = "black")
 
 # plot
 
