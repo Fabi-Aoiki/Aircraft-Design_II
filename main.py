@@ -201,19 +201,23 @@ W_Tank = mass_tank_and_insu.m_T_I_tot
 print(f"Tank and Insu {W_Tank} [kg]")
 M_Tank = Moment(W_Tank,29.893,0)
 
-W_FC_Stack = W_fcStackBase 
+# W_FC_Stack = W_fcStackBase
+W_FC_Stack = 5715
 print(f"FC Stacks {W_FC_Stack} [kg]")
 M_FC_Stack = Moment(W_FC_Stack,31.716,-1.25)
 
-W_FC_Sys = W_sys
+# W_FC_Sys = W_sys
+W_FC_Sys = 4184
 print(f"FC Systems {W_FC_Sys} [kg]")
 M_FC_Sys = Moment(W_FC_Sys,31.716,-1.25)
 
-W_FC_cool = W_cool
+# W_FC_cool = W_cool
+W_FC_cool = 9164
 print(f"FC Cooling {W_FC_cool} [kg]")
 M_FC_Cool = Moment(W_FC_cool,29.893,-2.025)
 
-W_FC_Bat = W_Bat
+# W_FC_Bat = W_Bat
+W_FC_Bat = 900
 print(f"FC Battery {W_FC_Bat} [kg]")
 M_FC_Bat = Moment(W_FC_Bat,28.396,-1.25)
 
