@@ -195,7 +195,7 @@ print("Minimum Bat Weight:", W_Bat)
 
 
 #Weights Calculations######################################################################################################
-#Change on 27.03.25 Wing 4 Meter to the front
+#Change on 27.03.25 Wing 4 Meter to the front (3 meters at the end)
 
 W_Tank = mass_tank_and_insu.m_T_I_tot
 print(f"Tank and Insu {W_Tank} [kg]")
