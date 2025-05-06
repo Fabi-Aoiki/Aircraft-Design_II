@@ -332,7 +332,7 @@ plt.plot(px, py, "-", label = "Cargo Unloading", color = "blue")
 for i in range(len(py_bftb)):
     py_bftb[i] = py_bftb[i] - m_cargo
 
-plt.plot(px_bftb, py_bftb, "-", label = "Disembarking", color = "green")
+plt.plot(px_bftb, py_bftb, "-", color = "green")
 
 # disembarking from back to front
 
