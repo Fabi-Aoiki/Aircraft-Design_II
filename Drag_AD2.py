@@ -1,13 +1,17 @@
 # Detailed Drag Estimation in Aircraft Design 2
 
 import math
+import constants as con
 
-# Fuselage Drag Estimation (page 12 in PDF)
+# fuselage drag estimation (page 12 in pdf)
 
+Re = 11 # reynolds number
+C_Ftu = 0.455 / (math.log10(Re))**2.58 # friction coefficient turbulent flow
 
-C_Ftu = 0.455 / (math.log10(Re))**2.58 # Friction Coefficient Turbulent Flow
+d_f = 0.5 * (con.bf + con.hf) # averaged diameter of the fuselage
+l_f = 62.7 # meter
+k_f = 2.2 * (d_f / l_f)**1.5 + 3.8 * (d_f / l_f)**3 # pressure drag factor
+k_lgb = 1/5 * k_f # penalty factor for the landing gear boxes 
 
-k_f = 2.2 * (d_f / l_f)**1.5 + 3.8 * (d_f / l_f)**3 # Pressure Drag Factor
-k_lgb = 0 # penalty factor for the landing gear boxes 
-
+S_fwet = con.SG
 c_Df = C_Ftu * (1 + k_f + k_lgb) * S_fwet / S_w # Fuselage Drag Coefficient
