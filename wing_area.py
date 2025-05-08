@@ -39,7 +39,7 @@ def wing_area(W_TO,WS):
     return round(W_TO/WS,2)
 
 def wing_area_s():
-    W_TO = cons.Wto_stretch
+    W_TO = cons.Wto
     WS = cons.WS
 
     return round(W_TO/WS,2)
