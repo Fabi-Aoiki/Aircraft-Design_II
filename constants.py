@@ -1,8 +1,8 @@
 #Basic 
 
-l_fus_s=62.7
-h_fus_s=5.5
-b_fus_s=4.5
+l_fus_s=62.7 # meter
+h_fus_s=5.5 # meter
+b_fus_s=4.5 # meter
 
 
 
