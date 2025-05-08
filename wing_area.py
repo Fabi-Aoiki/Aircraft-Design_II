@@ -35,7 +35,10 @@ dT = cons.dT_TO
 phi_25 = 0
 phi_25_deg = 0
 
-def wing_area(W_TO,WS):
+def wing_area():
+    W_TO = cons.Wto_stretch
+    WS = cons.WS
+
     return round(W_TO/WS,2)
 
 S = wing_area(W_TO,WS)
