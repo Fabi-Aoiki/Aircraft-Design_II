@@ -35,3 +35,13 @@ k_n = 2.2 * (d_n / l_n)**1.5 + 3.8 * (d_n / l_n)**3 # pressure drag factor
 
 S_nwet = d_n**2 * 3.1416 / 4 * l_n * con.N_E # wetted surface of all four nacelles
 c_Dn = C_Ftu * (1 + k_f) * S_nwet / S_w # fuselage drag coefficient
+
+
+# compressible drag estimation (page 11 in pdf)
+
+phi_25 = 21.4 * 3.1416 / 180 # sweep angle quarter cord
+M_dd = 0.758 # drag divergence Mach number
+M_inf = con.ma_stretch 
+
+DeltaM = M_inf - M_dd / math.sqrt(math.cos(phi_25))
+DeltaC_D = 0.002 * math.exp(60 * DeltaM)
