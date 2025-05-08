@@ -32,6 +32,7 @@ dt = 0  # no temperature difference Temperature(ISA) CHECK VALUE!!!!
 cd0 = 0.017 #parasitic drag
 #cd0 = 0.019 #str
 ma = 0.75  # chosen Mach number for flight CHECK VALUE!!!!
+ma_stretch = 0.785
 ma_max = 0.8 #max Mach number; used for wing dimensioning
 #ma_max = 0.785 #max speed stretch version
 #ma_max = 0.785
