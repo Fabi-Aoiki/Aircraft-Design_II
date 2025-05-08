@@ -1,3 +1,14 @@
+#Basic 
+
+l_fus_s=62.7
+h_fus_s=5.5
+b_fus_s=4.5
+
+
+
+
+
+
 #General
 Wto = 90350 * 9.806 #maxium takeoff weight base version in N
 Wf = 5782 * 9.806 #fuel weight in Newton Base Version
