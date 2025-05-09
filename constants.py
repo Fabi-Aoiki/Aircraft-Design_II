@@ -178,7 +178,7 @@ kwf = 0.23
 lt = 29.83 # m Length fus to tail 
 hf = 5.48 # m height fus
 bf = 4.5 #m with fus
-SG = 964.6 #m^2 Wetted fus
+SG = 755 #m^2 wetted fuselage area
 
 
 #Under Thorenbeck
