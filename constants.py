@@ -1,3 +1,14 @@
+#Basic 
+
+l_fus_s=62.7 # meter
+h_fus_s=5.5 # meter
+b_fus_s=4.5 # meter
+
+
+
+
+
+
 #General
 Wto = 90350 * 9.806 #maxium takeoff weight base version in N
 Wf = 5782 * 9.806 #fuel weight in Newton Base Version
@@ -21,6 +32,7 @@ dt = 0  # no temperature difference Temperature(ISA) CHECK VALUE!!!!
 cd0 = 0.017 #parasitic drag
 #cd0 = 0.019 #str
 ma = 0.75  # chosen Mach number for flight CHECK VALUE!!!!
+ma_stretch = 0.785
 ma_max = 0.8 #max Mach number; used for wing dimensioning
 #ma_max = 0.785 #max speed stretch version
 #ma_max = 0.785
@@ -157,6 +169,8 @@ k_wt = 0.64 #Nein
 
 Cor_factor_Ttail = 1.05 #NOT in Thorenbeck assumption by me. 
 
+Lambda_h = 25 # ° sweep angle (quarter line) horizontal tail wing
+Lambda_v = 25 # ° sweep angle (quarter line) vertical tail wing
 
 #Fus Tohrenbeck
 
@@ -164,7 +178,7 @@ kwf = 0.23
 lt = 29.83 # m Length fus to tail 
 hf = 5.48 # m height fus
 bf = 4.5 #m with fus
-SG = 964.6 #m^2 Wetted fus
+SG = 755 #m^2 wetted fuselage area
 
 
 #Under Thorenbeck
