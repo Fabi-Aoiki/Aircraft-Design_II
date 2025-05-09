@@ -5,6 +5,7 @@ import constants as con
 import wing_area as wa
 import Drag_Estimation as DE
 import isa
+import matplotlib.pyplot as plt
 
 # fuselage drag estimation (page 12 in pdf)
 
@@ -45,3 +46,100 @@ M_inf = con.ma_stretch
 
 DeltaM = M_inf - M_dd / math.sqrt(math.cos(phi_25))
 DeltaC_D = 0.002 * math.exp(60 * DeltaM)
+
+
+# diagram CL over CD
+
+# read values
+
+def ExtrParamTxt(filename, varname):
+    var_values = []
+    with open(filename, "r", encoding="utf-8") as f:
+        # Header-Zeile suchen
+        for line in f:
+            cols = line.split()
+            if varname in cols:
+                idx = cols.index(varname)
+                break
+        # Restdaten auslesen
+        for line in f:
+            if not line.strip() or line.lstrip().startswith("#"):
+                continue
+            vals = line.split()
+            var_values.append(float(vals[idx]))
+    return(var_values)
+
+# plot CD0 (CD_viscous) wing
+
+cd_visc_wing_list = ExtrParamTxt("CD_visc_wing.txt", "CD_viscous")
+cl_visc_wing_list = ExtrParamTxt("CD_visc_wing.txt", "CL")
+
+plt.plot(cd_visc_wing_list, cl_visc_wing_list, linestyle = "-", label = "Parasite Drag")
+
+# plot CD0 (CD_viscous) wing + htp + vtp
+
+cd_visc_all_list = ExtrParamTxt("CD_visc_all.txt", "CD_viscous")
+cl_visc_all_list = ExtrParamTxt("CD_visc_all.txt", "CL")
+
+plt.plot(cd_visc_all_list, cl_visc_all_list, linestyle = "-", label = "HTP + VTP (Par.)")
+
+# add CD0 (CDn) nacelle
+
+cd_nac_list = []
+cl_nac_list = cl_visc_all_list
+for i in range(len(cd_visc_all_list)):
+    cd_nac_list.append(cd_visc_all_list[i] + c_Dn)
+
+plt.plot(cd_nac_list, cl_nac_list, linestyle = "-", label = "Nacelle Drag")
+
+# add CD0 (CDf) fuselage
+
+cd_fus_list = []
+cl_fus_list = cl_visc_all_list
+for i in range(len(cd_visc_all_list)):
+    cd_fus_list.append(cd_visc_all_list[i] + c_Df + c_Dn)
+
+plt.plot(cd_fus_list, cl_fus_list, linestyle = "-", label = "Fuselage Drag")
+
+# add CDi (CD_induced) wing
+
+cd_indu_wing_list = ExtrParamTxt("CD_indu_wing.txt", "CD_induced")
+cl_indu_wing_list = ExtrParamTxt("CD_indu_wing.txt", "CL")
+
+for i in range(len(cd_indu_wing_list)):
+    cd_indu_wing_list[i] = cd_indu_wing_list[i] + cd_fus_list[i]
+
+plt.plot(cd_indu_wing_list, cl_indu_wing_list, linestyle = "-", label = "Induced Drag")
+
+# add CDi (CD_induced) wing + htp + vtp
+
+cd_indu_all_list = ExtrParamTxt("CD_indu_all.txt", "CD_induced")
+cl_indu_all_list = ExtrParamTxt("CD_indu_all.txt", "CL")
+
+for i in range(len(cd_indu_all_list)):
+    cd_indu_all_list[i] = cd_indu_all_list[i] + cd_fus_list[i]
+
+plt.plot(cd_indu_all_list, cl_indu_all_list, linestyle = "-", label = "Trim Drag")
+
+# add Compr Drag
+
+cd_compr_list = []
+cl_compr_list = cl_indu_all_list
+for i in range(len(cl_indu_all_list)):
+    cd_compr_list.append(cd_indu_all_list[i] + DeltaC_D)
+
+plt.plot(cd_compr_list, cl_compr_list, linestyle = "-", label = "Compr. Drag")
+
+# plot everything
+
+plt.xlim(0)
+plt.xlabel("CD")
+plt.ylabel("CL")
+plt.legend(loc='best')
+plt.grid(True)
+plt.show()
+
+
+# L/D vs CL for different flight altitudes
+
+altitudes_list = []
