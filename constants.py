@@ -169,8 +169,8 @@ k_wt = 0.64 #Nein
 
 Cor_factor_Ttail = 1.05 #NOT in Thorenbeck assumption by me. 
 
-Lambda_h = 22 # ° sweep angle (quarter line) horizontal tail wing
-Lambda_v = 35 # ° sweep angle (quarter line) vertical tail wing
+Lambda_h = 25 # ° sweep angle (quarter line) horizontal tail wing
+Lambda_v = 25 # ° sweep angle (quarter line) vertical tail wing
 
 #Fus Tohrenbeck
 
