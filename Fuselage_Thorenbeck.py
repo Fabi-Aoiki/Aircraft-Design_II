@@ -20,7 +20,7 @@ def Calc_fus():
 
     return(Wf)
 
-print(Calc_fus())
+# print(Calc_fus())
 
 
 
