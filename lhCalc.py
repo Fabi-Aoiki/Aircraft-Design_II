@@ -1,3 +1,4 @@
+import numpy as np
 
 import constants
 import math
@@ -56,7 +57,7 @@ def calcElPower(flightPhase: FlightPhase, powerToWeight: float):
         case _:
             return -1
     
-    Pmot = powerToWeight * (constants.Wto/9.806) / (constants.ntrans * nprop)
+    Pmot = powerToWeight * (constants.Wto) / (constants.ntrans * nprop) #powerToWeight ist in W/N daher muss Wto auch in N sein.
     if(flightPhase == FlightPhase.takeOff):
         print("pmot min: ", Pmot)
     if(flightPhase == FlightPhase.climb):
@@ -65,7 +66,11 @@ def calcElPower(flightPhase: FlightPhase, powerToWeight: float):
     P_elFcSys = Pmot * (TRthr + constants.P_elNonPropToMotors)
     P_elStack = P_elFcSys/0.93 #I know hardcoded is shitty, but nobody will see/needs to know
     
-    return P_elStack
+    return Pmot, P_elStack
+
+print("\nElectric Power needed based on Power/Weight during take off: ", calcElPower(0,20))
+print("\nElectric Power needed based on Power/Weight during cruise: ", calcElPower(1,20))
+print("\nElectric Power needed based on Power/Weight during climb: ", calcElPower(2,20))
 
 def calcDesignStackPower(P_elFcSys: float): #to be calculated under cruise conditions
     fcLoad = 1 - constants.oversizingFc
@@ -128,3 +133,35 @@ def calcSystemsWeight(power: float, fcLoad: float):
 def calcCoolingWeight(power: float, fcLoad: float):
     coolWei = power/1000 * interpolateCoolingWeiRel(fcLoad)
     return coolWei
+
+def calcMotorWeight(power: float):
+    kwPerkg = 16
+    motWei = power/1000 / kwPerkg
+    return motWei
+
+def calcInverterWeight(power: float):
+    kwPerkg = 19
+    invWei = power/1000 / kwPerkg
+    return invWei
+
+def calcMotorDimensions(power: float, engineNum: int):
+    refMotordia = 0.4 #in m
+    refMotorlen = 0.12 #in m
+    refMotorpw = 1400 #in kw
+    refMotorvol = refMotordia * np.pi * refMotorlen
+    refMotorpwDen = refMotorvol / refMotorpw #in m^3/kg
+
+    singleEngpw = power/1000 / engineNum #single engine power in kw
+
+    singleEngvol = refMotorpwDen * singleEngpw # in m^3
+    singleEngdia = 0.5 #in m
+    nacelleDia = singleEngdia * 1.2 #assumption that engine nacalle is 20% thicker to accomodate cooling, etc.
+    singleEnglen = singleEngvol / (singleEngdia * np.pi)
+    nacelleLen = singleEnglen * 3 #assumption that engine nacelle is 3 time longer than the motor, accomodating motor mounts and cooling
+
+    return singleEngdia, singleEnglen, nacelleDia, nacelleLen
+
+
+print("\nHier stehen Motor und Invertergewicht als Gesamtmasse: ", calcMotorWeight(25570000), calcInverterWeight(25570000))
+print("\nEinzelmotordurchmesser und Länge: ", calcMotorDimensions(25570000, 4)[0], calcMotorDimensions(25570000, 4)[1])
+print("\nNacelle Dimensions: ", calcMotorDimensions(25570000, 4)[2], calcMotorDimensions(25570000, 4)[3])
