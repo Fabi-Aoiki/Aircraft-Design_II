@@ -38,10 +38,10 @@ def Calc_LD():
                 CL = np.array(CL_list)
                 LD = np.array(LD_list)
 
-                plt.plot(CL, LD)
+                plt.plot(CL, LD, label = str(h) + " m")
         plt.xlabel("CL")
         plt.ylabel("CL/CD")
-        # plt.legend(loc='best')
+        plt.legend(loc='best')
         plt.grid(True)
         plt.show()
         plt.close()
