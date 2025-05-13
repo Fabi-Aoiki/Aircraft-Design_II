@@ -1,7 +1,7 @@
 import numpy as np
 import constants as con
 import isa as isa
-from Drag_AD2 import S_nwet
+#from Drag_AD2 import S_nwet
 from wing_area import wing_area_s
 import matplotlib.pyplot as plt
 
@@ -23,6 +23,7 @@ def Calc_LD():
 
                         V=M*a
                         x = 2*(con.Wto_stretch*0.99) / (rho*(wing_area_s())*(V**2)) #x = CL
+                        #v_cl = np.sqrt(2*con.Wto_stretch*0.99/(rho*197.5)*cl)
                         if x>1.07:
 
                                 x = None
@@ -46,13 +47,47 @@ def Calc_LD():
         plt.show()
         plt.close()
 
+def Calc_LD_M():
+        for h in np.linspace(0, 12000, 7):
+                rho = isa.isa_model(h,0)[2]
+                a = isa.isa_model(h,0)[3]
+
+                M_list = []
+                LD_list = []
+
+                for cl in np.linspace(0.1, 2, 80):
+
+                        #V=M*a
+                        #x = 2*(con.Wto_stretch*0.99) / (rho*(wing_area_s())*(V**2)) #x = CL
+                        v = np.sqrt(2*con.Wto_stretch*0.99/(rho*197.5)*cl)
+                        M=v/a
+                        x=cl
+                        if x>1.07:
+
+                                x = None
+
+                        M_list.append(M)
+                        if x == None:
+                                y = None
+                        else:
+                                y = -127.06 * x**6 + 214.11 * x**5 + 71.803 * x**4 - 236.72 * x**3 - 2.0649 * x**2 + 104.22 * x # y = L/D
+                        LD_list.append(y)
+                        print(x,y)
+
+                Mach = np.array(M_list)
+                LD = np.array(LD_list)
+
+                plt.plot(Mach, LD, label = str(h) + " m")
+        plt.xlabel("Mach")
+        plt.ylabel("CL/CD")
+        plt.legend(loc='best')
+        plt.grid(True)
+        plt.show()
+        plt.close()
+
 
 Calc_LD()
-
-
-
-
-
+Calc_LD_M()
 
 
 
