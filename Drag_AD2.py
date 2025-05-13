@@ -71,15 +71,15 @@ def ExtrParamTxt(filename, varname):
 
 # plot CD0 (CD_viscous) wing
 
-cd_visc_wing_list = ExtrParamTxt("CD_visc_wing.txt", "CD_viscous")
-cl_visc_wing_list = ExtrParamTxt("CD_visc_wing.txt", "CL")
+cd_visc_wing_list = ExtrParamTxt("Aircraft-Design_II/CD_visc_wing.txt", "CD_viscous")
+cl_visc_wing_list = ExtrParamTxt("Aircraft-Design_II/CD_visc_wing.txt", "CL")
 
 plt.plot(cd_visc_wing_list, cl_visc_wing_list, linestyle = "-", label = "Parasite Drag")
 
 # plot CD0 (CD_viscous) wing + htp + vtp
 
-cd_visc_all_list = ExtrParamTxt("CD_visc_all.txt", "CD_viscous")
-cl_visc_all_list = ExtrParamTxt("CD_visc_all.txt", "CL")
+cd_visc_all_list = ExtrParamTxt("Aircraft-Design_II/CD_visc_all.txt", "CD_viscous")
+cl_visc_all_list = ExtrParamTxt("Aircraft-Design_II/CD_visc_all.txt", "CL")
 
 plt.plot(cd_visc_all_list, cl_visc_all_list, linestyle = "-", label = "HTP + VTP (Par.)")
 
@@ -103,8 +103,8 @@ plt.plot(cd_fus_list, cl_fus_list, linestyle = "-", label = "Fuselage Drag")
 
 # add CDi (CD_induced) wing
 
-cd_indu_wing_list = ExtrParamTxt("CD_indu_wing.txt", "CD_induced")
-cl_indu_wing_list = ExtrParamTxt("CD_indu_wing.txt", "CL")
+cd_indu_wing_list = ExtrParamTxt("Aircraft-Design_II/CD_indu_wing.txt", "CD_induced")
+cl_indu_wing_list = ExtrParamTxt("Aircraft-Design_II/CD_indu_wing.txt", "CL")
 
 for i in range(len(cd_indu_wing_list)):
     cd_indu_wing_list[i] = cd_indu_wing_list[i] + cd_fus_list[i]
@@ -113,8 +113,8 @@ plt.plot(cd_indu_wing_list, cl_indu_wing_list, linestyle = "-", label = "Induced
 
 # add CDi (CD_induced) wing + htp + vtp
 
-cd_indu_all_list = ExtrParamTxt("CD_indu_all.txt", "CD_induced")
-cl_indu_all_list = ExtrParamTxt("CD_indu_all.txt", "CL")
+cd_indu_all_list = ExtrParamTxt("Aircraft-Design_II/CD_indu_all.txt", "CD_induced")
+cl_indu_all_list = ExtrParamTxt("Aircraft-Design_II/CD_indu_all.txt", "CL")
 
 for i in range(len(cd_indu_all_list)):
     cd_indu_all_list[i] = cd_indu_all_list[i] + cd_fus_list[i]
@@ -175,8 +175,8 @@ c_Dn_list = DragFactorsAlti(altitudes_list, v_list)[1]
 DeltaC_D_list = DragFactorsAlti(altitudes_list, v_list)[2]
 
 for i in range(len(altitudes_list)):
-    cd_all_list = ExtrParamTxt("Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CD")
-    cl_all_list = ExtrParamTxt("Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CL")
+    cd_all_list = ExtrParamTxt("Aircraft-Design_II/Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CD")
+    cl_all_list = ExtrParamTxt("Aircraft-Design_II/Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CL")
     for j in range(len(cd_all_list)):
         cd_all_list[j] = cd_all_list[j] + c_Df_list[i] + c_Dn_list[i] + DeltaC_D_list[i]
     cl_cd_list = []
