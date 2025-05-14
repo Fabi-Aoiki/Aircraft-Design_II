@@ -33,7 +33,7 @@ def CalcAnaDrag(M,h):
         C_Ftu = 0.455 / (math.log10(Re))**2.58 # friction coefficient turbulent flow
         d_n = 1.2 # diameter nacelle (meters)
         k_n = 2.2 * (d_n / l_n)**1.5 + 3.8 * (d_n / l_n)**3 # pressure drag factor
-        S_nwet = d_n**2 * 3.1416 / 4 * l_n * con.N_E # wetted surface of all four nacelles
+        S_nwet = (d_n**2 * 3.1416 / 4 + d_n * 3.1416 * l_n) * con.N_E # wetted surface of all four nacelles
         c_Dn = C_Ftu * (1 + k_f) * S_nwet / S_w # fuselage drag coefficient
 
         # compressible drag estimation (page 11 in pdf)
