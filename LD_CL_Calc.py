@@ -93,6 +93,7 @@ def Calc_LD_M():
 
                 M_list = []
                 LD_list = []
+                CL_list = []
 
                 for cl in np.linspace(0.1, 2, 80):
 
@@ -101,6 +102,7 @@ def Calc_LD_M():
                         v = np.sqrt(2*con.Wto_stretch*0.99/(rho*197.5)*cl)
                         M=v/a
                         x=cl
+                        CL_list.append(cl)
                         if x>1.07:
 
                                 x = None
@@ -115,6 +117,14 @@ def Calc_LD_M():
 
                 Mach = np.array(M_list)
                 LD = np.array(LD_list)
+                CL = np.array(CL_list)
+
+                # Adding analytical drags
+                DeltaD = CalcAnaDrag(0.6, h)
+                for i in range(len(LD)):
+                        if LD[i] is not None and CL[i] is not None:
+                                TotalD = 1/LD[i] * CL[i] + DeltaD
+                                LD[i] = CL[i]/TotalD
 
                 plt.plot(Mach, LD, label = str(h) + " m")
         plt.xlabel("Mach")
@@ -126,7 +136,7 @@ def Calc_LD_M():
 
 
 Calc_LD()
-# Calc_LD_M()
+Calc_LD_M()
 
 
 
