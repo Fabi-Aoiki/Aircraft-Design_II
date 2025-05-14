@@ -38,7 +38,7 @@ def CalcAnaDrag(M,h):
 
         # compressible drag estimation (page 11 in pdf)
 
-        DeltaC_D = 0.002
+        DeltaC_D = 0.0 # for M = 0.6
         
         return(c_Df + c_Dn + DeltaC_D)
 
