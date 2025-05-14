@@ -141,52 +141,52 @@ plt.show()
 plt.close()
 
 
-# L/D vs CL for different flight altitudes
+# # L/D vs CL for different flight altitudes
 
-altitudes_list = [12000, 6000, 0]
-v_list = [236, 210, 154] # m/s
+# altitudes_list = [12000, 6000, 0]
+# v_list = [236, 210, 154] # m/s
 
-# drag function for analytical expressions
+# # drag function for analytical expressions
 
-def DragFactorsAlti(altitudes_list, v_list):
+# def DragFactorsAlti(altitudes_list, v_list):
 
-    c_Df_list = []
-    for i in range(len(altitudes_list)):
-        Re = DE.reynoldsCalc(v_list[i], l_f)
-        C_Ftu = 0.455 / (math.log10(Re))**2.58 
-        c_Df = C_Ftu * (1 + k_f + k_lgb) * S_fwet / S_w
-        c_Df_list.append(c_Df)
+#     c_Df_list = []
+#     for i in range(len(altitudes_list)):
+#         Re = DE.reynoldsCalc(v_list[i], l_f)
+#         C_Ftu = 0.455 / (math.log10(Re))**2.58 
+#         c_Df = C_Ftu * (1 + k_f + k_lgb) * S_fwet / S_w
+#         c_Df_list.append(c_Df)
     
-    c_Dn_list = []
-    for i in range(len(altitudes_list)):
-        Re = DE.reynoldsCalc(v_list[i], l_n)
-        C_Ftu = 0.455 / (math.log10(Re))**2.58
-        c_Dn = C_Ftu * (1 + k_f) * S_nwet / S_w
-        c_Dn_list.append(c_Dn)
+#     c_Dn_list = []
+#     for i in range(len(altitudes_list)):
+#         Re = DE.reynoldsCalc(v_list[i], l_n)
+#         C_Ftu = 0.455 / (math.log10(Re))**2.58
+#         c_Dn = C_Ftu * (1 + k_f) * S_nwet / S_w
+#         c_Dn_list.append(c_Dn)
     
-    DeltaC_D_list = [0.002, 0.002, 0.002] # pretty accurate
+#     DeltaC_D_list = [0.002, 0.002, 0.002] # pretty accurate
 
-    return(c_Df_list, c_Dn_list, DeltaC_D_list)
+#     return(c_Df_list, c_Dn_list, DeltaC_D_list)
 
-# extract data from files and plot
+# # extract data from files and plot
 
-c_Df_list = DragFactorsAlti(altitudes_list, v_list)[0]
-c_Dn_list = DragFactorsAlti(altitudes_list, v_list)[1]
-DeltaC_D_list = DragFactorsAlti(altitudes_list, v_list)[2]
+# c_Df_list = DragFactorsAlti(altitudes_list, v_list)[0]
+# c_Dn_list = DragFactorsAlti(altitudes_list, v_list)[1]
+# DeltaC_D_list = DragFactorsAlti(altitudes_list, v_list)[2]
 
-for i in range(len(altitudes_list)):
-    cd_all_list = ExtrParamTxt("Aircraft-Design_II/Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CD")
-    cl_all_list = ExtrParamTxt("Aircraft-Design_II/Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CL")
-    for j in range(len(cd_all_list)):
-        cd_all_list[j] = cd_all_list[j] + c_Df_list[i] + c_Dn_list[i] + DeltaC_D_list[i]
-    cl_cd_list = []
-    for j in range(len(cd_all_list)):
-        cl_cd_list.append(cl_all_list[j] / cd_all_list[j])
-    plt.plot(cl_all_list, cl_cd_list, linestyle = "-", label = "h = " + str(altitudes_list[i]) + " m")
+# for i in range(len(altitudes_list)):
+#     cd_all_list = ExtrParamTxt("Aircraft-Design_II/Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CD")
+#     cl_all_list = ExtrParamTxt("Aircraft-Design_II/Wing_Polar_Graph_" + str(altitudes_list[i]) + "m.txt", "CL")
+#     for j in range(len(cd_all_list)):
+#         cd_all_list[j] = cd_all_list[j] + c_Df_list[i] + c_Dn_list[i] + DeltaC_D_list[i]
+#     cl_cd_list = []
+#     for j in range(len(cd_all_list)):
+#         cl_cd_list.append(cl_all_list[j] / cd_all_list[j])
+#     plt.plot(cl_all_list, cl_cd_list, linestyle = "-", label = "h = " + str(altitudes_list[i]) + " m")
         
-plt.xlabel("CL")
-plt.ylabel("CL/CD")
-plt.legend(loc='best')
-plt.grid(True)
-plt.show()
-plt.close()
+# plt.xlabel("CL")
+# plt.ylabel("CL/CD")
+# plt.legend(loc='best')
+# plt.grid(True)
+# plt.show()
+# plt.close()
