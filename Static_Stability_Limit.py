@@ -46,6 +46,16 @@ def xn_MAC (rTAC, M):
     #print("c_LT: ", c_LT, "\nc_LnT: ", c_LnT, "\ndaw_danT: ", daw_danT_, "\nc_L: ", c_L)
     return xn_MAC
 
+def sigma (xn_MAC, xcg_MAC):
+    sigma = xn_MAC - xcg_MAC
+    if sigma >= 0.05:
+        print("\nWithin Static Stabbility Limit! sigma = ", sigma)
+        return sigma
+    else:
+        print("\nOutside of Static Stability Limit! sigma = ", sigma)
+        return sigma
+
+#print(xn_MAC(27.9, cons.ma_max))
 def xn_MAC_Mach_08 (rTAC, M):
 
     c_LT = c_Li(cons.AR_h, 20, M)

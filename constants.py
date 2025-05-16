@@ -174,7 +174,7 @@ Lambda_v = 25 # ° sweep angle (quarter line) vertical tail wing
 
 #Fus Tohrenbeck
 
-kwf = 0.23 
+kwf = 0.23
 lt = 29.83 # m Length fus to tail 
 hf = 5.48 # m height fus
 bf = 4.5 #m with fus
