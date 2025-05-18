@@ -6,8 +6,6 @@ xVal = 0.689
 yMin = 10
 yMax = 29
 
-# test commit due to new repo
-
 DiaPath = "Aircraft-Design_II/ChartReaderFolder/bitmap.jpg"
 
 def AutoChartReader(DiaPath, xMin, xMax, xVal, yMin, yMax, IsLog = False): 
