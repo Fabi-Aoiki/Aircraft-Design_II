@@ -6,7 +6,7 @@
 
 from math import *
 import numpy as np
-from isa_model import isa_model as isa
+from isa import isa_model as isa
 from matplotlib import pyplot as plt
 
 
