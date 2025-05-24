@@ -6,6 +6,7 @@ import constants as con
 from wing_area import wing_parameter
 import matplotlib.pyplot as plt
 from isa import isa_model
+import main
 # level flight diagram
 # required thrust-to-weight ratio
 # calculation of equivalent airspeeds assuming level flight
@@ -15,7 +16,7 @@ cl_list = DAD2.cl_indu_all_list
 # creating an empty list for equivalent airspeeds
 vEAS_list = []
 # calculationg W/S at mTO
-WS = 116658 * 9.81 / wing_parameter(con.AR,con.taper)[4] # eigentlich mTO = main.Momenten_Summe['Weights'] aber error
+WS = main.Momenten_Summe['Weights'] * 9.81 / wing_parameter(con.AR,con.taper)[4] 
 # equation for each element in cl list
 for cl in cl_list:
     vEAS_list.append( math.sqrt(2 * WS / 1.225 / abs(cl)) )
