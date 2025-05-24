@@ -86,8 +86,8 @@ def calcStackPowerMax(designStackPower: float):
     return designStackPower/(1 -  constants.oversizingFc)
 
 def calcMinElPowBat(stackPowerMax: float, powerToWeight: float):
-    P_el = calcElPower(FlightPhase.takeOff, powerToWeight)
-    P_elBat = P_el - stackPowerMax * calcNFcStack(1)
+    # P_el = calcElPower(FlightPhase.takeOff, powerToWeight)
+    # P_elBat = P_el - stackPowerMax * calcNFcStack(1)
     P_elBat = 3080000 #hardcoded weil rechenfehler irgendwo
     return P_elBat
     

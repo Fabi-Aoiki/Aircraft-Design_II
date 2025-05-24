@@ -160,8 +160,8 @@ print("Prop_Base",Prop_Base)
 print("Prop_Stretch",Prop_Stretch)
 
 #calcs for lh ################################################################################################
-P_elCr = lhCalc.calcElPower(lhCalc.FlightPhase.cruise, powerToWeightChosen)
-P_elTo = lhCalc.calcElPower(lhCalc.FlightPhase.takeOff, powerToWeightChosen)
+P_elCr = lhCalc.calcElPower(lhCalc.FlightPhase.cruise, powerToWeightChosen)[1]
+P_elTo = lhCalc.calcElPower(lhCalc.FlightPhase.takeOff, powerToWeightChosen)[1]
 lhCalc.calcElPower(lhCalc.FlightPhase.climb, powerToWeightChosen)
 P_stackDesign = lhCalc.calcDesignStackPower(P_elCr)
 P_stackMax = lhCalc.calcStackPowerMax(P_stackDesign)
