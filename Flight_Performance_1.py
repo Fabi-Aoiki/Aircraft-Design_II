@@ -7,6 +7,7 @@ from wing_area import wing_parameter
 import matplotlib.pyplot as plt
 from isa import isa_model
 import main
+import axial_momentum as am
 # level flight diagram
 # required thrust-to-weight ratio
 # calculation of equivalent airspeeds assuming level flight
@@ -89,6 +90,33 @@ for i in range(len(cd_compr_list)):
 # creating plot
 plt.plot(vEAS_list, dl_list, label = "w/o compression")
 plt.plot(vEAS_list, dl_compr_list, label = "w/ compression")
+plt.xlabel(r"$v_{EAS}$ (m/s)")
+plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
+plt.legend()
+plt.show()
+
+
+# available thrust-to-weight ratio
+# calculations for a turbofan
+# first equation of page 5 from 20
+# throttle ratio not sure need to ask fabi or georg
+# no idea with the units but i just go with the flow
+thrust_list = []
+for Ma in Ma_list:
+    thrust_list.append( 0.8 * (1.225 / isa_model(con.H_CRUISE, con.dt)[2]) * \
+                        math.exp( -0.35 * Ma * ( isa_model(con.H_CRUISE, con.dt)[2] / 101325 ) * math.sqrt( am.Pbr ) ) )
+# now just mutliplying the second equation inside there
+for i in range(len(thrust_list)):
+    thrust_list[i] = thrust_list[i] * ( 1 - ( 1.3 + 0.25 * am.Pbr ) * 0.02 ) 
+# multiplying with the installed static thrust-to-weight ratio and the current weight ratio
+# i have no idea what those values are to be honest
+# need to ask fabi or georg about that
+for i in range(len(thrust_list)):
+    thrust_list[i] = thrust_list[i] * 1.0 * 1.0
+# plotting the result
+# diagram is still fucked up obviously
+plt.plot(vEAS_list, dl_compr_list, label = "required")
+plt.plot(vEAS_list, thrust_list, label = "available")
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
 plt.legend()
