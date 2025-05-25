@@ -87,8 +87,9 @@ dl_compr_list = []
 for i in range(len(cd_compr_list)):
     dl_compr_list.append( cd_compr_list[i] / cl_list[i] )
 # creating plot
-plt.plot(vEAS_list, dl_list)
-plt.plot(vEAS_list, dl_compr_list)
+plt.plot(vEAS_list, dl_list, label = "w/o compression")
+plt.plot(vEAS_list, dl_compr_list, label = "w/ compression")
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
+plt.legend()
 plt.show()
