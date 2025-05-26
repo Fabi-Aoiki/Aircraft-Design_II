@@ -71,7 +71,7 @@ def propeller_eta(area, v_75, h):
 
 # --- Propeller Parameters --- #
 
-d = 3.56            # diameter [m]
+d = 4.24            # diameter [m]
 A = pi*(d/2)**2     # disk area [m²]
 rpm = 1050          # rotational velocity [rpm]
 n = rpm/60          # // [rps]
@@ -80,10 +80,10 @@ V_tip = omega*d/2   # Tip velocity [m/s]
 V_75 = V_tip*0.75   # Velocity at r/R = 0.75
 sigma = 0.25        # Solidity [-]
 S_blade = sigma*A   # Blade area [m²]
-V_cr_design = 175   # Design cruise speed [m/s]
-M_cr = 0.80         # Design cruise Mach number [-]
+V_cr_design = 231   # Design cruise speed [m/s]
+M_cr = 0.785        # Design cruise Mach number [-]
 
-Pbr = 5443            # Engine break power [kW]
+Pbr = 5607            # Engine break power [kW]
 Pshaft = 0.98 * Pbr   # Shaft power at sea-level [kW], w/ n_trans = 0.98
 P0 = 0.935 * Pshaft   # Jet power at Sea-level [kW], w/ n_transfer = 0.935
 
