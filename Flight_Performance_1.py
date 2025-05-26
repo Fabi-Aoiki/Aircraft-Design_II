@@ -61,7 +61,7 @@ for cl in cl_list:
     MaDD_list.append( MaDDj )
 # plotting lift over mach to check how it looks
 plt.plot(MaDD_list, cl_list)
-plt.xlabel("Ma")
+plt.xlabel("Ma Drag Divergence")
 plt.ylabel("CL")
 plt.ylim(0, max(cl_list)*1.1)
 plt.xlim(0, max(MaDD_list)*1.1)
