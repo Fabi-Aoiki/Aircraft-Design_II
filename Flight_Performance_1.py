@@ -83,15 +83,14 @@ dl_compr_list = []
 for i in range(len(cd_compr_list)):
     dl_compr_list.append( cd_compr_list[i] / cl_list[i] )
 # creating plot
-plt.plot(vEAS_list, dl_list, label = "w/o compression")
-plt.plot(vEAS_list, dl_compr_list, label = "w/ compression")
+plt.plot(vEAS_list, dl_list, label = "w/o compr drag")
+plt.plot(vEAS_list, dl_compr_list, label = "w/ compr drag")
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
-plt.ylim(0,10)
+plt.ylim(0,1)
+plt.xlim(min(vEAS_list)*0.9, 320)
 plt.legend()
 plt.show()
-
-print(DeltaM_list)
 
 
 # available thrust-to-weight ratio
@@ -117,5 +116,7 @@ plt.plot(vEAS_list, dl_compr_list, label = "required")
 plt.plot(vEAS_list, thrust_list, label = "available")
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
+plt.ylim(0,1)
+plt.xlim(min(vEAS_list)*0.9, 320)
 plt.legend()
 plt.show()
