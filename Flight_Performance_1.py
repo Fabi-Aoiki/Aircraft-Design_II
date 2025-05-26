@@ -28,11 +28,16 @@ for i in range(len(cl_list)-1, -1, -1):
         cl_list.pop(i)
         cd_list.pop(i)
         vEAS_list.pop(i)
+# plotting cl over cd just to check how it looks like
+plt.plot(cd_list, cl_list)
+plt.xlabel("CD")
+plt.ylabel("CL")
+plt.show()
 # calculate the reciprocal of the glide ratio D/L
 dl_list = []
 for i in range(len(cl_list)):
     dl_list.append(cd_list[i]/cl_list[i])
-# plotting epsion over vEAS
+# plotting epsilon over vEAS
 plt.plot(vEAS_list, dl_list)
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
@@ -45,32 +50,22 @@ for vEAS in vEAS_list:
 Ma_list = []
 for vTAS in vTAS_list:
     Ma_list.append(vTAS / isa_model(con.H_CRUISE, con.dt)[3])
-# calculating / extracting the wing lift
-cd_indu_wing_list = DAD2.ExtrParamTxt("CD_indu_wing.txt", "CD_induced")
-cl_indu_wing_list = DAD2.ExtrParamTxt("CD_indu_wing.txt", "CL")
-cd_visc_wing_list = DAD2.ExtrParamTxt("CD_visc_wing.txt", "CD_viscous")
-cl_visc_wing_list = DAD2.ExtrParamTxt("CD_visc_wing.txt", "CL")
-cd_wing_list = []
-cl_wing_list = []
-for i in range(len(cd_indu_wing_list)):
-    cd_wing_list.append( cd_indu_wing_list[i] + cd_visc_wing_list[i] )
-    cl_wing_list.append( cl_indu_wing_list[i] + cl_visc_wing_list[i] )
-# clipping the negative values once again for same list length
-for i in range(len(DAD2.cl_indu_all_list)-1, -1, -1):
-    if DAD2.cl_indu_all_list[i] < 0:
-        cl_wing_list.pop(i)
-        cd_wing_list.pop(i)
+# we assume that wing lift is airplane lift
 # calculating the drag divergence mach number for the wing
 MaDD_list = []
 kFac_list = [0.758, 0.1, -0.09, 0, -0.1]
-for cl_wing in cl_wing_list:
+for cl in cl_list:
     MaDDj = 0
     for i in range(len(kFac_list)):
-        MaDDj = MaDDj + kFac_list[i] * cl_wing ** i
+        MaDDj = MaDDj + kFac_list[i] * cl ** i
     MaDD_list.append( MaDDj )
-# sanity check for the length of the lists
-if len(Ma_list) != len(MaDD_list):
-        raise ValueError("Lists Ma and MaDD have to be the same length. Check the code!")
+# plotting lift over mach to check how it looks
+plt.plot(MaDD_list, cl_list)
+plt.xlabel("Ma")
+plt.ylabel("CL")
+plt.ylim(0, max(cl_list)*1.1)
+plt.xlim(0, max(MaDD_list)*1.1)
+plt.show()
 # calculating ΔM for the compressible drag
 DeltaM_list = []
 for i in range(len(Ma_list)):
@@ -92,8 +87,11 @@ plt.plot(vEAS_list, dl_list, label = "w/o compression")
 plt.plot(vEAS_list, dl_compr_list, label = "w/ compression")
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
+plt.ylim(0,10)
 plt.legend()
 plt.show()
+
+print(DeltaM_list)
 
 
 # available thrust-to-weight ratio
