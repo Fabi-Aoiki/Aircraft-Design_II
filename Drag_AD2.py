@@ -137,7 +137,8 @@ plt.xlabel("CD")
 plt.ylabel("CL")
 plt.legend(loc='best')
 plt.grid(True)
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 
 

@@ -166,7 +166,9 @@ def plot_landing_dis_over_ws():
     y1 = np.array(landingDisList)
     plt.plot(x, y1)
     plt.axhline(y=1900, color='tab:orange', label='max. allowed landing distance', linestyle='-')
-    plt.show()
+    if __name__ == "__main__":
+        plt.show()
+    plt.close()
     return 0
 
 

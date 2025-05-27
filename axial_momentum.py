@@ -146,4 +146,8 @@ plt.ylim([0, 10000])
 plt.grid()
 plt.legend()
 
-plt.show()
+if __name__ == "__main__":
+    plt.show()
+plt.close()
+plt.close()
+plt.close()
