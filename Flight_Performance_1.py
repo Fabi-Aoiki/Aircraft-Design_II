@@ -100,11 +100,11 @@ plt.show()
 # no idea with the units but i just go with the flow
 thrust_list = []
 for Ma in Ma_list:
-    thrust_list.append( 0.8 * (1.225 / isa_model(con.H_CRUISE, con.dt)[2]) * \
-                        math.exp( -0.35 * Ma * ( isa_model(con.H_CRUISE, con.dt)[2] / 101325 ) * math.sqrt( am.Pbr ) ) )
+    thrust_list.append( con.TRthr_CR * ( isa_model(con.H_CRUISE, con.dt)[2] / 1.225 ) * \
+                        math.exp( -0.35 * Ma * ( isa_model(con.H_CRUISE, con.dt)[2] / 101325 ) * math.sqrt( am.Pbr/1000 ) ) )
 # now just mutliplying the second equation inside there
 for i in range(len(thrust_list)):
-    thrust_list[i] = thrust_list[i] * ( 1 - ( 1.3 + 0.25 * am.Pbr ) * 0.02 ) 
+    thrust_list[i] = thrust_list[i] * ( 1 - ( 1.3 + 0.25 * am.Pbr/1000 ) * 0.02 ) 
 # multiplying with the installed static thrust-to-weight ratio and the current weight ratio
 # i have no idea what those values are to be honest
 # need to ask fabi or georg about that
@@ -112,11 +112,11 @@ for i in range(len(thrust_list)):
     thrust_list[i] = thrust_list[i] * 1.0 * 1.0
 # plotting the result
 # diagram is still fucked up obviously
-plt.plot(vEAS_list, dl_compr_list, label = "required")
-plt.plot(vEAS_list, thrust_list, label = "available")
-plt.xlabel(r"$v_{EAS}$ (m/s)")
+plt.plot(Ma_list, dl_compr_list, label = "required")
+plt.plot(Ma_list, thrust_list, label = "available")
+plt.xlabel(r"M")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
 plt.ylim(0,1)
-plt.xlim(min(vEAS_list)*0.9, 320)
+plt.xlim(0.5, 1)
 plt.legend()
 plt.show()
