@@ -9,6 +9,7 @@ from isa import isa_model
 import main
 import axial_momentum as am
 import LD_CL_Calc as LDCL
+import numpy as np
 # level flight diagram
 # required thrust-to-weight ratio
 # calculation of equivalent airspeeds assuming level flight
@@ -132,21 +133,80 @@ plt.show()
 # climb perfomance
 # specific excess thrust
 # left side minus right side
-# altitudes 0, 2500, 5000, 7500, 10000, 12000 meters
+# altitudes 0, 2500, 5000, 7500, 10000, 12000 metres
 perf_list = [am.perf_0, am.perf_1, am.perf_2, am.perf_3, am.perf_4, am.perf_5]
+alti_list = [0, 2500, 5000, 7500, 10000, 12000]
+gamma_list_all = []
+mach_list_all = []
 # iterate through all the altitudes
-for i in range(6):
-    # get the thrust from propeller
-    left_side_list_i = perf_list[0][0]
-    for j in range(len(left_side_list_i)):
-        # four propellers and take off mass
-        left_side_list_i[j] = left_side_list_i[j] * 4 / (main.W_Take_off * 9.81)
-    right_side_list_i = LDCL.Calc_LD_M()[1][i]
-    print(right_side_list_i)
-    # get the reciproce value for epsilon
-    for j in range(len(right_side_list_i)):
-        right_side_list_i[j] = 1 / right_side_list_i[j]
-    # subtract to get gamma
-    gamma_i = []
-    print(len(left_side_list_i))
-    print(len(right_side_list_i))
+for k in range(6):
+    # min and max mach for the altitude
+    minMach = min(LDCL.Calc_LD_M()[0][k])
+    maxMach = max(LDCL.Calc_LD_M()[0][k])
+    # approximate as functions (5th order polynomial) for left side
+    koeff = np.polyfit(perf_list[k][4], perf_list[k][0], 5)
+    # calculating the left side
+    left_side_values = []
+    for i in np.arange(minMach, maxMach+0.02, 0.02):
+        # evaluating function
+        value = 0
+        for j in range(6):
+            value = value + koeff[j] * i ** (5-j)
+        value = value * 4 / (main.W_Take_off * 9.81)
+        left_side_values.append(value)
+    # calculating the right side
+    koeff = np.polyfit(LDCL.Calc_LD_M()[0][k], LDCL.Calc_LD_M()[1][k], 5)
+    right_side_values = []
+    for i in np.arange(minMach, maxMach+0.02, 0.02):
+        # evaluating function
+        value = 0
+        for j in range(6):
+            value = value + koeff[j] * i ** (5-j)
+        print(value)
+        value = 1 / value
+        right_side_values.append(value)
+    # calculating the difference for gamma
+    gamma = []
+    for i in range(len(right_side_values)):
+        gamma.append(left_side_values[i] - right_side_values[i])
+    mach_list_all.append(np.arange(minMach, maxMach+0.02, 0.02))
+    gamma_list_all.append(gamma)
+# plotting for all altitudes
+for i in range(len(mach_list_all)):
+    plt.plot(mach_list_all[i], gamma_list_all[i], label = "h = " + str(alti_list[i]) + " m")
+plt.xlabel("M (-)")
+plt.ylabel(r"$\gamma$ (rad)")
+plt.legend()
+plt.show()
+plt.close()
+# converting from Mach to vTAS
+vTAS_list_all = []
+for j in range(len(alti_list)):
+    vTAS_list = []
+    for i in range(len(mach_list_all[j])):
+        vTAS_list.append( mach_list_all[j][i] * isa_model(alti_list[j], 0)[3] )
+    vTAS_list_all.append(vTAS_list)
+# plotting for all altitudes but now with TAS
+for i in range(len(vTAS_list_all)):
+    plt.plot(vTAS_list_all[i], gamma_list_all[i], label = "h = " + str(alti_list[i]) + " m")
+plt.xlabel("$v_{TAS}$ (m/s)")
+plt.ylabel(r"$\gamma$ (rad)")
+plt.legend()
+plt.show()
+plt.close()
+
+# climb: Specific Excess Power
+SEP_list_all = []
+for i in range(len(alti_list)):
+    SEP_list = []
+    for j in range(len(gamma_list_all[i])):
+        SEP_list.append( vTAS_list_all[i][j] * gamma_list_all[i][j] )
+    SEP_list_all.append(SEP_list)
+# plotting for all altitudes
+for i in range(len(vTAS_list_all)):
+    plt.plot(vTAS_list_all[i], SEP_list_all[i], label = "h = " + str(alti_list[i]) + " m")
+plt.xlabel("$v_{TAS}$ (m/s)")
+plt.ylabel("SEP (m/s)")
+plt.legend()
+plt.show()
+plt.close()

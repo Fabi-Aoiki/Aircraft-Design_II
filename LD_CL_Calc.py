@@ -84,7 +84,8 @@ def Calc_LD():
         plt.ylabel("CL/CD")
         plt.legend(loc='best')
         plt.grid(True)
-        plt.show()
+        if __name__ == "__main__":
+                plt.show()
         plt.close()
 
 def Calc_LD_M():
@@ -133,13 +134,20 @@ def Calc_LD_M():
                                 LD[i] = CL[i]/TotalD
 
                 plt.plot(Mach, LD, label = str(h) + " m")
-                M_list_all.append(Mach)
-                LD_list_all.append(LD)
+                # clear the None entries and then also crop Mach list
+                for i in range(len(LD)):
+                        if LD[i] is None:
+                                LD = LD[:i]
+                                Mach = Mach[:i]
+                                break
+                M_list_all.append(Mach.tolist())
+                LD_list_all.append(LD.tolist())
         plt.xlabel("Mach")
         plt.ylabel("CL/CD")
         plt.legend(loc='best')
         plt.grid(True)
-        plt.show()
+        if __name__ == "__main__":
+                plt.show()
         plt.close()
         return(M_list_all, LD_list_all)
 
