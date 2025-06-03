@@ -91,6 +91,15 @@ plt.ylim(0,1)
 plt.xlim(min(vEAS_list)*0.9, 320)
 plt.legend()
 plt.show()
+# once again but over Mach since it looks way better
+plt.plot(Ma_list, dl_list, label = "w/o compr drag")
+plt.plot(Ma_list, dl_compr_list, label = "w/ compr drag")
+plt.xlabel(r"M (-)")
+plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
+plt.ylim(0,1)
+plt.xlim(min(Ma_list)*0.9, 1)
+plt.legend()
+plt.show()
 
 
 # available thrust-to-weight ratio
