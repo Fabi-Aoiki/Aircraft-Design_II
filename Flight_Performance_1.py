@@ -152,7 +152,7 @@ for k in range(6):
         value = 0
         for j in range(6):
             value = value + koeff[j] * i ** (5-j)
-        value = value * 4 / (main.W_Take_off * 9.81)
+        value = value * 4 * 0.9 / (main.W_Take_off * 9.81)
         left_side_values.append(value)
     # calculating the right side
     koeff = np.polyfit(LDCL.Calc_LD_M()[0][k], LDCL.Calc_LD_M()[1][k], 5)
