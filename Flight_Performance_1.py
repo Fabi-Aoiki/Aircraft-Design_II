@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from isa import isa_model
 import main
 import axial_momentum as am
+import LD_CL_Calc as LDCL
 # level flight diagram
 # required thrust-to-weight ratio
 # calculation of equivalent airspeeds assuming level flight
@@ -101,7 +102,6 @@ plt.xlim(min(Ma_list)*0.9, 1)
 plt.legend()
 plt.show()
 
-
 # available thrust-to-weight ratio
 # calculations for a turbofan
 # first equation of page 5 from 20
@@ -115,12 +115,11 @@ for Ma in Ma_list:
 for i in range(len(thrust_list)):
     thrust_list[i] = thrust_list[i] * ( 1 - ( 1.3 + 0.25 * am.Pbr/1000 ) * 0.02 ) 
 # multiplying with the installed static thrust-to-weight ratio and the current weight ratio
-# i have no idea what those values are to be honest
-# need to ask fabi or georg about that
+# taking thrust for FL400 at Mach 0 for mass closer after take-off
+# times 16 at the end because of four propellers that apply to to parameters (4**2)
 for i in range(len(thrust_list)):
-    thrust_list[i] = thrust_list[i] * 1.0 * 1.0
+    thrust_list[i] = thrust_list[i] * am.perf_5[0][0] / ( main.W_Take_off * 9.81 * 0.99 ) * 16
 # plotting the result
-# diagram is still fucked up obviously
 plt.plot(Ma_list, dl_compr_list, label = "required")
 plt.plot(Ma_list, thrust_list, label = "available")
 plt.xlabel(r"M")
@@ -129,3 +128,25 @@ plt.ylim(0,1)
 plt.xlim(0.5, 1)
 plt.legend()
 plt.show()
+
+# climb perfomance
+# specific excess thrust
+# left side minus right side
+# altitudes 0, 2500, 5000, 7500, 10000, 12000 meters
+perf_list = [am.perf_0, am.perf_1, am.perf_2, am.perf_3, am.perf_4, am.perf_5]
+# iterate through all the altitudes
+for i in range(6):
+    # get the thrust from propeller
+    left_side_list_i = perf_list[0][0]
+    for j in range(len(left_side_list_i)):
+        # four propellers and take off mass
+        left_side_list_i[j] = left_side_list_i[j] * 4 / (main.W_Take_off * 9.81)
+    right_side_list_i = LDCL.Calc_LD_M()[1][i]
+    print(right_side_list_i)
+    # get the reciproce value for epsilon
+    for j in range(len(right_side_list_i)):
+        right_side_list_i[j] = 1 / right_side_list_i[j]
+    # subtract to get gamma
+    gamma_i = []
+    print(len(left_side_list_i))
+    print(len(right_side_list_i))
