@@ -111,13 +111,13 @@ plt.show()
 thrust_list = []
 for Ma in Ma_list:
     thrust_list.append( con.TRthr_CR * ( isa_model(con.H_CRUISE, con.dt)[2] / 1.225 ) * \
-                        math.exp( -0.35 * Ma * ( isa_model(con.H_CRUISE, con.dt)[2] / 101325 ) * math.sqrt( am.Pbr/1000 ) ) )
+                        math.exp( -0.35 * Ma * ( isa_model(con.H_CRUISE, con.dt)[2] / 101325 ) * math.sqrt( 60 ) ) )
 # now just mutliplying the second equation inside there
 for i in range(len(thrust_list)):
-    thrust_list[i] = thrust_list[i] * ( 1 - ( 1.3 + 0.25 * am.Pbr/1000 ) * 0.02 ) 
+    thrust_list[i] = thrust_list[i] * ( 1 - ( 1.3 + 0.25 * 60 ) * 0.02 ) 
 # multiplying with the installed static thrust-to-weight ratio and the current weight ratio
 # taking thrust for FL400 at Mach 0 for mass closer after take-off
-# times 16 at the end because of four propellers that apply to to parameters (4**2)
+# times 4 at the end because of four propellers that apply to one parameter
 for i in range(len(thrust_list)):
     thrust_list[i] = thrust_list[i] * am.perf_5[0][0] / ( main.W_Take_off * 9.81 * 0.99 ) * 16
 # plotting the result
@@ -138,6 +138,7 @@ perf_list = [am.perf_0, am.perf_1, am.perf_2, am.perf_3, am.perf_4, am.perf_5]
 alti_list = [0, 2500, 5000, 7500, 10000, 12000]
 gamma_list_all = []
 mach_list_all = []
+epsilon_list_all = []
 # iterate through all the altitudes
 for k in range(6):
     # min and max mach for the altitude
@@ -171,6 +172,7 @@ for k in range(6):
         gamma.append(left_side_values[i] - right_side_values[i])
     mach_list_all.append(np.arange(minMach, maxMach+0.02, 0.02))
     gamma_list_all.append(gamma)
+    epsilon_list_all.append(right_side_values)
 # plotting for all altitudes
 for i in range(len(mach_list_all)):
     plt.plot(mach_list_all[i], gamma_list_all[i], label = "h = " + str(alti_list[i]) + " m")
@@ -207,6 +209,28 @@ for i in range(len(vTAS_list_all)):
     plt.plot(vTAS_list_all[i], SEP_list_all[i], label = "h = " + str(alti_list[i]) + " m")
 plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SEP (m/s)")
+plt.legend()
+plt.show()
+plt.close()
+
+# specific air range (sar) for hydrogen
+# values need to be updated once available
+heating_value = 120 * 10**6
+eta_approx = 0.9**6
+weight = main.W_Take_off * 9.81
+# iterate over alts
+SAR_list_all = []
+for i in range(len(epsilon_list_all)):
+    SAR_list = []
+    for j in range(len(epsilon_list_all[i])):
+        SAR = eta_approx / epsilon_list_all[i][j] / weight * heating_value
+        SAR_list.append(SAR)
+    SAR_list_all.append(SAR_list)
+# plotting for all altitudes
+for i in range(len(SAR_list_all)):
+    plt.plot(vTAS_list_all[i], SAR_list_all[i], label = "h = " + str(alti_list[i]) + " m")
+plt.xlabel("$v_{TAS}$ (m/s)")
+plt.ylabel("SAR (m/kg)")
 plt.legend()
 plt.show()
 plt.close()
