@@ -3,6 +3,7 @@ import isa as isa
 import constants as con
 import math
 import lhCalc as old
+import matplotlib.pyplot as plt
 ############################################################# Value
 #Basic Thermodynamic things
 
@@ -19,12 +20,12 @@ PT0 = []
 n=1
 while n < con.H_CRUISE:
     h.append(n)
-    n = n +100 
+    n = n +50 
 
 n=0
-while n < con.ma_max:
+while n <= con.ma_max:
     M0.append(n)
-    n = n +0.05
+    n = n +(con.ma_max/10)
 
 for z in M0:
     TS0it = []
@@ -226,6 +227,7 @@ ns = (listlength(TT0)[2])
 ns = int(ns)-1
 
 ETA_fc_anc =[]
+RETA_fc_anc=[]# 1- ETA (Revese Eta)
 i=0
 
 while i <= ns:
@@ -244,6 +246,7 @@ while i <= ns:
     for x,y,z in zip(TT0run_pre,Prtrun_pre,Prcrun_pre):
         n = 0
         ETA_fc_ancit=[]
+        RETA_fc_ancit=[]
 
         while n <= ls-1:
 
@@ -253,15 +256,16 @@ while i <= ns:
             Prcrun = z[n]
             
             ETA_fc_ancrun = 1-((1/con.PEMFC_ETA_c_m)*cp*con.PEMFC_Lamda*(1/(ETA_fc_stack*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2))*TT0run*(((((Prcrun**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))))))/(pow(Prtrun,(((con.PEMFC_ETA_t_pol))*(con.PEMFC_Kappa-1))/con.PEMFC_Kappa)))-1)) 
-            
-            print(ETA_fc_ancrun)
+            RETA_fc_ancrun = 1-ETA_fc_ancrun
 
             ETA_fc_ancit.append(ETA_fc_ancrun)
+            RETA_fc_ancit.append(RETA_fc_ancrun)
             n = n +1
 
 
 
         ETA_fc_anc.append(ETA_fc_ancit)
+        RETA_fc_anc.append(RETA_fc_ancit)
 
     print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     print(i)
@@ -269,6 +273,59 @@ while i <= ns:
     i = i +1
 
 print(ETA_fc_anc)
+
+
+
+
+
+
+
+#**********************************************************************************************************************************************************************************
+#Graphen
+#**********************************************************************************************************************************************************************************
+#for m,f in zip(M0,RETA_fc_anc):
+
+data = {}
+
+for m,f in zip(M0,ETA_fc_anc):
+    data[m]=f
+    plt.plot(f, h, label = str(m))
+
+plt.xlabel("1-ETA_fc_anc")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Efficiency over height and different Mach numbers')
+plt.show()
+
+
+
+plt.plot(ETA_fc_anc[-1], h, label = str(M0[-1]))
+
+plt.xlabel("1-ETA_fc_anc")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Efficiency over height')
+plt.show()
+
+
+
+data = {}
+r=[]
+for f,v in zip(Pt,PC):
+    run = []
+    for b,p in zip(f,v):
+        run.append(b/p)
+    r.append(run)
+
+for m,t in zip(M0,r):
+ plt.plot(t, h, label = str(m))
+
+plt.xlabel("Power ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Power ratio over height and different Mach numbers')
+plt.show()
+
 """print(f"Das ist TSO{TS0}")
 print(f"Das ist PSO{PS0}")"""
 """print(f"Das ist PT4 {PT4}")
