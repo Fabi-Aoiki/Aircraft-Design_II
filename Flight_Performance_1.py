@@ -10,6 +10,7 @@ import main
 import axial_momentum as am
 import LD_CL_Calc as LDCL
 import numpy as np
+from scipy.interpolate import make_interp_spline
 # level flight diagram
 # required thrust-to-weight ratio
 # calculation of equivalent airspeeds assuming level flight
@@ -151,8 +152,8 @@ for k in range(6):
     for i in np.arange(minMach, maxMach+0.02, 0.02):
         # evaluating function
         value = 0
-        for j in range(6):
-            value = value + koeff[j] * i ** (5-j)
+        for j in range(len(koeff)):
+            value = value + koeff[j] * i ** (len(koeff)-1-j)
         value = value * 4 * 0.9 / (main.W_Take_off * 9.81)
         left_side_values.append(value)
     # calculating the right side
@@ -161,8 +162,8 @@ for k in range(6):
     for i in np.arange(minMach, maxMach+0.02, 0.02):
         # evaluating function
         value = 0
-        for j in range(6):
-            value = value + koeff[j] * i ** (5-j)
+        for j in range(len(koeff)):
+            value = value + koeff[j] * i ** (len(koeff)-1-j)
         print(value)
         value = 1 / value
         right_side_values.append(value)
@@ -194,9 +195,9 @@ for i in range(len(vTAS_list_all)):
 plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel(r"$\gamma$ (rad)")
 plt.legend()
+plt.title("Specific Excess Thrust (Climb)")
 plt.show()
 plt.close()
-
 # climb: Specific Excess Power
 SEP_list_all = []
 for i in range(len(alti_list)):
@@ -210,9 +211,9 @@ for i in range(len(vTAS_list_all)):
 plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SEP (m/s)")
 plt.legend()
+plt.title("Specific Excess Power (Climb)")
 plt.show()
 plt.close()
-
 # specific air range (sar) for hydrogen
 # values need to be updated once available
 heating_value = 120 * 10**6
@@ -232,5 +233,53 @@ for i in range(len(SAR_list_all)):
 plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SAR (m/kg)")
 plt.legend()
+plt.title("Specific Air Range")
+plt.show()
+plt.close()
+# optimum velocities
+# need to find the maximum for SET, SEP and SAR at each alt
+# setting the right name for the SET (gamma) list
+SET_list_all = gamma_list_all
+# for each altitude
+vTAS_Max_SET_list = []
+for i in range(len(SET_list_all)):
+    index_of_max = SET_list_all[i].index(max(SET_list_all[i]))
+    max_speed = vTAS_list_all[i][index_of_max]
+    vTAS_Max_SET_list.append(max_speed)
+vTAS_Max_SEP_list = []
+for i in range(len(SEP_list_all)):
+    index_of_max = SEP_list_all[i].index(max(SEP_list_all[i]))
+    max_speed = vTAS_list_all[i][index_of_max]
+    vTAS_Max_SEP_list.append(max_speed)
+vTAS_Max_SAR_list = []
+for i in range(len(SAR_list_all)):
+    index_of_max = SAR_list_all[i].index(max(SAR_list_all[i]))
+    max_speed = vTAS_list_all[i][index_of_max]
+    vTAS_Max_SAR_list.append(max_speed)
+# plotting
+plt.plot(vTAS_Max_SET_list, alti_list, label = r"$SET_{max}$")
+plt.plot(vTAS_Max_SEP_list, alti_list, label = r"$SEP_{max}$")
+plt.plot(vTAS_Max_SAR_list, alti_list, label = r"$SAR_{max}$")
+plt.xlabel(r"$v_{TAS}$ (m/s)")
+plt.ylabel("altitude (m)")
+plt.title("Optimum Velocities")
+plt.legend()
+plt.show()
+plt.close()
+# specific flight time
+# for hydro simply use SAR and devide through speed
+SE_list_all = []
+for i in range(len(SAR_list_all)):
+    SE_list = []
+    for j in range(len(SAR_list_all[i])):
+        SE_list.append( SAR_list_all[i][j] / vTAS_list_all[i][j] )
+    SE_list_all.append(SE_list)
+# plotting
+for i in range(len(SE_list_all)):
+    plt.plot(vTAS_list_all[i], SE_list_all[i], label = "h = " + str(alti_list[i]) + " m")
+plt.xlabel("$v_{TAS}$ (m/s)")
+plt.ylabel("SE (s/kg)")
+plt.legend()
+plt.title("Specific Flight Time")
 plt.show()
 plt.close()
