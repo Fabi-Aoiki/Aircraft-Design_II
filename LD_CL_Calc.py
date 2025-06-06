@@ -42,9 +42,10 @@ def CalcAnaDrag(M,h):
         
         return(c_Df + c_Dn + DeltaC_D)
 
+h_list = [0, 2500, 5000, 7500, 10000, 12000]
 
 def Calc_LD():
-        for h in np.linspace(0, 12000, 7):
+        for h in h_list:
                 rho = isa.isa_model(h,0)[2] 
                 a = isa.isa_model(h,0)[3]
 
@@ -83,11 +84,17 @@ def Calc_LD():
         plt.ylabel("CL/CD")
         plt.legend(loc='best')
         plt.grid(True)
-        plt.show()
+        if __name__ == "__main__":
+                plt.show()
         plt.close()
 
 def Calc_LD_M():
-        for h in np.linspace(0, 12000, 7):
+
+        M_list_all = []
+        LD_list_all = []
+
+
+        for h in h_list:
                 rho = isa.isa_model(h,0)[2]
                 a = isa.isa_model(h,0)[3]
 
@@ -127,12 +134,22 @@ def Calc_LD_M():
                                 LD[i] = CL[i]/TotalD
 
                 plt.plot(Mach, LD, label = str(h) + " m")
+                # clear the None entries and then also crop Mach list
+                for i in range(len(LD)):
+                        if LD[i] is None:
+                                LD = LD[:i]
+                                Mach = Mach[:i]
+                                break
+                M_list_all.append(Mach.tolist())
+                LD_list_all.append(LD.tolist())
         plt.xlabel("Mach")
         plt.ylabel("CL/CD")
         plt.legend(loc='best')
         plt.grid(True)
-        plt.show()
+        if __name__ == "__main__":
+                plt.show()
         plt.close()
+        return(M_list_all, LD_list_all)
 
 
 Calc_LD()

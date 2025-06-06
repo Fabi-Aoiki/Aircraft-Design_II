@@ -239,6 +239,23 @@ MAC = 4.916
 
 
 
+####################################
+#PEMFC
+##########
+PEMFC_Lamda = 1.8
+PEMFC_dPT_PT=0.08108
+PEMFC_PT_d=18500 #N/m^2
+PEMFC_ETA_c_pol = 0.72
+PEMFC_ETA_t_pol = 0.85
+PEMFC_ETA_c_m = 0.95
+PEMFC_R_s=287.05 
+PEMFC_Kappa=1.4
+PEMFC_LHV = 1.2*(10**8) #J/kg
+PEMFC_M_H2= 2.0159*(10**(-3)) #kg/mol
+PEMFC_M_air=28.965*(10**(-3))
+PEMFC_y_air_o2=0.21
+
+
 
 
 
