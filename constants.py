@@ -254,7 +254,9 @@ PEMFC_LHV = 1.2*(10**8) #J/kg
 PEMFC_M_H2= 2.0159*(10**(-3)) #kg/mol
 PEMFC_M_air=28.965*(10**(-3))
 PEMFC_y_air_o2=0.21
-
+PEMFC_a = -0.213
+PEMFC_b = 0.67
+PEMFC_powertoweight = 20
 
 
 
