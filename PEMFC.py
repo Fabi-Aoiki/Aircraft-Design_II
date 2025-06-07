@@ -28,7 +28,7 @@ PT0n = []
 
 M1 =[]
 v0 = []
-vmax=250
+vmax=150
 n=1
 while n < con.H_CRUISE:
     h.append(n)
@@ -150,14 +150,14 @@ for i in PT0n:
 ############################################################################################################################
 #New
 
-##ETA_fc_stack
-ETA_fc_stack = con.PEMFC_a*con.oversizingFc + con.PEMFC_b
 
 
 ##Pel_stack
 Pel_Stack = old.calcElPower(old.FlightPhase.cruise, con.PEMFC_powertoweight)[1]
 P_stackDesign = old.calcDesignStackPower(Pel_Stack)
 P_stackMax = old.calcStackPowerMax(P_stackDesign)
+##ETA_fc_stack
+ETA_fc_stack = con.PEMFC_a*(Pel_Stack/P_stackMax) + con.PEMFC_b
 
 
 
@@ -468,17 +468,17 @@ i=0
 while i <= ns:
 
 
-    Prtrun_pre=[]
-    Prcrun_pre=[]
-    TT0run_pre=[]
-    Prcrun_pre.append(PRcn[i])
-    TT0run_pre.append(TT0n[i])
-    Prtrun_pre.append(PRtn[i])
+    Prtrun_pre1=[]
+    Prcrun_pre1=[]
+    TT0run_pre1=[]
+    Prcrun_pre1.append(PRcn[i])
+    TT0run_pre1.append(TT0n[i])
+    Prtrun_pre1.append(PRtn[i])
 
 
-   
 
-    for x,y,z in zip(TT0run_pre,Prtrun_pre,Prcrun_pre):
+
+    for x1,y1,z1 in zip(TT0run_pre1,Prtrun_pre1,Prcrun_pre1):
         n = 0
         ETA_fc_ancit=[]
         RETA_fc_ancit=[]
@@ -486,11 +486,11 @@ while i <= ns:
         while n <= ls-1:
 
             
-            TT0run = x[n]
-            Prtrun = y[n]
-            Prcrun = z[n]
+            TT0run1 = x1[n]
+            Prtrun1 = y1[n]
+            Prcrun1 = z1[n]
             
-            ETA_fc_ancrun = 1-((1/con.PEMFC_ETA_c_m)*cp*con.PEMFC_Lamda*(1/(ETA_fc_stack*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2))*TT0run*(((((Prcrun**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))))))/(Prtrun**((((con.PEMFC_ETA_t_pol))*(con.PEMFC_Kappa-1))/con.PEMFC_Kappa))))-1)
+            ETA_fc_ancrun = 1-((1/con.PEMFC_ETA_c_m)*cp*con.PEMFC_Lamda*(1/(ETA_fc_stack*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2))*TT0run1*(((((Prcrun1**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))))))/(Prtrun1**((((con.PEMFC_ETA_t_pol))*(con.PEMFC_Kappa-1))/con.PEMFC_Kappa))))-1)
             RETA_fc_ancrun = 1-ETA_fc_ancrun
 
             ETA_fc_ancit.append(ETA_fc_ancrun)
@@ -507,34 +507,34 @@ while i <= ns:
     print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     i = i +1
 
-print(ETA_fc_ancn)
+    print(ETA_fc_ancn)
 
-#**********************************************************************************************************************************************************************************
-#Graphen
-#**********************************************************************************************************************************************************************************
-#for m,f in zip(M0,RETA_fc_anc):
+    #**********************************************************************************************************************************************************************************
+    #Graphen
+    #**********************************************************************************************************************************************************************************
+    #for m,f in zip(M0,RETA_fc_anc):
 
-data = {}
+    data = {}
 
-for m,f in zip(v0,RETA_fc_ancn):
-    data[m]=f
-    plt.plot(f, h, label = str(m))
+    for m,f in zip(v0,RETA_fc_ancn):
+        data[m]=f
+        plt.plot(f, h, label = str(m))
 
-plt.xlabel("1-ETA_fc_anc")
-plt.ylabel("Height [m]")
-plt.legend()
-plt.title('Efficiency over height and different VCAS')
-plt.show()
+    plt.xlabel("1-ETA_fc_anc")
+    plt.ylabel("Height [m]")
+    plt.legend()
+    plt.title('Efficiency over height and different VCAS')
+    plt.show()
 
 
 
-plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
+    plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
 
-plt.xlabel("1-ETA_fc_anc")
-plt.ylabel("Height [m]")
-plt.legend()
-plt.title('Efficiency over height')
-plt.show()
+    plt.xlabel("1-ETA_fc_anc")
+    plt.ylabel("Height [m]")
+    plt.legend()
+    plt.title('Efficiency over height')
+    plt.show()
 
 
 
