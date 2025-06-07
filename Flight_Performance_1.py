@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 from isa import isa_model
 import main
 import axial_momentum as am
-import LD_CL_Calc as LDCL
+# import LD_CL_Calc as LDCL
+import ld_cl_calc_NEW as LDCL
 import numpy as np
 from scipy.interpolate import make_interp_spline
 # level flight diagram
@@ -36,6 +37,7 @@ plt.plot(cd_list, cl_list)
 plt.xlabel("CD")
 plt.ylabel("CL")
 plt.show()
+plt.close()
 # calculate the reciprocal of the glide ratio D/L
 dl_list = []
 for i in range(len(cl_list)):
@@ -44,7 +46,8 @@ for i in range(len(cl_list)):
 plt.plot(vEAS_list, dl_list)
 plt.xlabel(r"$v_{EAS}$ (m/s)")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
-plt.show()
+# plt.show()
+plt.close()
 # calculating the true air speed vTAS at cruising altitude
 vTAS_list = []
 for vEAS in vEAS_list:
@@ -68,7 +71,8 @@ plt.xlabel("Ma Drag Divergence")
 plt.ylabel("CL")
 plt.ylim(0, max(cl_list)*1.1)
 plt.xlim(0, max(MaDD_list)*1.1)
-plt.show()
+# plt.show()
+plt.close()
 # calculating ΔM for the compressible drag
 DeltaM_list = []
 for i in range(len(Ma_list)):
@@ -93,7 +97,8 @@ plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
 plt.ylim(0,1)
 plt.xlim(min(vEAS_list)*0.9, 320)
 plt.legend()
-plt.show()
+# plt.show()
+plt.close()
 # once again but over Mach since it looks way better
 plt.plot(Ma_list, dl_list, label = "w/o compr drag")
 plt.plot(Ma_list, dl_compr_list, label = "w/ compr drag")
@@ -102,7 +107,8 @@ plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
 plt.ylim(0,1)
 plt.xlim(min(Ma_list)*0.9, 1)
 plt.legend()
-plt.show()
+# plt.show()
+plt.close()
 
 # available thrust-to-weight ratio
 # calculations for a turbofan
@@ -149,7 +155,7 @@ for k in range(6):
     koeff = np.polyfit(perf_list[k][4], perf_list[k][0], 5)
     # calculating the left side
     left_side_values = []
-    for i in np.arange(minMach, maxMach+0.02, 0.02):
+    for i in np.arange(minMach, maxMach+0.01, 0.01):
         # evaluating function
         value = 0
         for j in range(len(koeff)):
@@ -159,7 +165,7 @@ for k in range(6):
     # calculating the right side
     koeff = np.polyfit(LDCL.Calc_LD_M()[0][k], LDCL.Calc_LD_M()[1][k], 5)
     right_side_values = []
-    for i in np.arange(minMach, maxMach+0.02, 0.02):
+    for i in np.arange(minMach, maxMach+0.01, 0.01):
         # evaluating function
         value = 0
         for j in range(len(koeff)):
@@ -171,7 +177,7 @@ for k in range(6):
     gamma = []
     for i in range(len(right_side_values)):
         gamma.append(left_side_values[i] - right_side_values[i])
-    mach_list_all.append(np.arange(minMach, maxMach+0.02, 0.02))
+    mach_list_all.append(np.arange(minMach, maxMach+0.01, 0.01))
     gamma_list_all.append(gamma)
     epsilon_list_all.append(right_side_values)
 # plotting for all altitudes
@@ -179,6 +185,8 @@ for i in range(len(mach_list_all)):
     plt.plot(mach_list_all[i], gamma_list_all[i], label = "h = " + str(alti_list[i]) + " m")
 plt.xlabel("M (-)")
 plt.ylabel(r"$\gamma$ (rad)")
+plt.xlim(0, 0.85) # otherwise you cannot see anything
+plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
 plt.legend()
 plt.show()
 plt.close()
@@ -196,6 +204,8 @@ plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel(r"$\gamma$ (rad)")
 plt.legend()
 plt.title("Specific Excess Thrust (Climb)")
+plt.xlim(0, 251) # otherwise you cannot see anything
+plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
 plt.show()
 plt.close()
 # climb: Specific Excess Power
@@ -212,6 +222,8 @@ plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SEP (m/s)")
 plt.legend()
 plt.title("Specific Excess Power (Climb)")
+plt.xlim(0, 251) # otherwise you cannot see anything
+plt.ylim(0, max(SEP_list_all[0])) # need that because of xlim
 plt.show()
 plt.close()
 # specific air range (sar) for hydrogen
@@ -234,6 +246,8 @@ plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SAR (m/kg)")
 plt.legend()
 plt.title("Specific Air Range")
+plt.xlim(0, 251) # otherwise you cannot see anything
+plt.ylim(0, max(SAR_list_all[-1])*1.2) # need that because of xlim
 plt.show()
 plt.close()
 # optimum velocities

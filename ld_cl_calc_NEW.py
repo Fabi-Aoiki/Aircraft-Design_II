@@ -48,7 +48,7 @@ def CalcAnaDrag(M, h):
 def calc_cd_comp(cl, m, mdd):
     cd_0 = 0.01673 - 0.0072
     k = 1 / (10 * np.pi * 0.99) #curvefitting factor
-    m_dd = mdd / (np.cos(np.deg2rad(21.4)))
+    m_dd = mdd / (np.cos(np.deg2rad(21.4)))**0.5
     return cd_0 + k * cl ** 2 + 0.002 * np.exp(60 * (m - m_dd))
 
 
@@ -93,6 +93,11 @@ for h in [0, 2500, 5000, 7500, 10000, 12000]:
     cl = np.array(cl_list)
     plt.plot(cd, cl, label = "CD(CL) for different Mach numbers @ " + str(h) + " m", zorder = 12200 - h)
 
+# need that for export to flight performance
+# taking only the last one (12000 m)
+# might not be used but just in case
+cd_list_export = cd_list
+cl_list_export = cl_list
 
 plt.scatter(calc_cd_comp(calc_cl(con.Wto_stretch, rho(12000, 0), speed_of_sound(12000, 0)*0.785), 0.785, 0.758) + CalcAnaDrag(0.785, 12000),calc_cl(con.Wto_stretch, rho(12000, 0), speed_of_sound(12000, 0)*0.785), color='orange',label="Cruise Design Point", zorder = 24000)
 plt.plot(drag.cd_indu_all_list, drag.cl_indu_all_list, label="CD(CL) as simulated at M = 0.6", zorder = 0)
@@ -102,7 +107,8 @@ plt.legend()
 plt.xlim(0,0.08)
 #plt.ylim(-1.1, 1.15)
 plt.grid()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 
 
@@ -152,12 +158,17 @@ plt.xlabel("CL")
 plt.ylabel("L/D")
 plt.legend()
 plt.grid()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
+plt.close()
 
 
 #######################################
 ######### DIAGRAMM LD_Mach ############
 #######################################
+
+M_list_all = []
+LD_list_all = []
 
 for h in [0, 2500, 5000, 7500, 10000, 12000]:
     m_list = []
@@ -195,10 +206,20 @@ for h in [0, 2500, 5000, 7500, 10000, 12000]:
     m = np.array(m_list_plot)
     plt.plot(m, ld, label = "LD(CL) for different Mach numbers @ " + str(h) + " m", zorder = 200 + h)
 
+    # required to export to flight perfomance script
+    M_list_all.append(m.tolist())
+    LD_list_all.append(ld.tolist())
+
 plt.xlim(0, 1.25)
 plt.ylim(0,22.5)
 plt.xlabel("Mach Number")
 plt.ylabel("L/D")
 plt.legend()
 plt.grid()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
+plt.close()
+
+# required to export to flight performance script
+def Calc_LD_M():
+    return(M_list_all, LD_list_all)
