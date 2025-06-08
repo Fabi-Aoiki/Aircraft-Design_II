@@ -82,7 +82,7 @@ def Efiicienc(TT0n, PRcn, PRtn, cp,ETA_fc_stack, h, v0):
 
 
 
-    plt.plot(ETA_fc_ancn[-1], h, label = str(v0[-1]))
+    plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
 
     plt.xlabel("1-ETA_fc_anc")
     plt.ylabel("Height [m]")

@@ -28,7 +28,7 @@ PT0n = []
 
 M1 =[]
 v0 = []
-vmax=150
+vmax=0.8*295
 n=1
 while n < con.H_CRUISE:
     h.append(n)
@@ -153,9 +153,9 @@ for i in PT0n:
 
 
 ##Pel_stack
-Pel_Stack = old.calcElPower(old.FlightPhase.cruise, con.PEMFC_powertoweight)[1]
-P_stackDesign = old.calcDesignStackPower(Pel_Stack)
-P_stackMax = old.calcStackPowerMax(P_stackDesign)
+Pel_Stack = 29.21e6 #old.calcElPower(old.FlightPhase.cruise, con.PEMFC_powertoweight)[1]
+#P_stackDesign = old.calcDesignStackPower(Pel_Stack)
+P_stackMax = 63.29e6 #old.calcStackPowerMax(P_stackDesign)
 ##ETA_fc_stack
 ETA_fc_stack = con.PEMFC_a*(Pel_Stack/P_stackMax) + con.PEMFC_b
 
@@ -489,14 +489,24 @@ while i <= ns:
             TT0run1 = x1[n]
             Prtrun1 = y1[n]
             Prcrun1 = z1[n]
-            
-            ETA_fc_ancrun = 1-((1/con.PEMFC_ETA_c_m)*cp*con.PEMFC_Lamda*(1/(ETA_fc_stack*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2))*TT0run1*(((((Prcrun1**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))))))/(Prtrun1**((((con.PEMFC_ETA_t_pol))*(con.PEMFC_Kappa-1))/con.PEMFC_Kappa))))-1)
+
+
+
+            PRc_hoch = ((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))
+            PRT_hoch = ((con.PEMFC_ETA_t_pol)*((con.PEMFC_Kappa-1))/con.PEMFC_Kappa)
+
+
+            Ltr = TT0run1*((((Prcrun1**(PRc_hoch)))/(Prtrun1**(PRT_hoch)))-1)
+
+            #Ltrr = TT0run1*(1-(((Prcrun1**(PRc_hoch)))/(Prtrun1**(PRT_hoch))))
+            ETA_fc_ancrun = 1 - (1/con.PEMFC_ETA_c_m)*cp*con.PEMFC_Lamda*(1/(ETA_fc_stack*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2)) * Ltr
             RETA_fc_ancrun = 1-ETA_fc_ancrun
+            print(f"Das ist der Wirkungsgrad  {ETA_fc_ancrun} , Das ist der Gegen Wirkungsgrad {RETA_fc_ancrun} , Das ist der letzte Term {Ltr}")
+            print(f"Das ist PRC  {Prcrun1} , Das ist PRT {Prtrun1} , Das ist der letzte Term reverse  {Ltr}")
 
             ETA_fc_ancit.append(ETA_fc_ancrun)
             RETA_fc_ancit.append(RETA_fc_ancrun)
             n = n +1
-
 
 
         ETA_fc_ancn.append(ETA_fc_ancit)
@@ -514,27 +524,26 @@ while i <= ns:
     #**********************************************************************************************************************************************************************************
     #for m,f in zip(M0,RETA_fc_anc):
 
-    data = {}
 
-    for m,f in zip(v0,RETA_fc_ancn):
-        data[m]=f
-        plt.plot(f, h, label = str(m))
+for m,f in zip(v0,RETA_fc_ancn):
+    
+    plt.plot(f, h, label = str(m))
 
-    plt.xlabel("1-ETA_fc_anc")
-    plt.ylabel("Height [m]")
-    plt.legend()
-    plt.title('Efficiency over height and different VCAS')
-    plt.show()
-
+plt.xlabel("1-ETA_fc_anc")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Efficiency over height and different VCAS')
+plt.show()
 
 
-    plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
 
-    plt.xlabel("1-ETA_fc_anc")
-    plt.ylabel("Height [m]")
-    plt.legend()
-    plt.title('Efficiency over height')
-    plt.show()
+plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
+
+plt.xlabel("1-ETA_fc_anc")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Efficiency over height')
+plt.show()
 
 
 
@@ -560,7 +569,7 @@ plt.legend()
 plt.title('Power ratio over height and different VCAS')
 plt.show()
 
-
+print(f"PT3 {PT3}   PT4 {PT4}")
 
 
 """print(f"Das ist TSO{TS0}")
