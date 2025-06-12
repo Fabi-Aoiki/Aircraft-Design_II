@@ -36,7 +36,7 @@ for i in range(len(cl_list)-1, -1, -1):
 plt.plot(cd_list, cl_list)
 plt.xlabel("CD")
 plt.ylabel("CL")
-plt.show()
+# plt.show()
 plt.close()
 # calculate the reciprocal of the glide ratio D/L
 dl_list = []
@@ -229,7 +229,7 @@ plt.close()
 # specific air range (sar) for hydrogen
 # values need to be updated once available
 heating_value = 120 * 10**6
-eta_approx = 0.9**6
+eta_approx = 0.92**6
 weight = main.W_Take_off * 9.81
 # iterate over alts
 SAR_list_all = []
