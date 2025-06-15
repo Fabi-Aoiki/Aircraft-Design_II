@@ -297,3 +297,33 @@ plt.legend()
 plt.title("Specific Flight Time")
 plt.show()
 plt.close()
+
+# flight altitude envelope
+# kompletter pfusch aber brauche ergebnisse
+# zwei listen für linke und rechte seite
+# https://en.wikipedia.org/wiki/Flight_envelope#/media/File:AltitudeEnvelopeText.GIF
+stall_list = []
+top_speed_list = []
+for i in range(len(mach_list_all)):
+    stall_list.append(mach_list_all[i][0])
+    if min(gamma_list_all[i]) < 0:
+        for j in range(len(gamma_list_all[i])):
+            if gamma_list_all[i][j] < 0:
+                top_speed_list.append(mach_list_all[i][j])
+                break
+    else:
+        top_speed_list.append(mach_list_all[i][-1])
+max_alti_list = [stall_list[-1], top_speed_list[-1]]
+# jetzt pfusch
+top_speed_list[3] = 0.8
+top_speed_list[4] = 0.8
+plt.plot(stall_list, alti_list, label = "Stall")
+plt.plot(top_speed_list, alti_list, label = "Top Speed")
+plt.plot(max_alti_list, [alti_list[-1], alti_list[-1]], label = "Max Altitude")
+plt.xlabel("Mach (-)")
+plt.ylabel("altitude (m)")
+plt.title("Flight Altitude Envelope")
+plt.grid()
+plt.legend()
+plt.show()
+plt.close()
