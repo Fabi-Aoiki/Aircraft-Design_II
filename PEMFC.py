@@ -79,10 +79,12 @@ for z in v0:
     for i in h:
         TS0run=(isa.isa_model(i,con.dt)[1])
         PS0run=(isa.isa_model(i,con.dt)[0])
+        #qrun=8900
+        #qrun=(((z**2)*(1))/2)
         qrun=(((z**2)*(isa.isa_model(i,con.dt)[2]))/2) #Erster Versuch mittels Bernouli
         PT0run=(PS0run + qrun)
-        M1run=(((2/((con.PEMFC_Kappa)-1))*((PT0run/PS0run)**(((con.PEMFC_Kappa)-1)/(con.PEMFC_Kappa))-1))**0.5)
-        TT0runr=((isa.isa_model(i,con.dt)[1])*(1+((con.PEMFC_Kappa-1)/(2))*(M1run**2)))
+        M1run=(((2/((con.PEMFC_Kappa)-1))*(((PT0run/PS0run)**(((con.PEMFC_Kappa)-1)/(con.PEMFC_Kappa)))-1))**0.5)
+        TT0runr=((TS0run)*(1+(((con.PEMFC_Kappa-1)/(2))*(M1run**2))))
 
 
 
@@ -145,10 +147,10 @@ for i in PT0n:
 
 ##PRt Clac Iteration over M and then hight    
 PRtn = []
-for i in PT0n:
+for o in PT0n:
     PRtint = []
-    for x in i:
-        PRtint.append(PT4/x)#PT5 = PT0 
+    for f in o:
+        PRtint.append(PT4/f)#PT5 = PT0 
     
     PRtn.append(PRtint)
 ############################################################################################################################
@@ -161,6 +163,7 @@ Pel_Stack = 29.21e6 #old.calcElPower(old.FlightPhase.cruise, con.PEMFC_powertowe
 #P_stackDesign = old.calcDesignStackPower(Pel_Stack)
 P_stackMax = 63.29e6 #old.calcStackPowerMax(P_stackDesign)
 ##ETA_fc_stack
+#ETA_fc_stack = con.PEMFC_a*(0.33) + con.PEMFC_b
 ETA_fc_stack = con.PEMFC_a*(Pel_Stack/P_stackMax) + con.PEMFC_b
 
 
@@ -529,7 +532,7 @@ while i <= ns:
             #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             print(f"Das ist der Wirkungsgrad  {ETA_fc_ancrun} , Das ist der Gegen Wirkungsgrad {RETA_fc_ancrun} , Das ist der letzte Term {Ltr}")
             
-            #print(f"Das ist PRC  {Prcrun1} , Das ist PRT {Prtrun1} , Das ist der letzte Term reverse  {Ltr}")
+            print(f"Das ist PRC  {Prcrun1} , Das ist PRT {Prtrun1} , Das ist der letzte Term reverse  {Ltr}")
             #print(f"Controll Term {(Prcrun1/Prtrun1)}")
             #print(f"Hoch vergleich {(((PRc_hoch))/(PRT_hoch))}") Hoch zahlen können ausggeschlossen werden
             #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -569,7 +572,7 @@ for k in RETA_fc_ancn:
     RETA_fc_mani.append(RETA_fc_maniit)
 
 
-for m,f in itertools.zip_longest(v0,RETA_fc_mani):
+for m,f in itertools.zip_longest(v0,RETA_fc_ancn):
     
     plt.plot(f, h, label = str(m))
 
@@ -580,6 +583,17 @@ plt.title('Efficiency over height and different VCAS')
 plt.show()
 
 
+"""for m,f in itertools.zip_longest(v0,RETA_fc_mani):
+    
+    plt.plot(f, h, label = str(m))
+
+plt.xlabel("1-ETA_fc_anc")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Efficiency over height and different VCAS')
+plt.show()
+
+"""
 
 """plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
 
@@ -593,32 +607,40 @@ plt.show()
 
 data = {}
 r=[]
+rm=[]
+ri=[]
 maxr = []
 for f,v in itertools.zip_longest(Ptn,PCn):
     
     run = []
     runm = []
+    rin=[]
     for b,p in zip(f,v):
         if b/p >= 1:
             run.append(None)
+            rin.append(None)
             continue
         elif b/p <= 0:
             run.append(None)
+            rin.append(None)
             continue
         else:
             #run.append((((b/p))))
-            run.append((1+((b/p)*-1)))
+            run.append((((b/p))))
+            rin.append((1+((b/p)*-1)))
             runm.append((1+((b/p)*-1)))
         #print(f"Turbine{b}   Compressor{p}")
     maxr.append(max(runm))
     r.append(run)
+    ri.append(rin)
+    rm.append(runm)
 print(r)
 """for m,t in zip(v0,r):
  plt.plot(t, h, label = str(m))"""
 
 maxg = max(maxr)
 rap = []
-for i in r:
+for i in ri:
     ir = []
     for x in i:
         if x != None:
@@ -626,9 +648,19 @@ for i in r:
         ir.append(x)
     rap.append(ir)
 
+for m,f in itertools.zip_longest(v0,r):
+    
+    plt.plot((f), h, label = str(m))
+
+
+plt.xlabel("Power ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Power ratio over height and different VCAS Old')
+plt.show()
 
 #r.reverse()
-h.reverse()
+"""h.reverse()
 #r[-1].reverse()
 for m,f in itertools.zip_longest(v0,rap):
     
@@ -640,7 +672,7 @@ plt.ylabel("Height [m]")
 plt.legend()
 plt.title('Power ratio over height and different VCAS')
 plt.show()
-
+"""
 #print(f"PT3 {PT3}   PT4 {PT4}")
 
 

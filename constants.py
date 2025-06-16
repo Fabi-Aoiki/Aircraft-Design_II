@@ -244,7 +244,7 @@ MAC = 4.916
 ##########
 PEMFC_Lamda = 1.8
 PEMFC_dPT_PT=0.08108
-PEMFC_PT_d=18500 #N/m^2
+PEMFC_PT_d=185000 #N/m^2
 PEMFC_ETA_c_pol = 0.72
 PEMFC_ETA_t_pol = 0.85
 PEMFC_ETA_c_m = 0.95
