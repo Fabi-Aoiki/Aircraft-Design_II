@@ -141,7 +141,7 @@ for i in PT0n:
     PRcint = []
     for x in i:
         PRcint.append(PT3/x)#PT2 = PT0 
-        print(x)
+        #print(x)
     
     PRcn.append(PRcint)
 
@@ -514,7 +514,7 @@ while i <= ns:
 
             
 
-            print(x[n],y1[n],z1[n])
+            #print(x[n],y1[n],z1[n])
 
 
 
@@ -530,9 +530,9 @@ while i <= ns:
 
             RETA_fc_ancrun = ((1-ETA_fc_ancrun))
             #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            print(f"Das ist der Wirkungsgrad  {ETA_fc_ancrun} , Das ist der Gegen Wirkungsgrad {RETA_fc_ancrun} , Das ist der letzte Term {Ltr}")
+            #print(f"Das ist der Wirkungsgrad  {ETA_fc_ancrun} , Das ist der Gegen Wirkungsgrad {RETA_fc_ancrun} , Das ist der letzte Term {Ltr}")
             
-            print(f"Das ist PRC  {Prcrun1} , Das ist PRT {Prtrun1} , Das ist der letzte Term reverse  {Ltr}")
+            #print(f"Das ist PRC  {Prcrun1} , Das ist PRT {Prtrun1} , Das ist der letzte Term reverse  {Ltr}")
             #print(f"Controll Term {(Prcrun1/Prtrun1)}")
             #print(f"Hoch vergleich {(((PRc_hoch))/(PRT_hoch))}") Hoch zahlen können ausggeschlossen werden
             #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -634,7 +634,7 @@ for f,v in itertools.zip_longest(Ptn,PCn):
     r.append(run)
     ri.append(rin)
     rm.append(runm)
-print(r)
+#print(r)
 """for m,t in zip(v0,r):
  plt.plot(t, h, label = str(m))"""
 

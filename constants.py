@@ -258,6 +258,9 @@ PEMFC_a = -0.213
 PEMFC_b = 0.67
 PEMFC_powertoweight = 20
 
+PEMFC_PT_ref=101325
+PEMFC_TT_ref= 288.15
+
 
 
 
