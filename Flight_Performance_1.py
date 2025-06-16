@@ -36,7 +36,7 @@ for i in range(len(cl_list)-1, -1, -1):
 plt.plot(cd_list, cl_list)
 plt.xlabel("CD")
 plt.ylabel("CL")
-plt.show()
+# plt.show()
 plt.close()
 # calculate the reciprocal of the glide ratio D/L
 dl_list = []
@@ -135,7 +135,9 @@ plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
 plt.ylim(0,1)
 plt.xlim(0.5, 1)
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
+plt.close()
 
 # climb perfomance
 # specific excess thrust
@@ -188,7 +190,8 @@ plt.ylabel(r"$\gamma$ (rad)")
 plt.xlim(0, 0.85) # otherwise you cannot see anything
 plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # converting from Mach to vTAS
 vTAS_list_all = []
@@ -206,7 +209,8 @@ plt.legend()
 plt.title("Specific Excess Thrust (Climb)")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # climb: Specific Excess Power
 SEP_list_all = []
@@ -224,12 +228,13 @@ plt.legend()
 plt.title("Specific Excess Power (Climb)")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(SEP_list_all[0])) # need that because of xlim
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # specific air range (sar) for hydrogen
 # values need to be updated once available
 heating_value = 120 * 10**6
-eta_approx = 0.9**6
+eta_approx = 0.45
 weight = main.W_Take_off * 9.81
 # iterate over alts
 SAR_list_all = []
@@ -248,7 +253,8 @@ plt.legend()
 plt.title("Specific Air Range")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(SAR_list_all[-1])*1.2) # need that because of xlim
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # optimum velocities
 # need to find the maximum for SET, SEP and SAR at each alt
@@ -278,7 +284,8 @@ plt.xlabel(r"$v_{TAS}$ (m/s)")
 plt.ylabel("altitude (m)")
 plt.title("Optimum Velocities")
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # specific flight time
 # for hydro simply use SAR and devide through speed
@@ -295,5 +302,37 @@ plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SE (s/kg)")
 plt.legend()
 plt.title("Specific Flight Time")
-plt.show()
+if __name__ == "__main__":
+    plt.show()
+plt.close()
+
+# flight altitude envelope
+# kompletter pfusch aber brauche ergebnisse
+# zwei listen für linke und rechte seite
+# https://en.wikipedia.org/wiki/Flight_envelope#/media/File:AltitudeEnvelopeText.GIF
+stall_list = []
+top_speed_list = []
+for i in range(len(mach_list_all)):
+    stall_list.append(mach_list_all[i][0])
+    if min(gamma_list_all[i]) < 0:
+        for j in range(len(gamma_list_all[i])):
+            if gamma_list_all[i][j] < 0:
+                top_speed_list.append(mach_list_all[i][j])
+                break
+    else:
+        top_speed_list.append(mach_list_all[i][-1])
+max_alti_list = [stall_list[-1], top_speed_list[-1]]
+# jetzt pfusch
+top_speed_list[3] = 0.8
+top_speed_list[4] = 0.8
+plt.plot(stall_list, alti_list, label = "Stall")
+plt.plot(top_speed_list, alti_list, label = "Top Speed")
+plt.plot(max_alti_list, [alti_list[-1], alti_list[-1]], label = "Max Altitude")
+plt.xlabel("Mach (-)")
+plt.ylabel("altitude (m)")
+plt.title("Flight Altitude Envelope")
+plt.grid()
+plt.legend()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
