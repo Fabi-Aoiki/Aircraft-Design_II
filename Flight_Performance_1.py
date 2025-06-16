@@ -135,7 +135,9 @@ plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
 plt.ylim(0,1)
 plt.xlim(0.5, 1)
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
+plt.close()
 
 # climb perfomance
 # specific excess thrust
@@ -188,7 +190,8 @@ plt.ylabel(r"$\gamma$ (rad)")
 plt.xlim(0, 0.85) # otherwise you cannot see anything
 plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # converting from Mach to vTAS
 vTAS_list_all = []
@@ -206,7 +209,8 @@ plt.legend()
 plt.title("Specific Excess Thrust (Climb)")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # climb: Specific Excess Power
 SEP_list_all = []
@@ -224,12 +228,13 @@ plt.legend()
 plt.title("Specific Excess Power (Climb)")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(SEP_list_all[0])) # need that because of xlim
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # specific air range (sar) for hydrogen
 # values need to be updated once available
 heating_value = 120 * 10**6
-eta_approx = 0.92**6
+eta_approx = 0.45
 weight = main.W_Take_off * 9.81
 # iterate over alts
 SAR_list_all = []
@@ -248,7 +253,8 @@ plt.legend()
 plt.title("Specific Air Range")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(SAR_list_all[-1])*1.2) # need that because of xlim
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # optimum velocities
 # need to find the maximum for SET, SEP and SAR at each alt
@@ -278,7 +284,8 @@ plt.xlabel(r"$v_{TAS}$ (m/s)")
 plt.ylabel("altitude (m)")
 plt.title("Optimum Velocities")
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 # specific flight time
 # for hydro simply use SAR and devide through speed
@@ -295,7 +302,8 @@ plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SE (s/kg)")
 plt.legend()
 plt.title("Specific Flight Time")
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
 
 # flight altitude envelope
@@ -325,5 +333,6 @@ plt.ylabel("altitude (m)")
 plt.title("Flight Altitude Envelope")
 plt.grid()
 plt.legend()
-plt.show()
+if __name__ == "__main__":
+    plt.show()
 plt.close()
