@@ -29,9 +29,9 @@ PT0n = []
 
 M1 =[]
 v0 = []
-vmax=0.8*295
+vmax=0.8*350
 n=0
-while n < con.H_CRUISE:
+while n < 18000:#con.H_CRUISE:
     h.append(n)
     n = n +50 
 
@@ -116,22 +116,6 @@ PT4 = con.PEMFC_PT_d * (1-con.PEMFC_dPT_PT)
 
 #Values From Changing values
 ##PRc Clac Iteration over M and then hight
-"""PRc = []
-for i in PT0:
-    PRcint = []
-    for x in i:
-        PRcint.append(PT3/x)#PT2 = PT0 
-    
-    PRc.append(PRcint)
-
-##PRt Clac Iteration over M and then hight    
-PRt = []
-for i in PT0:
-    PRtint = []
-    for x in i:
-        PRtint.append(PT4/x)#PT5 = PT0 
-    
-    PRt.append(PRtint)"""
 
 ############################################################################################################################
 #New
@@ -169,7 +153,7 @@ ETA_fc_stack = con.PEMFC_a*(Pel_Stack/P_stackMax) + con.PEMFC_b
 
 
 ##Mass Flow
-mdot = con.PEMFC_Lamda*((Pel_Stack/ (ETA_fc_stack * con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2)))
+mdot = con.PEMFC_Lamda*((Pel_Stack/ (ETA_fc_stack * con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2))) #[kg/s]  under regular circum 26.218857206691773 
 
 
 ##TT3 and PC Itération over length of lists the same length
@@ -191,59 +175,7 @@ def listlength(liste):
 
     return(lg,ls,ns)
 
-"""
-lg = listlength(TT0)[0] 
-ls = listlength(TT0)[1] 
-ns = (listlength(TT0)[2])
-ns = int(ns)-1
-TT3=[]
-TTerm=[]
-PC =[]
-i=0
 
-while i <= ns:
-    TT3i = []
-    TTermi=[]
-    Prcrun_pre=[]
-    TT0run_pre=[]
-    PCi = []
-    Prcrun_pre.append(PRc[i])
-    TT0run_pre.append(TT0[i])
-
-   
-
-    for x,y in zip(TT0run_pre,Prcrun_pre):
-        n = 0
-        TT3it=[]
-        TTermit=[]
-        PCit=[]
-
-        while n <= ls-1:
-
-            Prcrun = y[n]
-            TT0run = x[n]
-            #print(TT0run,Prcrun)
-            TT3run = ((Prcrun**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa)))*TT0run))
-            TTermrun = ((Prcrun**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa)))))
-            PCrun = cp * mdot * TT0run *(TTermrun - 1)
-            TT3it.append(TT3run)
-            TTermit.append(TTermrun)
-            PCit.append(PCrun)
-            n = n +1
-
-
-        TT3.append(TT3it)
-        TTerm.append(TTermit)
-        PC.append(PCit)
-    #TT3.append(TT3i)old idea
-    #TTerm.append(TTermi)
-    #PC.append(PCi)
-    #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    #print(i)
-    #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    i = i +1
-print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-"""
 ###################################################################################################################################################
 lg = listlength(TT0n)[0] 
 ls = listlength(TT0n)[1] 
@@ -296,60 +228,7 @@ while i <= ns:
     #print(i)
     #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     i = i +1
-print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-"""########################
-#Pt
-
-
-lg = listlength(TT3)[0] 
-ls = listlength(TT3)[1] 
-ns = (listlength(TT3)[2])
-ns = int(ns)-1
-
-Pt =[]
-i=0
-print("---------------------------------------------------------------------")
-#print("TT3")
-#print(TT3)
-print("_--------------------------------------------------------------")
-while i <= ns:
-
-
-    Prtrun_pre=[]
-    TT3run_pre=[]
-    Pti = []
-    Prtrun_pre.append(PRt[i])
-    TT3run_pre.append(TT3[i])
-
-   
-
-    for x,y in zip(TT3run_pre,Prtrun_pre):
-        n = 0
-        Ptit=[]
-
-        while n <= ls-1:
-
-            Prtrun = y[n]
-            TT3run = x[n]
-            
-            Ptrun = cp * mdot * TT3run *(1-pow(Prtrun,(((con.PEMFC_ETA_t_pol)*-1)*(con.PEMFC_Kappa-1))/con.PEMFC_Kappa))
-            #print(Ptrun)
-
-            Ptit.append(Ptrun)
-            n = n +1
-
-
-
-        Pt.append(Ptit)
-
-    #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    #print(i)
-    #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    i = i +1
-
-#print(Pt)
-
-print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")"""
+#print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
 
 ########################
@@ -363,10 +242,7 @@ ns = int(ns)-1
 
 Ptn =[]
 i=0
-print("---------------------------------------------------------------------")
-#print("TT3")
-#print(TT3)
-print("_--------------------------------------------------------------")
+
 while i <= ns:
 
 
@@ -407,60 +283,6 @@ while i <= ns:
 print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 #ETA_fc_anc
 
-
-"""lg = listlength(TT0)[0] 
-ls = listlength(TT0)[1] 
-ns = (listlength(TT0)[2])
-ns = int(ns)-1
-
-ETA_fc_anc =[]
-RETA_fc_anc=[]# 1- ETA (Revese Eta)
-i=0
-
-while i <= ns:
-
-
-    Prtrun_pre=[]
-    Prcrun_pre=[]
-    TT0run_pre=[]
-    Prcrun_pre.append(PRc[i])
-    TT0run_pre.append(TT0[i])
-    Prtrun_pre.append(PRt[i])
-
-
-   
-
-    for x,y,z in zip(TT0run_pre,Prtrun_pre,Prcrun_pre):
-        n = 0
-        ETA_fc_ancit=[]
-        RETA_fc_ancit=[]
-
-        while n <= ls-1:
-
-            
-            TT0run = x[n]
-            Prtrun = y[n]
-            Prcrun = z[n]
-            
-            ETA_fc_ancrun = 1-((1/con.PEMFC_ETA_c_m)*cp*con.PEMFC_Lamda*(1/(ETA_fc_stack*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2))*TT0run*(((((Prcrun**(((con.PEMFC_Kappa-1)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))))))/(pow(Prtrun,(((con.PEMFC_ETA_t_pol))*(con.PEMFC_Kappa-1))/con.PEMFC_Kappa)))-1)) 
-            RETA_fc_ancrun = 1-ETA_fc_ancrun
-
-            ETA_fc_ancit.append(ETA_fc_ancrun)
-            RETA_fc_ancit.append(RETA_fc_ancrun)
-            n = n +1
-
-
-
-        ETA_fc_anc.append(ETA_fc_ancit)
-        RETA_fc_anc.append(RETA_fc_ancit)
-
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    print(i)
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    i = i +1
-
-print(ETA_fc_anc)
-"""
 
 #h.reverse()
 
@@ -554,22 +376,250 @@ while i <= ns:
 
     #print(ETA_fc_ancn)
 
+#corrections 
+##############################################
+#Mdot coreections
+
+#Op points find
+
+opind = h.index(12000) #op height
+Mop = 0.785
+n=0
+ETAR = []
+Mpoint = []
+TT0pointit =[]
+PT0pointit =[]
+
+ETARl = []
+Mpointl = []
+v0l=[]
+Mdis =[]
+PRcl = []
+TT0pointl =[]
+PT0pointl =[]
+
+
+for i in v0:
+    Mpoint = M1[n]
+    ETAR = ETA_fc_ancn[n]
+    PRcrl = PRcn[n]
+    TT0pointit = TT0n[n]
+    PT0pointit = PT0n[n]
+    print(f"Geschwindigkeit {i}, Wirkungsgrad {ETAR[opind]}, Mach {Mpoint[opind]} ")
+    PRcl.append(PRcrl[opind])
+    ETARl.append(ETAR[opind])
+    Mpointl.append(Mpoint[opind])
+    v0l.append(opind)
+    Mdis.append(abs((Mpoint[opind])-Mop))
+    TT0pointl.append(TT0pointit[opind])
+    PT0pointl.append(PT0pointit[opind])
+    n=n+1
+
+
+
+Mnear = min(Mdis)
+
+vspoint = Mdis.index(Mnear)
+
+PRc_Choosen= PRcl[vspoint]
+TT_Choosen = TT0pointl[vspoint]
+PT_Choosen = PT0pointl[vspoint]
+print(f"Compression choosen = {PRc_Choosen}, Temp choosen = {TT_Choosen}, Pressure choosen = {PT_Choosen}")
+
+
+
+PRcrestricted = []
+n=0
+for i in PRcn:
+
+    PRc_it =[]
+
+    for x in i:
+        if PRc_Choosen <= x:
+            PRc_it.append(PRc_Choosen)
+        else:
+            PRc_it.append(x)
+    PRcrestricted.append(PRc_it)
+    n=n+1
+
+
+mdotcor = mdot* (((TT_Choosen/con.PEMFC_TT_ref)**0.5)/(PT_Choosen/con.PEMFC_PT_ref))
+
+mdot_aden = mdotcor* ((PT_Choosen/con.PEMFC_PT_ref)/((TT_Choosen/con.PEMFC_TT_ref)**0.5))
+
+mdot_cn = []
+
+for x,y in zip(PRcrestricted,PRcn):
+    mdot_cn_it =[]
+    for a,b in zip(x,y):
+        m = mdot_aden*((a/b)**(1-(((0.4)/(2*con.PEMFC_ETA_c_pol*con.PEMFC_Kappa)))))
+        mdot_cn_it.append(m)
+    mdot_cn.append(mdot_cn_it)
+
+
+
+
+
+#Pel Stack cn
+Pel_cn = []
+H_cn = []
+FC_cn = [] 
+ETA_stack_cn = []
+
+
+for i in mdot_cn:
+    Pel_cn_it = []
+    Pel_ver_it = []
+    FC_cn_it = []
+    ETA_stack_cn_it = []
+    for m in i:
+        sub1 = (1/((1/ETA_fc_stack)*(m/mdot_aden)))
+        sub2 = con.PEMFC_a*(Pel_Stack/P_stackMax)
+        complete = ((con.PEMFC_b)/(sub1-sub2)) * Pel_Stack
+        ncomplete = ((con.PEMFC_b)/(sub1-sub2))
+        FC_com = (Pel_Stack/P_stackMax)*ncomplete
+        ETA_com = con.PEMFC_a * FC_com + con.PEMFC_b
+        Pel_cn_it.append(complete)
+        Pel_ver_it.append(ncomplete)
+        FC_cn_it.append(FC_com)
+        ETA_stack_cn_it.append(ETA_com)
+    Pel_cn.append(Pel_cn_it)
+    H_cn.append(Pel_ver_it)
+    FC_cn.append(FC_cn_it)
+    ETA_stack_cn.append(ETA_stack_cn_it)
+
+#############################################################################################################################
+lg = listlength(TT0n)[0] 
+ls = listlength(TT0n)[1] 
+ns = (listlength(TT0n)[2])
+ns = int(ns)-1
+
+ETA_cn =[]
+RETA_cn=[]# 1- ETA (Revese Eta)
+
+i=0
+
+
+
+while i <= ns:
+
+
+    Prtrun_pre1=[]
+    Prcrun_pre1=[]
+    TT0run_pre1=[]
+    ETA_stack_run_pre1=[]
+    Prcrun_pre1.append(PRcrestricted[i])
+    TT0run_pre1.append(TT0n[i])
+    Prtrun_pre1.append(PRtn[i])
+    ETA_stack_run_pre1.append(ETA_stack_cn[i])
+    
+    
+
+
+
+
+    for x1,y1,z1,u1 in itertools.zip_longest(TT0run_pre1,Prtrun_pre1,Prcrun_pre1,ETA_stack_run_pre1):
+        n = 0
+        ETA_cnit=[]
+        RETA_cnit=[]
+        
+        
+
+
+        while n <= ls-1:
+
+        
+            TT0run1 = x1[n]
+            Prtrun1 = y1[n]
+            Prcrun1 = z1[n]
+            ETA_stack_run1 = u1[n]
+
+            
+
+
+
+
+
+            PRc_hoch = ((0.4)/(con.PEMFC_ETA_c_pol*con.PEMFC_Kappa))
+            PRT_hoch = ((con.PEMFC_ETA_t_pol)*((0.4))/con.PEMFC_Kappa)
+
+
+            Ltr = TT0run1*((((Prcrun1**(PRc_hoch)))/(Prtrun1**(PRT_hoch)))-1)
+
+
+
+            ETA_cnrun = (1- (((1/con.PEMFC_ETA_c_m))*cp*con.PEMFC_Lamda*(1/(ETA_stack_run1*con.PEMFC_LHV))*(con.PEMFC_M_air/(2*con.PEMFC_M_H2*con.PEMFC_y_air_o2)) * Ltr))
+
+            RETA_cnrun = ((1-ETA_cnrun))
+
+
+            ETA_cnit.append(ETA_cnrun)
+            RETA_cnit.append(RETA_cnrun)
+            n = n +1
+
+        #RETA_fc_ancit.reverse()
+
+
+        ETA_cn.append(ETA_cnit)
+        RETA_cn.append(RETA_cnit)
+
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    print(i)
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    i = i +1
+################################################################################################################################
+Pshaft = []
+
+for a , b, c, d in zip(H_cn, ETA_cn, ETA_fc_ancn, FC_cn):
+    Pshaft_it =[]
+
+    for w, x, y, z in zip(a,b,c,d):
+        Pel_mot_crs = ((Pel_Stack*0.93)- con.P_elNonProp)  #Sketchy shit weil Timon mist Programiert
+        Konst = con.Transef_Se * con.PEMFC_ETA_emot * con.PEMFC_ETA_invert * Pel_mot_crs
+        Nonkonst = w*(x/y)*(z/(Pel_Stack/P_stackMax))
+        P = Konst *Nonkonst
+        Pshaft_it.append(P)
+    Pshaft.append(Pshaft_it)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################################################################################################################
+
+
+
+
+
+
+
+
+
+
     #**********************************************************************************************************************************************************************************
     #Graphen
     #**********************************************************************************************************************************************************************************
     #for m,f in zip(M0,RETA_fc_anc):
 
 
-#print(minl)
-ming = min(minl)
-RETA_fc_mani = []
 
-for k in RETA_fc_ancn:
-    RETA_fc_maniit = []
-    for s in k:
-        s = s + ((ming*-1)*1.5)
-        RETA_fc_maniit.append(s)
-    RETA_fc_mani.append(RETA_fc_maniit)
 
 
 for m,f in itertools.zip_longest(v0,RETA_fc_ancn):
@@ -583,29 +633,10 @@ plt.title('Efficiency over height and different VCAS')
 plt.show()
 
 
-"""for m,f in itertools.zip_longest(v0,RETA_fc_mani):
-    
-    plt.plot(f, h, label = str(m))
-
-plt.xlabel("1-ETA_fc_anc")
-plt.ylabel("Height [m]")
-plt.legend()
-plt.title('Efficiency over height and different VCAS')
-plt.show()
-
-"""
-
-"""plt.plot(RETA_fc_ancn[-1], h, label = str(v0[-1]))
-
-plt.xlabel("1-ETA_fc_anc")
-plt.ylabel("Height [m]")
-plt.legend()
-plt.title('Efficiency over height')
-plt.show()
-"""
 
 
-data = {}
+
+
 r=[]
 rm=[]
 ri=[]
@@ -634,19 +665,11 @@ for f,v in itertools.zip_longest(Ptn,PCn):
     r.append(run)
     ri.append(rin)
     rm.append(runm)
-#print(r)
-"""for m,t in zip(v0,r):
- plt.plot(t, h, label = str(m))"""
 
-maxg = max(maxr)
-rap = []
-for i in ri:
-    ir = []
-    for x in i:
-        if x != None:
-            x=x+maxg
-        ir.append(x)
-    rap.append(ir)
+
+
+
+
 
 for m,f in itertools.zip_longest(v0,r):
     
@@ -656,78 +679,93 @@ for m,f in itertools.zip_longest(v0,r):
 plt.xlabel("Power ratio")
 plt.ylabel("Height [m]")
 plt.legend()
-plt.title('Power ratio over height and different VCAS Old')
+plt.title('Power ratio over height and different VCAS')
 plt.show()
 
-#r.reverse()
-"""h.reverse()
-#r[-1].reverse()
-for m,f in itertools.zip_longest(v0,rap):
+
+
+
+
+#Pressure Ratio constricted and none constricted
+for m,f,g in itertools.zip_longest(v0,PRcn,PRcrestricted):
+    
+    plt.plot((f), h, label = str(m))
+    plt.plot((g), h, label = (str(m) + " Restricted"))
+
+
+plt.xlabel("Compressor Pressure Ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Compressor Ratio over height and different VCAS')
+plt.show()
+
+
+
+
+
+
+rverg=[]
+
+for f in mdot_cn:
+    
+    run = []
+
+    for b in f:
+
+        run.append((((b/mdot_aden))))
+
+
+
+    rverg.append(run)
+
+
+
+
+
+for m,f in itertools.zip_longest(v0,rverg):
     
     plt.plot((f), h, label = str(m))
 
 
-plt.xlabel("Power ratio")
+plt.xlabel("mdot")
 plt.ylabel("Height [m]")
 plt.legend()
-plt.title('Power ratio over height and different VCAS')
+plt.title('mdot_cn / mdot over height and different VCAS')
 plt.show()
-"""
-#print(f"PT3 {PT3}   PT4 {PT4}")
-
-
-"""print(f"Das ist TSO{TS0}")
-print(f"Das ist PSO{PS0}")"""
-"""print(f"Das ist PT4 {PT4}")
-print(f"Das ist PT3 {PT3}")
-print(f"Das ist PRc {PRc}")"""
 
 
 
 
+for m,f in itertools.zip_longest(v0,H_cn):
+    
+    plt.plot((f), h, label = str(m))
 
-"""#**********************************************************************************************************************************************************************************
-#Graphen
-#**********************************************************************************************************************************************************************************
-#for m,f in zip(M0,RETA_fc_anc):
 
-data = {}
+plt.xlabel("mdot")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Pel diff over height and different VCAS')
+plt.show()
 
-for m,f in zip(M0,ETA_fc_anc):
-    data[m]=f
+
+
+for m,f in itertools.zip_longest(v0,RETA_cn):
+    
     plt.plot(f, h, label = str(m))
 
-plt.xlabel("1-ETA_fc_anc")
+plt.xlabel("1-ETA_fc_anc_constricted")
 plt.ylabel("Height [m]")
 plt.legend()
-plt.title('Efficiency over height and different Mach numbers')
+plt.title('Constricted efficiency over height and different VCAS')
 plt.show()
 
 
+for m,f in itertools.zip_longest(v0,Pshaft):
+    
+    plt.plot(f, h, label = str(m))
 
-plt.plot(ETA_fc_anc[-1], h, label = str(M0[-1]))
-
-plt.xlabel("1-ETA_fc_anc")
+plt.xlabel("Shaft Power")
 plt.ylabel("Height [m]")
 plt.legend()
-plt.title('Efficiency over height')
+plt.title('Shaft power to height')
 plt.show()
-
-
-
-data = {}
-r=[]
-for f,v in zip(Pt,PC):
-    run = []
-    for b,p in zip(f,v):
-        run.append(b/p)
-    r.append(run)
-
-for m,t in zip(M0,r):
- plt.plot(t, h, label = str(m))
-
-plt.xlabel("Power ratio")
-plt.ylabel("Height [m]")
-plt.legend()
-plt.title('Power ratio over height and different Mach numbers')
-plt.show()"""

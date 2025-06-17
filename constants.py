@@ -261,7 +261,8 @@ PEMFC_powertoweight = 20
 PEMFC_PT_ref=101325
 PEMFC_TT_ref= 288.15
 
-
+PEMFC_ETA_emot = 0.99
+PEMFC_ETA_invert = 0.99
 
 
 
