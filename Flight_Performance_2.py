@@ -3,6 +3,8 @@
 import Flight_Performance_1 as FP1
 import matplotlib.pyplot as plt
 import numpy as np
+import main
+import math
 
 # INTEGRAL CLIMB PERFORMANCE
 # sep_list = FP1.SEP_list_all
@@ -88,3 +90,58 @@ plt.xlim(left=0)
 if __name__ == "__main__":
     plt.show()
 plt.close()
+
+fuelFractionClimb = 1 - climbFuel / (0.995 * main.W_Take_off)
+print("Fuel Fraction = " + str(round(fuelFractionClimb, 4)))
+
+
+# PAYLOAD-RANGE-DIAGRAM
+def GetRange(TakeOffMass, FuelMass, fuelFractionClimb, climbDistance):
+    m12 = TakeOffMass - FuelMass
+    FuelMassContingency = FuelMass * 0.8 * 0.05
+    m11 = m12 + FuelMassContingency
+    mf11 = m12 / m11
+    mf10 = 0.998
+    m10 = m11 / mf10
+    mf9 = (2.71828**(1800*1/21.4*9.81*103/(0.45*120*10**6)))**(-1)
+    m9 = m10 / mf9
+    m8 = m9
+    mf8 = 1
+    FuelMassDiversion = 185
+    m6 = m8 + FuelMassDiversion
+    mf67 = m8 / m6
+    m5 = m6
+    mf5 = 1
+    mf0 = 0.996
+    mf1 = 0.998
+    mf2 = 0.998
+    mf3 = fuelFractionClimb
+    m4 = TakeOffMass * mf0 * mf1 * mf2 * mf3
+    RangeCruise = 0.45 * 120 * 10**6 * math.log(m5 / m4) / 9.81 / (1/21.2) / 1000
+    RangeDescent = 220
+    RangeTotal = abs(RangeCruise) + RangeDescent + climbDistance/1000
+    return(RangeTotal)
+
+RangeA = 0
+RangeB = GetRange(116658, 6606, fuelFractionClimb, climbDistance) * 0.95 # Throttle
+RangeC = GetRange(116658, 9375, fuelFractionClimb, climbDistance) * 0.95 # Throttle
+RangeD = GetRange(116658 - 31220 + 10000, 9375, fuelFractionClimb, climbDistance) * 0.95 # Throttle
+
+
+A = ['A', 0,      31220]
+B = ['B', RangeB, 31220]
+C = ['C', RangeC, 31220 - 9375 + 6606]
+D = ['D', RangeD, 0]
+data = [A,B,C,D]
+plotdata = [[],[]]
+for i in data:
+    plotdata[0].append(i[1])
+    plotdata[1].append(i[2])
+    plt.annotate(i[0], (i[1], i[2]))
+plt.plot(plotdata[0], plotdata[1], '-',color='#ff0000')
+plt.scatter(plotdata[0], plotdata[1], color='#aaaaaa')
+
+plt.grid()
+plt.xlabel('Range [km]')
+plt.ylabel('Payload [kg]')
+plt.show()
