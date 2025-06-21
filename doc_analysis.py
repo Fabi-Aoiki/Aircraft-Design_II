@@ -15,7 +15,7 @@ import doc_model as doc
 
 mach_cr = 0.785                 # Cruise Mach number [-]
 alt_cr = 12000                  # Cruise altitude [m]
-r_design = 2600                 # Design range [nm]
+r_design = 2650                 # Design range [nm]
 pax = 276                       # Number of passengers [-]
 m_pax = pax*95                  # Total passengers mass [-]
 mtom = 116658                   # MTOM [kg]
@@ -211,7 +211,7 @@ plt.savefig('Figures/break-even_payload.png', bbox_inches='tight')
 plt.figure(5, figsize=(10, 7), dpi=130)
 plt.rcParams.update({'font.size': 14})
 plt.plot(range_nm, np.divide(np.subtract(pl_data, m_cargo), 95), label='Max Capacity', linestyle='--', color='k' , alpha=0.5)
-plt.plot(range_nm, np.divide(np.subtract(pl_data, m_cargo), 95/0.8), label='80% Capacity')
+plt.plot(range_nm, np.divide(np.subtract(pl_data, m_cargo), 95/0.75), label='75% Capacity')
 plt.plot(range_nm, be_pax, label=f'Break-even PAX @ {rev_rate_pax:.2} €/AS')
 plt.ylabel('PAX [-]')
 plt.xlabel('Range [nm]')

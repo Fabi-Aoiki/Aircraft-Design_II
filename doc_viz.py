@@ -49,7 +49,7 @@ baseline = get_data(path_Baseline)
 list_data = [baseline]
 names = ['Baseline']
 
-Optimal_Range = 2800
+Optimal_Range = 2650
 
 # ----- Payload Range ------ #
 
@@ -99,6 +99,32 @@ plt.xlim([0, 3500*1.852])
 plt.legend()
 plt.grid()
 plt.savefig('Figures/cask_range.png', bbox_inches='tight')
+
+
+# ----- DOC and Payload Range (Christoph) ------ #
+
+plt.clf()
+plt.cla()
+
+fig, ax1 = plt.subplots()
+
+ax1.plot(baseline[0], baseline[5], color='tab:blue', label='CASK')
+ax1.set_ylabel('CASK (€)')
+ax1.set_xlabel('Range (km)')
+
+ax2 = ax1.twinx()
+ax2.plot(baseline[0], baseline[1], color='tab:red', label='Payload')
+ax2.set_ylabel('Payload (kg)')
+
+lines1, labels1 = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(lines1 + lines2, labels1 + labels2, loc='center right')
+
+ax1.grid(True) 
+ax1.set_ylim(0, 0.2)
+plt.xlim(0,6900)
+
+plt.savefig('Figures/cask_payload_range.png', bbox_inches='tight')
 
 
 # ----- Breakdown at Design Range ------ #
