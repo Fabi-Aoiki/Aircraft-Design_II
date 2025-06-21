@@ -57,6 +57,9 @@ def calc_cd_comp(cl, m, mdd):
 ######### DIAGRAMM CL_CD ############
 #####################################
 
+cd_list_export = []
+cl_list_export = []
+
 for h in [0, 2500, 5000, 7500, 10000, 12000]:
     m_list = []
     m_list_plot = []
@@ -88,6 +91,9 @@ for h in [0, 2500, 5000, 7500, 10000, 12000]:
             cd_list.append(cd)
             ld_list.append(cl/cd)
             m_list_plot.append(m)
+    
+    cd_list_export.append(cd_list)
+    cl_list_export.append(cl_list)
 
     cd = np.array(cd_list)
     cl = np.array(cl_list)
@@ -96,8 +102,6 @@ for h in [0, 2500, 5000, 7500, 10000, 12000]:
 # need that for export to flight performance
 # taking only the last one (12000 m)
 # might not be used but just in case
-cd_list_export = cd_list
-cl_list_export = cl_list
 
 plt.scatter(calc_cd_comp(calc_cl(con.Wto_stretch, rho(12000, 0), speed_of_sound(12000, 0)*0.785), 0.785, 0.758) + CalcAnaDrag(0.785, 12000),calc_cl(con.Wto_stretch, rho(12000, 0), speed_of_sound(12000, 0)*0.785), color='orange',label="Cruise Design Point", zorder = 24000)
 plt.plot(drag.cd_indu_all_list, drag.cl_indu_all_list, label="CD(CL) as simulated at M = 0.6", zorder = 0)

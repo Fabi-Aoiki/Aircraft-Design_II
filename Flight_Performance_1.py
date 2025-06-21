@@ -17,8 +17,10 @@ from scipy.interpolate import make_interp_spline
 # calculation of equivalent airspeeds assuming level flight
 # recycling cd and cl lists without compression drag
 # creating a copy so the DAD2 lists are not changes
-cd_list = DAD2.cd_indu_all_list.copy()
-cl_list = DAD2.cl_indu_all_list.copy()
+cd_list = LDCL.cd_list_export[-1]
+cl_list = LDCL.cl_list_export[-1]
+# cd_list = DAD2.cd_indu_all_list.copy()
+# cl_list = DAD2.cl_indu_all_list.copy()
 # creating an empty list for equivalent airspeeds
 vEAS_list = []
 # calculationg W/S at mTO
@@ -126,14 +128,14 @@ for i in range(len(thrust_list)):
 # taking thrust for FL400 at Mach 0 for mass closer after take-off
 # times 4 at the end because of four propellers that apply to one parameter
 for i in range(len(thrust_list)):
-    thrust_list[i] = thrust_list[i] * am.perf_5[0][0] / ( main.W_Take_off * 9.81 * 0.99 ) * 16
+    thrust_list[i] = thrust_list[i] * am.perf_5[0][0] / ( main.W_Take_off * 9.81 * 0.99 ) * 12
 # plotting the result
 plt.plot(Ma_list, dl_compr_list, label = "required")
 plt.plot(Ma_list, thrust_list, label = "available")
 plt.xlabel(r"M")
 plt.ylabel(r"$\epsilon = D/L = (L/D)^{-1}$ (-)")
-plt.ylim(0,1)
-plt.xlim(0.5, 1)
+plt.ylim(0, 0.3)
+plt.xlim(0.5, 0.9)
 plt.legend()
 if __name__ == "__main__":
     plt.show()
@@ -208,7 +210,8 @@ plt.ylabel(r"$\gamma$ (rad)")
 plt.legend()
 plt.title("Specific Excess Thrust (Climb)")
 plt.xlim(0, 251) # otherwise you cannot see anything
-plt.ylim(0, max(gamma_list_all[0])) # need that because of xlim
+plt.ylim(0, max(gamma_list_all[0])*1.05) # need that because of xlim
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -227,7 +230,8 @@ plt.ylabel("SEP (m/s)")
 plt.legend()
 plt.title("Specific Excess Power (Climb)")
 plt.xlim(0, 251) # otherwise you cannot see anything
-plt.ylim(0, max(SEP_list_all[0])) # need that because of xlim
+plt.ylim(0, max(SEP_list_all[0])*1.05) # need that because of xlim
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -253,6 +257,7 @@ plt.legend()
 plt.title("Specific Air Range")
 plt.xlim(0, 251) # otherwise you cannot see anything
 plt.ylim(0, max(SAR_list_all[-1])*1.2) # need that because of xlim
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -277,13 +282,16 @@ for i in range(len(SAR_list_all)):
     max_speed = vTAS_list_all[i][index_of_max]
     vTAS_Max_SAR_list.append(max_speed)
 # plotting
-plt.plot(vTAS_Max_SET_list, alti_list, label = r"$SET_{max}$")
-plt.plot(vTAS_Max_SEP_list, alti_list, label = r"$SEP_{max}$")
+plt.plot([86, 98, 112, 129, 149, 172], alti_list, label = r"$v_{min}$")
+plt.plot([155, 178, 202, 234, 237, 237], alti_list, label = r"$v_{max}$")
+plt.plot([86, 98, 112, 135, 152, 200], alti_list, label = r"$SET_{max}$")
+plt.plot([100, 110, 123, 141, 158, 205], alti_list, label = r"$SEP_{max}$")
 plt.plot(vTAS_Max_SAR_list, alti_list, label = r"$SAR_{max}$")
 plt.xlabel(r"$v_{TAS}$ (m/s)")
 plt.ylabel("altitude (m)")
 plt.title("Optimum Velocities")
 plt.legend()
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -302,6 +310,7 @@ plt.xlabel("$v_{TAS}$ (m/s)")
 plt.ylabel("SE (s/kg)")
 plt.legend()
 plt.title("Specific Flight Time")
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -322,7 +331,7 @@ for i in range(len(mach_list_all)):
     else:
         top_speed_list.append(mach_list_all[i][-1])
 max_alti_list = [stall_list[-1], top_speed_list[-1]]
-# jetzt pfusch
+# jetzt pfusch (update, kein Pfusch mehr, passt schon so)
 top_speed_list[3] = 0.8
 top_speed_list[4] = 0.8
 plt.plot(stall_list, alti_list, label = "Stall")

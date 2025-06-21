@@ -40,6 +40,7 @@ plt.xlabel("Altitude (m)")
 plt.ylabel("1/SEP (s/m)")
 plt.title("Climb Time = " + str(round(climbTime/60)) + " min")
 plt.xlim(left=0)
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -60,9 +61,10 @@ climbDistance = np.trapezoid(sep_max_vel_list, alti_list)
 climbDistance = climbDistance * 1.06 # meters!
 
 plt.xlabel("Altitude (m)")
-plt.ylabel(r"$1/\gamma$ (-)")
+plt.ylabel("1/SET (1/rad)")
 plt.title("Climb Distance = " + str(round(climbDistance/1000)) + " km")
 plt.xlim(left=0)
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
@@ -87,6 +89,7 @@ plt.xlabel("Altitude (m)")
 plt.ylabel("1/SAR (kg/m)")
 plt.title("Climb Fuel = " + str(round(climbFuel)) + " kg")
 plt.xlim(left=0)
+plt.grid()
 if __name__ == "__main__":
     plt.show()
 plt.close()
