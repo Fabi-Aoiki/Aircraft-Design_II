@@ -29,7 +29,7 @@ PT0n = []
 
 M1 =[]
 v0 = []
-vmax=0.8*350
+vmax=0.8*300
 n=0
 while n < 18000:#con.H_CRUISE:
     h.append(n)
@@ -113,6 +113,7 @@ for z in v0:
 PT3 = con.PEMFC_PT_d * (1+con.PEMFC_dPT_PT)
 PT4 = con.PEMFC_PT_d * (1-con.PEMFC_dPT_PT)
 
+PTDiff = PT3 -PT4 
 
 #Values From Changing values
 ##PRc Clac Iteration over M and then hight
@@ -459,6 +460,41 @@ for x,y in zip(PRcrestricted,PRcn):
 
 
 
+PT3C = []
+PTFCC = []
+for a,b in zip(PRcrestricted, PT0n):
+    PT3C_r = []
+    PTFCC_r = []
+    for x,y in zip(a,b):
+        PT3c_n = x*y
+        PTFCC_n = PT3c_n/(1+con.PEMFC_dPT_PT)
+        #print(f"PT3 = {PT3c_n}, PRCr = {x}, PT0 = {y}, PTFCC = {PTFCC_n}")
+        PT3C_r.append(PT3c_n)
+        PTFCC_r.append(PTFCC_n)
+    PT3C.append(PT3C_r)
+    PTFCC.append(PTFCC_r)
+
+
+PT4C = []
+a = None
+x = None
+for a in PTFCC :
+    PT4C_r = []
+    for x in a:
+        PT4c_n = x*(1-con.PEMFC_dPT_PT)
+        PT4C_r.append(PT4c_n)
+    PT4C.append(PT4C_r)
+
+
+
+PRTCn = []
+for o,u in zip(PT0n,PT4C):
+    PRtintc = []
+    for f,g in zip(o,u):
+        PRtintc.append(g/f)#PT5 = PT0
+        print(g/f)
+    
+    PRTCn.append(PRtintc)
 
 #Pel Stack cn
 Pel_cn = []
@@ -510,7 +546,7 @@ while i <= ns:
     ETA_stack_run_pre1=[]
     Prcrun_pre1.append(PRcrestricted[i])
     TT0run_pre1.append(TT0n[i])
-    Prtrun_pre1.append(PRtn[i])
+    Prtrun_pre1.append(PRTCn[i])
     ETA_stack_run_pre1.append(ETA_stack_cn[i])
     
     
@@ -667,24 +703,71 @@ for f,v in itertools.zip_longest(Ptn,PCn):
     rm.append(runm)
 
 
+rm=[]
+
+for f,v in itertools.zip_longest(PRTCn,PRcrestricted):
+    
+
+    runm = []
+
+    for b,p in zip(f,v):
+        if b/p >= 1:
+
+            runm.append(None)
+            continue
+        elif b/p <= 0:
+
+            runm.append(None)
+            continue
+        else:
+            #run.append((((b/p))))
+            runm.append((((b/p))))
 
 
 
 
-for m,f in itertools.zip_longest(v0,r):
+
+    rm.append(runm)
+
+
+
+
+for m,f,g in itertools.zip_longest(v0,r,rm):
     
     plt.plot((f), h, label = str(m))
+    plt.plot((g), h, label = (str(m)+"Restricted"))
 
 
-plt.xlabel("Power ratio")
+plt.xlabel("Pressure ratio")
 plt.ylabel("Height [m]")
 plt.legend()
-plt.title('Power ratio over height and different VCAS')
+plt.title('Pressure ratio over height and different VCAS')
+plt.grid(True)
 plt.show()
 
 
+    
+plt.plot((r[-1]), h, label = str(v0[-1]))
+plt.plot((rm[-1]), h, label = (str(v0[-1])+"Restricted"))
 
 
+plt.xlabel("Pressure ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Pressure ratio over height')
+plt.grid(True)
+plt.show()
+
+plt.plot((r[4]), h, label = str(v0[4]))
+plt.plot((rm[4]), h, label = (str(v0[4])+"Restricted"))
+
+
+plt.xlabel("Pressure ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Pressure ratio over height')
+plt.grid(True)
+plt.show()
 
 #Pressure Ratio constricted and none constricted
 for m,f,g in itertools.zip_longest(v0,PRcn,PRcrestricted):
@@ -697,11 +780,40 @@ plt.xlabel("Compressor Pressure Ratio")
 plt.ylabel("Height [m]")
 plt.legend()
 plt.title('Compressor Ratio over height and different VCAS')
+plt.grid(True)
 plt.show()
 
 
 
+#Pressure Ratio constricted and none constricted 
 
+    
+plt.plot((PRcn[-1]), h, label = str(v0[-1]))
+plt.plot((PRcrestricted[-1]), h, label = (str(v0[-1]) + " Restricted"))
+
+
+plt.xlabel("Compressor Pressure Ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Compressor Ratio diffrence of restriction')
+plt.grid(True)
+plt.show()
+
+
+
+#Pressure Ratio constricted and none constricted TURBINE
+for m,f,g in itertools.zip_longest(v0,PRtn,PRTCn):
+    
+    plt.plot((f), h, label = str(m))
+    plt.plot((g), h, label = (str(m) + " Restricted"))
+
+
+plt.xlabel("Turbine Pressure Ratio")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Turbine Ratio over height and different VCAS')
+plt.grid(True)
+plt.show()
 
 
 rverg=[]
@@ -731,6 +843,7 @@ plt.xlabel("mdot")
 plt.ylabel("Height [m]")
 plt.legend()
 plt.title('mdot_cn / mdot over height and different VCAS')
+plt.grid(True)
 plt.show()
 
 
@@ -745,6 +858,7 @@ plt.xlabel("mdot")
 plt.ylabel("Height [m]")
 plt.legend()
 plt.title('Pel diff over height and different VCAS')
+plt.grid(True)
 plt.show()
 
 
@@ -757,15 +871,48 @@ plt.xlabel("1-ETA_fc_anc_constricted")
 plt.ylabel("Height [m]")
 plt.legend()
 plt.title('Constricted efficiency over height and different VCAS')
+plt.grid(True)
 plt.show()
+
+
+
+
+
+    
+plt.plot(RETA_cn[-1], h, label = str(v0[-1]))
+
+plt.xlabel("1-ETA_fc_anc_constricted")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Constricted efficiency')
+plt.grid(True)
+plt.show()
+
 
 
 for m,f in itertools.zip_longest(v0,Pshaft):
     
     plt.plot(f, h, label = str(m))
 
-plt.xlabel("Shaft Power")
+plt.xlabel("Shaft Power  [W]")
 plt.ylabel("Height [m]")
 plt.legend()
 plt.title('Shaft power to height')
+plt.grid(True)
 plt.show()
+
+for m,f in itertools.zip_longest(v0,FC_cn):
+    
+    plt.plot(f, h, label = str(m))
+
+plt.xlabel("FC Load")
+plt.ylabel("Height [m]")
+plt.legend()
+plt.title('Fuel Cell Load')
+plt.grid(True)
+plt.show()
+
+#print(PTDiff)
+#print(PRcrestricted)
+#print(f"PT3C {PT3C}  _______   PT4C{PT4C}")
+print(PRTCn)
